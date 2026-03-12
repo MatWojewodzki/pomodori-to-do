@@ -10,7 +10,10 @@ function Panel({ className, ...props }: PanelProps) {
     return (
         <div
             {...props}
-            className={classNames(className, 'w-md p-6 bg-neutral-800')}
+            className={classNames(
+                className,
+                'w-md p-6 flex flex-col items-center bg-neutral-800'
+            )}
         >
             {props.children}
         </div>

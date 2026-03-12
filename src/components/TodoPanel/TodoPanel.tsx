@@ -1,5 +1,5 @@
-import PanelHeader from './PanelHeader'
-import Panel from './Panel.tsx'
+import PanelHeader from '../Panel/PanelHeader.tsx'
+import Panel from '../Panel/Panel.tsx'
 
 type TodoPanelProps = {
     width: number

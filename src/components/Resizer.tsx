@@ -5,7 +5,7 @@ type ResizerProps = {
 }
 
 const MIN_TODO_PANEL_WIDTH = 120
-const MIN_POMODORO_PANEL_WIDTH = 320
+const MIN_POMODORO_PANEL_WIDTH = 640
 
 function Resizer(props: ResizerProps) {
     const isDraggingRef = useRef(false)
