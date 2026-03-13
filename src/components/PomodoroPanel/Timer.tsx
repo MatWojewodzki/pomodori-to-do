@@ -1,6 +1,6 @@
-import classNames from 'classnames'
 import PomodoroStateButton from './PomodoroStateButton.tsx'
 import { useEffect, useRef, useState } from 'react'
+import TimerControlButton from './TimerControlButton.tsx'
 
 const POMODORI_TO_LONG_BREAK = 4
 
@@ -152,10 +152,10 @@ function Timer() {
                 </PomodoroStateButton>
             </div>
             <p className="text-9xl font-bold text-center">{formattedTime}</p>
-            <button
-                className={classNames(
-                    'w-64 py-6 font-bold text-4xl cursor-pointer rounded-lg bg-white text-black'
-                )}
+            <TimerControlButton
+                running={isRunning}
+                paused={isPaused}
+                secondsLeft={secondsLeft}
                 onClick={() => {
                     if (isRunning && isPaused) {
                         resume()
@@ -167,15 +167,7 @@ function Timer() {
                         start()
                     }
                 }}
-            >
-                {isRunning
-                    ? isPaused
-                        ? 'Resume'
-                        : 'Pause'
-                    : secondsLeft === 0
-                      ? 'Reset'
-                      : 'Start'}
-            </button>
+            />
         </div>
     )
 }
