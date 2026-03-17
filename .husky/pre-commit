@@ -1,1 +1,6 @@
 pnpm exec lint-staged
+
+pnpm typecheck
+
+cargo fmt --manifest-path src-tauri/Cargo.toml
+cargo check --manifest-path src-tauri/Cargo.toml
