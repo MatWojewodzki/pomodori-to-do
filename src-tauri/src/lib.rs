@@ -26,7 +26,11 @@ pub fn run() {
             app.manage(todo_service);
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![])
+        .invoke_handler(tauri::generate_handler![
+            todo::command::get_todos,
+            todo::command::create_todo,
+            todo::command::delete_todo,
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
