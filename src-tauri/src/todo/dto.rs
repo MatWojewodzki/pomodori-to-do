@@ -2,7 +2,8 @@ use crate::todo::domain::Todo;
 
 pub mod create_todo;
 
-#[derive(serde::Serialize)]
+#[derive(serde::Serialize, ts_rs::TS)]
+#[ts(export)]
 pub struct TodoDto {
     pub id: String,
     pub text: String,

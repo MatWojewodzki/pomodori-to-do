@@ -26,4 +26,5 @@ sqlx = { version = "0.8", features = ["sqlite", "runtime-tokio"] }
 async-trait = "0.1.89"
 uuid = { version = "1.22.0", features = ["v4"] }
 thiserror = "2.0.18"
+ts-rs = "12"
 

@@ -13,3 +13,4 @@ node_modules
 public
 
 src-tauri
+src/types/generated
