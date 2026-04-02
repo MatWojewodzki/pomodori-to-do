@@ -1,11 +1,11 @@
 import classNames from 'classnames'
 import { TodoDto } from '../../types/generated/TodoDto.ts'
 
-export type TodoItemProps = {
+export type TodoListItemProps = {
     todo: TodoDto
 }
 
-function TodoItem(props: TodoItemProps) {
+function TodoListItem(props: TodoListItemProps) {
     const todo = props.todo
     return (
         <li className={classNames({ 'line-through': todo.completed })}>
@@ -14,4 +14,4 @@ function TodoItem(props: TodoItemProps) {
     )
 }
 
-export default TodoItem
+export default TodoListItem
