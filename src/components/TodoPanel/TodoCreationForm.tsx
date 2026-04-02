@@ -40,6 +40,7 @@ function TodoCreationForm() {
                     'grow px-2 text-white',
                     'rounded-md bg-neutral-600 active:outline-1 outline-neutral-600'
                 )}
+                autoComplete="off"
             />
             <button className="rounded-sm hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700">
                 <Tooltip text="Add a todo">
