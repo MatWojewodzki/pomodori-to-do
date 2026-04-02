@@ -9,15 +9,12 @@ type LeftMenuProps = {
 }
 
 function LeftMenu(props: LeftMenuProps) {
+    const tooltipText = props.isTodoPanelOpen
+        ? 'Hide To-do List'
+        : 'Show To-do List'
     return (
         <div className="px-1 py-2">
-            <Tooltip
-                text={
-                    props.isTodoPanelOpen
-                        ? 'Hide To-do List'
-                        : 'Show To-do List'
-                }
-            >
+            <Tooltip text={tooltipText}>
                 <button
                     className={classNames(
                         'p-1 rounded-sm',
@@ -25,6 +22,9 @@ function LeftMenu(props: LeftMenuProps) {
                         { 'bg-neutral-600': props.isTodoPanelOpen }
                     )}
                     onClick={() => props.setIsTodoPanelOpen((value) => !value)}
+                    aria-label={tooltipText}
+                    aria-expanded={props.isTodoPanelOpen}
+                    aria-controls="todo-panel"
                 >
                     <ChecklistIcon className="size-5" />
                 </button>

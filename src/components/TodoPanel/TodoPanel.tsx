@@ -9,7 +9,11 @@ type TodoPanelProps = {
 
 function TodoPanel(props: TodoPanelProps) {
     return (
-        <Panel style={{ width: `${props.width}px` }} className="rounded-e-lg">
+        <Panel
+            id="todo-panel"
+            style={{ width: `${props.width}px` }}
+            className="rounded-e-lg"
+        >
             <PanelHeader>To-do List</PanelHeader>
             <TodoCreationForm />
             <TodoList />
