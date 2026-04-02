@@ -27,11 +27,11 @@ function TodoCreationForm() {
 
     return (
         <form className="flex gap-4 w-full mb-4" onSubmit={handleSubmit}>
-            <label className="sr-only" htmlFor="addTodoInput">
+            <label className="sr-only" htmlFor="add-todo-input">
                 {'Add a new todo'}
             </label>
             <input
-                id="addTodoInput"
+                id="add-todo-input"
                 type="text"
                 placeholder="Add a todo"
                 value={text}
