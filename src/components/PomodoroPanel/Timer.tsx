@@ -117,57 +117,62 @@ function Timer() {
         .toString()
         .padStart(2, '0')}`
     return (
-        <div className="px-18 pt-12 pb-8 flex flex-col items-center gap-16 rounded-lg bg-neutral-600">
-            <div
-                role="radiogroup"
-                aria-label="Pomodoro timer state"
-                className="flex w-full justify-between"
-            >
-                <PomodoroStateButton
-                    active={pomodoroState == PomodoroState.WORK}
-                    onClick={() => {
-                        reset(PomodoroState.WORK)
-                        setPomodoroState(PomodoroState.WORK)
-                    }}
+        <div className="flex justify-center">
+            {' '}
+            <div className="px-18 pt-12 pb-8 flex flex-col items-center gap-16 rounded-lg bg-neutral-600">
+                <div
+                    role="radiogroup"
+                    aria-label="Pomodoro timer state"
+                    className="flex w-full justify-between"
                 >
-                    pomodoro
-                </PomodoroStateButton>
-                <PomodoroStateButton
-                    active={pomodoroState == PomodoroState.SHORT_BREAK}
+                    <PomodoroStateButton
+                        active={pomodoroState == PomodoroState.WORK}
+                        onClick={() => {
+                            reset(PomodoroState.WORK)
+                            setPomodoroState(PomodoroState.WORK)
+                        }}
+                    >
+                        pomodoro
+                    </PomodoroStateButton>
+                    <PomodoroStateButton
+                        active={pomodoroState == PomodoroState.SHORT_BREAK}
+                        onClick={() => {
+                            reset(PomodoroState.SHORT_BREAK)
+                            setPomodoroState(PomodoroState.SHORT_BREAK)
+                        }}
+                    >
+                        short break
+                    </PomodoroStateButton>
+                    <PomodoroStateButton
+                        active={pomodoroState == PomodoroState.LONG_BREAK}
+                        onClick={() => {
+                            reset(PomodoroState.LONG_BREAK)
+                            setPomodoroState(PomodoroState.LONG_BREAK)
+                        }}
+                    >
+                        long break
+                    </PomodoroStateButton>
+                </div>
+                <p className="text-9xl font-bold text-center">
+                    {formattedTime}
+                </p>
+                <TimerControlButton
+                    running={isRunning}
+                    paused={isPaused}
+                    secondsLeft={secondsLeft}
                     onClick={() => {
-                        reset(PomodoroState.SHORT_BREAK)
-                        setPomodoroState(PomodoroState.SHORT_BREAK)
+                        if (isRunning && isPaused) {
+                            resume()
+                        }
+                        if (isRunning && !isPaused) {
+                            pause()
+                        }
+                        if (!isRunning) {
+                            start()
+                        }
                     }}
-                >
-                    short break
-                </PomodoroStateButton>
-                <PomodoroStateButton
-                    active={pomodoroState == PomodoroState.LONG_BREAK}
-                    onClick={() => {
-                        reset(PomodoroState.LONG_BREAK)
-                        setPomodoroState(PomodoroState.LONG_BREAK)
-                    }}
-                >
-                    long break
-                </PomodoroStateButton>
+                />
             </div>
-            <p className="text-9xl font-bold text-center">{formattedTime}</p>
-            <TimerControlButton
-                running={isRunning}
-                paused={isPaused}
-                secondsLeft={secondsLeft}
-                onClick={() => {
-                    if (isRunning && isPaused) {
-                        resume()
-                    }
-                    if (isRunning && !isPaused) {
-                        pause()
-                    }
-                    if (!isRunning) {
-                        start()
-                    }
-                }}
-            />
         </div>
     )
 }
