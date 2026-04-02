@@ -1,22 +1,17 @@
 use sqlx::sqlite::{SqliteConnectOptions, SqlitePool, SqlitePoolOptions};
+use std::path::PathBuf;
 use std::str::FromStr;
-use tauri::{App, Manager};
 
 pub struct DbPools {
     pub writer: SqlitePool,
     pub reader: SqlitePool,
 }
 
-pub fn get_db_uri(app: &App) -> String {
+pub fn get_db_uri(app_dir: PathBuf) -> String {
     if cfg!(debug_assertions) {
         return "sqlite://database.dev.sqlite".to_string();
     }
-    let db_path = app
-        .path()
-        .app_data_dir()
-        .expect("failed to get app data dir")
-        .join("database.sqlite");
-
+    let db_path = app_dir.join("database.sqlite");
     format!("sqlite:///{}", db_path.to_string_lossy())
 }
 
@@ -27,7 +22,6 @@ pub async fn create_pool(url: &str) -> DbPools {
 
     let read_options = SqliteConnectOptions::from_str(url)
         .expect("Failed to parse db url")
-        .create_if_missing(true)
         .read_only(true);
 
     let write_pool = SqlitePoolOptions::new()
