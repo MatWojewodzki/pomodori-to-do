@@ -28,7 +28,7 @@ function TodoCreationForm() {
     return (
         <form className="flex gap-4 w-full mb-4" onSubmit={handleSubmit}>
             <label className="sr-only" htmlFor="addTodoInput">
-                Todo text
+                {'Add a new todo'}
             </label>
             <input
                 id="addTodoInput"
@@ -42,7 +42,10 @@ function TodoCreationForm() {
                 )}
                 autoComplete="off"
             />
-            <button className="rounded-sm hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700">
+            <button
+                className="rounded-sm hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700"
+                aria-label="Add a todo"
+            >
                 <Tooltip text="Add a todo">
                     <AddIcon className="size-6" />
                 </Tooltip>
