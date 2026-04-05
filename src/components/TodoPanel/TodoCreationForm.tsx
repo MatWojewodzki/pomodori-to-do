@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import AddIcon from '../../assets/add_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
+import AddIcon from '../../assets/icons/add_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
 import Tooltip from '../Tooltip.tsx'
 import classNames from 'classnames'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
