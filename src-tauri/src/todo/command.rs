@@ -24,3 +24,13 @@ pub async fn delete_todo(service: State<'_, TodoService>, id: String) -> Result<
     service.delete_todo(id).await?;
     Ok(())
 }
+
+#[tauri::command]
+pub async fn set_completed(
+    service: State<'_, TodoService>,
+    id: String,
+    completed: bool,
+) -> Result<(), AppError> {
+    service.set_completed(id, completed).await?;
+    Ok(())
+}

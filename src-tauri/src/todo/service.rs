@@ -26,4 +26,9 @@ impl TodoService {
         self.todo_repository.delete_todo(id).await?;
         Ok(())
     }
+
+    pub async fn set_completed(&self, id: String, completed: bool) -> Result<(), ServiceError> {
+        self.todo_repository.set_completed(id, completed).await?;
+        Ok(())
+    }
 }

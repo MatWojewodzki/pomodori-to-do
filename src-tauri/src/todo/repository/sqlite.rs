@@ -79,4 +79,11 @@ impl TodoRepository for TodoRepositorySqlite {
         query.execute(&self.pools.writer).await?;
         Ok(())
     }
+
+    async fn set_completed(&self, id: String, completed: bool) -> Result<(), RepositoryError> {
+        let q = "UPDATE todo SET completed = ? WHERE id = ?";
+        let query = sqlx::query(q).bind(if completed { 1 } else { 0 }).bind(id);
+        query.execute(&self.pools.writer).await?;
+        Ok(())
+    }
 }

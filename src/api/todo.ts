@@ -14,6 +14,13 @@ const todoApi = {
     async deleteTodo(id: string): Promise<void> {
         return await tauriInvoke('delete_todo', { id })
     },
+
+    async setCompleted(args: {
+        id: String
+        completed: boolean
+    }): Promise<void> {
+        return await tauriInvoke('set_completed', args)
+    },
 }
 
 export default todoApi
