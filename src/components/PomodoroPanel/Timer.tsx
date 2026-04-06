@@ -86,7 +86,6 @@ function Timer() {
         }
 
         function updateTimeLeft() {
-            console.log('tick')
             if (!endTime || pausedMsLeft) {
                 if (intervalRef.current) clearInterval(intervalRef.current)
                 return
