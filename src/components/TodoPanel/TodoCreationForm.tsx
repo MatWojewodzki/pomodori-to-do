@@ -22,7 +22,7 @@ function TodoCreationForm() {
         e.preventDefault()
         const todo = text.trim()
         if (todo === '') return
-        mutation.mutate({ text: todo })
+        mutation.mutate({ createTodo: { text: todo } })
     }
 
     return (
