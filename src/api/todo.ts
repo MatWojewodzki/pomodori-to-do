@@ -7,12 +7,12 @@ const todoApi = {
         return await tauriInvoke('get_todos')
     },
 
-    async createTodo(createTodo: CreateTodoDto): Promise<TodoDto> {
-        return await tauriInvoke('create_todo', { createTodo })
+    async createTodo(args: CreateTodoDto): Promise<TodoDto> {
+        return await tauriInvoke('create_todo', args)
     },
 
-    async deleteTodo(id: string): Promise<void> {
-        return await tauriInvoke('delete_todo', { id })
+    async deleteTodo(args: { id: string }): Promise<void> {
+        return await tauriInvoke('delete_todo', args)
     },
 
     async setCompleted(args: {
