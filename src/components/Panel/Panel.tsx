@@ -12,7 +12,7 @@ function Panel({ className, ...props }: PanelProps) {
             {...props}
             className={classNames(
                 className,
-                'w-md px-1 pt-6 flex flex-col bg-neutral-800'
+                'w-md px-1 pt-6 flex flex-col bg-neutral-800 overflow-x-hidden'
             )}
         >
             {props.children}
