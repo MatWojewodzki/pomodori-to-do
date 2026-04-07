@@ -7,7 +7,7 @@ const todoApi = {
         return await tauriInvoke('get_todos')
     },
 
-    async createTodo(args: CreateTodoDto): Promise<TodoDto> {
+    async createTodo(args: { createTodo: CreateTodoDto }): Promise<TodoDto> {
         return await tauriInvoke('create_todo', args)
     },
 
