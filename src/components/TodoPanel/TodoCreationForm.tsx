@@ -26,7 +26,10 @@ function TodoCreationForm() {
     }
 
     return (
-        <form className="flex gap-4 w-full mb-4" onSubmit={handleSubmit}>
+        <form
+            className=" w-full px-5 mb-4 flex items-center gap-4"
+            onSubmit={handleSubmit}
+        >
             <label className="sr-only" htmlFor="add-todo-input">
                 {'Add a new todo'}
             </label>
@@ -42,14 +45,14 @@ function TodoCreationForm() {
                 )}
                 autoComplete="off"
             />
-            <button
-                className="rounded-sm hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700"
-                aria-label="Add a todo"
-            >
-                <Tooltip text="Add a todo">
+            <Tooltip text="Add a todo" position="bottom-left">
+                <button
+                    className="rounded-sm hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700"
+                    aria-label="Add a todo"
+                >
                     <AddIcon className="size-6" />
-                </Tooltip>
-            </button>
+                </button>
+            </Tooltip>
         </form>
     )
 }

@@ -14,7 +14,7 @@ function LeftMenu(props: LeftMenuProps) {
         : 'Show To-do List'
     return (
         <div className="px-1 py-2">
-            <Tooltip text={tooltipText}>
+            <Tooltip text={tooltipText} position="bottom-right">
                 <button
                     className={classNames(
                         'p-1 rounded-sm',

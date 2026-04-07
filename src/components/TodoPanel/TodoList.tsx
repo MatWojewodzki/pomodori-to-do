@@ -10,7 +10,7 @@ function TodoList() {
     if (!result.isSuccess) return
     if (result.data.length > 0) {
         return (
-            <ul className="flex flex-col ps-2">
+            <ul className="px-5 flex flex-col overflow-y-auto">
                 {result.data.map((todo) => (
                     <TodoListItem key={todo.id} todo={todo} />
                 ))}
