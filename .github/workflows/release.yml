@@ -1,0 +1,86 @@
+# https://github.com/tauri-apps/tauri-action?tab=readme-ov-file#example
+# https://v2.tauri.app/distribute/pipelines/github/#example-workflow
+name: release
+on:
+    push:
+        tags:
+            - 'v*.*.*'
+
+jobs:
+    build:
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - platform: 'macos-latest' # for Arm based macs (M1 and above).
+                      tauri_args: '--target aarch64-apple-darwin'
+                      rust_target: 'aarch64-apple-darwin'
+                    - platform: 'macos-latest' # for Intel based macs.
+                      tauri_args: '--target x86_64-apple-darwin'
+                      rust_target: 'x86_64-apple-darwin'
+                    - platform: 'ubuntu-22.04'
+                      tauri_args: ''
+                      rust_target: ''
+                    - platform: 'windows-latest'
+                      tauri_args: ''
+                      rust_target: ''
+        runs-on: ${{ matrix.platform }}
+        steps:
+            - name: checkout repository
+              uses: actions/checkout@v6
+
+            - name: install dependencies (ubuntu only)
+              if: matrix.platform == 'ubuntu-22.04' # This must match the platform value defined above.
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+
+            - name: install pnpm
+              uses: pnpm/action-setup@5
+              with:
+                  version: 10
+
+            - name: setup node
+              uses: actions/setup-node@v6
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
+
+            - name: install Rust stable
+              uses: dtolnay/rust-toolchain@stable
+              with:
+                  targets: ${{ matrix.rust_target }}
+
+            - name: install frontend dependencies
+              run: 'pnpm install --frozen-lockfile'
+
+            - name: build app
+              run: 'pnpm tauri build --ci ${{ matrix.tauri_args }}'
+
+            - name: upload artifacts
+              uses: actions/upload-artifact@v7
+              with:
+                  name: bundle-${{ matrix.rust_target || 'default' }}-${{ matrix.platform }}
+                  path: 'src-tauri/target/release/bundle/**/*'
+                  if-no-files-found: error
+
+    publish-github:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - name: download artifacts
+              uses: actions/download-artifact@v8
+              with:
+                  pattern: bundle-*
+                  path: bundle
+                  merge-multiple: true
+
+            - name: create github release
+              uses: softprops/action-gh-release@v2
+              with:
+                  files: bundle/*
+                  draft: false
+                  prerelease: false
+                  generate_release_notes: true
+                  fail_on_unmatched_files: true
+                  make_latest: true
