@@ -27,7 +27,7 @@ function TodoCreationForm() {
 
     return (
         <form
-            className=" w-full px-5 mb-4 flex items-center gap-4"
+            className=" w-full px-5 mb-4 flex items-center gap-2"
             onSubmit={handleSubmit}
         >
             <label className="sr-only" htmlFor="add-todo-input">
@@ -40,14 +40,14 @@ function TodoCreationForm() {
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 className={classNames(
-                    'grow px-2 text-white',
+                    'grow px-2 py-1 text-white',
                     'rounded-md bg-neutral-600 active:outline-1 outline-neutral-600'
                 )}
                 autoComplete="off"
             />
             <Tooltip text="Add a todo" position="bottom-left">
                 <button
-                    className="rounded-sm hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700"
+                    className="p-1 rounded-sm hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700"
                     aria-label="Add a todo"
                 >
                     <AddIcon className="size-6" />
