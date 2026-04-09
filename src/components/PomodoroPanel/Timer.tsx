@@ -1,6 +1,11 @@
 import PomodoroStateButton from './PomodoroStateButton.tsx'
 import { useEffect, useRef, useState } from 'react'
 import TimerControlButton from './TimerControlButton.tsx'
+import {
+    isPermissionGranted,
+    requestPermission,
+    sendNotification,
+} from '@tauri-apps/plugin-notification'
 
 const POMODORI_TO_LONG_BREAK = 4
 
@@ -29,6 +34,35 @@ function getDurationS(state: PomodoroState) {
         : state == PomodoroState.SHORT_BREAK
           ? SHORT_BREAK_DURATION_S
           : LONG_BREAK_DURATION_S
+}
+
+function getOrdinal(n: number) {
+    const s = ['th', 'st', 'nd', 'rd']
+    const v = n % 100
+    return n + (s[(v - 20) % 10] || s[v] || s[0])
+}
+
+async function showNotification(
+    finishedState: PomodoroState,
+    pomodoroCount: number,
+    isLongBreakNext: boolean
+) {
+    const permissionGranted = await isPermissionGranted()
+    if (!permissionGranted) {
+        const permission = await requestPermission()
+        if (permission !== 'granted') {
+            return
+        }
+    }
+    const title =
+        finishedState == PomodoroState.WORK
+            ? 'Good job!'
+            : 'Time to get back to work!'
+    const body =
+        finishedState == PomodoroState.WORK
+            ? `You've just finished your ${getOrdinal(pomodoroCount)} pomodoro! ${isLongBreakNext ? 'You may take a longer break.' : 'Take a short break.'}`
+            : ''
+    sendNotification({ title, body })
 }
 
 function Timer() {
@@ -77,8 +111,14 @@ function Timer() {
 
             const newState = getNextState(pomodoroState, pomodoroCount)
             const newDurationS = getDurationS(newState)
-            setSecondsLeft(newDurationS)
 
+            showNotification(
+                pomodoroState,
+                pomodoroCount,
+                newState == PomodoroState.LONG_BREAK
+            ).then()
+
+            setSecondsLeft(newDurationS)
             if (pomodoroState == PomodoroState.WORK) {
                 setPomodoroCount(pomodoroCount + 1)
             }
