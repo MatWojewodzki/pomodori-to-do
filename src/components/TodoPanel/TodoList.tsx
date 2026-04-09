@@ -18,7 +18,11 @@ function TodoList() {
         )
     } else {
         return (
-            <p className="text-neutral-200 text-sm text-center">No todos yet</p>
+            <div className="grow flex items-center justify-center">
+                <p className="text-neutral-300 text-sm text-center">
+                    No todos yet
+                </p>
+            </div>
         )
     }
 }
