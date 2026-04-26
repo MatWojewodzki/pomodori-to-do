@@ -2,6 +2,7 @@ use sqlx::sqlite::{SqliteConnectOptions, SqlitePool, SqlitePoolOptions};
 use std::path::PathBuf;
 use std::str::FromStr;
 
+#[derive(Clone)]
 pub struct DbPools {
     pub writer: SqlitePool,
     pub reader: SqlitePool,

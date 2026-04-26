@@ -1,0 +1,11 @@
+pub mod sqlite;
+
+use crate::error::RepositoryError;
+use crate::task::domain::Task;
+use async_trait::async_trait;
+
+#[async_trait]
+pub trait TaskRepository: Send + Sync {
+    async fn get_tasks(&self) -> Result<Vec<Task>, RepositoryError>;
+    async fn create_task(&self, task: Task) -> Result<(), RepositoryError>;
+}
