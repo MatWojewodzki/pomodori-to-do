@@ -47,6 +47,8 @@ pub fn run() {
             todo::command::create_todo,
             todo::command::delete_todo,
             todo::command::set_completed,
+            task::command::get_tasks,
+            task::command::create_task,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
