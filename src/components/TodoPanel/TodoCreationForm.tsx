@@ -40,7 +40,7 @@ function TodoCreationForm() {
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 className={classNames(
-                    'grow px-2 py-1 text-white',
+                    'min-w-0 flex-1 px-2 py-1 text-white',
                     'rounded-md bg-neutral-600 active:outline-1 outline-neutral-600'
                 )}
                 autoComplete="off"
