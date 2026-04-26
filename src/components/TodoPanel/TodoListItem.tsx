@@ -56,7 +56,9 @@ function TodoListItem(props: TodoListItemProps) {
                     <CheckBoxOutlineBlank className="size-5.5" />
                 )}
             </button>
-            <span className="pt-1 flex-1">{todo.text}</span>
+            <span className="min-w-0 pt-1 flex-1 overflow-hidden text-ellipsis">
+                {todo.text}
+            </span>
             <button
                 className={classNames(
                     'p-1 shrink-0 rounded-md text-neutral-400',
