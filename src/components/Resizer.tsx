@@ -4,7 +4,7 @@ type ResizerProps = {
     setTodoPanelWidth: React.Dispatch<React.SetStateAction<number>>
 }
 
-const MIN_TODO_PANEL_WIDTH = 120
+const MIN_TODO_PANEL_WIDTH = 200
 const MIN_POMODORO_PANEL_WIDTH = 640
 
 function Resizer(props: ResizerProps) {
