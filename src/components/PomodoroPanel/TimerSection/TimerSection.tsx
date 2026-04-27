@@ -65,7 +65,7 @@ async function showNotification(
     sendNotification({ title, body })
 }
 
-function Timer() {
+function TimerSection() {
     const [pomodoroState, setPomodoroState] = useState<PomodoroState>(
         PomodoroState.WORK
     )
@@ -156,7 +156,7 @@ function Timer() {
         .toString()
         .padStart(2, '0')}`
     return (
-        <div className="flex justify-center">
+        <section className="flex justify-center">
             {' '}
             <div className="max-w-121 grow px-18 pt-12 pb-8 flex flex-col items-center gap-16 rounded-lg bg-neutral-600">
                 <div
@@ -212,8 +212,8 @@ function Timer() {
                     }}
                 />
             </div>
-        </div>
+        </section>
     )
 }
 
-export default Timer
+export default TimerSection

@@ -1,7 +1,7 @@
 import PanelHeader from '../Panel/PanelHeader.tsx'
 import Panel from '../Panel/Panel.tsx'
 import classNames from 'classnames'
-import Timer from './Timer.tsx'
+import TimerSection from './TimerSection/TimerSection.tsx'
 import TaskSection from './TaskSection/TaskSection.tsx'
 
 type PomodoroPanelProps = {
@@ -16,7 +16,7 @@ function PomodoroPanel(props: PomodoroPanelProps) {
             })}
         >
             <PanelHeader>Pomodoro Timer</PanelHeader>
-            <Timer />
+            <TimerSection />
             <TaskSection />
         </Panel>
     )
