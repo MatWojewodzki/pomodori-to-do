@@ -158,7 +158,7 @@ function Timer() {
     return (
         <div className="flex justify-center">
             {' '}
-            <div className="px-18 pt-12 pb-8 flex flex-col items-center gap-16 rounded-lg bg-neutral-600">
+            <div className="max-w-121 grow px-18 pt-12 pb-8 flex flex-col items-center gap-16 rounded-lg bg-neutral-600">
                 <div
                     role="radiogroup"
                     aria-label="Pomodoro timer state"

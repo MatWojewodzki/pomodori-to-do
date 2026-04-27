@@ -2,6 +2,7 @@ import PanelHeader from '../Panel/PanelHeader.tsx'
 import Panel from '../Panel/Panel.tsx'
 import classNames from 'classnames'
 import Timer from './Timer.tsx'
+import TaskSection from './TaskSection/TaskSection.tsx'
 
 type PomodoroPanelProps = {
     isTodoPanelOpen: boolean
@@ -16,6 +17,7 @@ function PomodoroPanel(props: PomodoroPanelProps) {
         >
             <PanelHeader>Pomodoro Timer</PanelHeader>
             <Timer />
+            <TaskSection />
         </Panel>
     )
 }
