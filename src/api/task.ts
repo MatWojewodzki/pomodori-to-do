@@ -8,7 +8,7 @@ const taskApi = {
 
     async createTask(args: {
         text: string
-        pomodoro_total: number
+        pomodoroTotal: number
     }): Promise<void> {
         return await tauriInvoke('create_todo', args)
     },
