@@ -20,4 +20,24 @@ impl TaskService {
         let task = Task::new(text, pomodoro_total)?;
         Ok(self.task_repository.create_task(task).await?)
     }
+
+    pub async fn update_task(
+        &self,
+        id: String,
+        text: String,
+        pomodoro_total: u32,
+        pomodoro_completed: u32,
+    ) -> Result<(), ServiceError> {
+        let task = Task {
+            id,
+            text,
+            pomodoro_total,
+            pomodoro_completed,
+        };
+        Ok(self.task_repository.update_task(task).await?)
+    }
+
+    pub async fn delete_task(&self, id: String) -> Result<(), ServiceError> {
+        Ok(self.task_repository.delete_task(id).await?)
+    }
 }

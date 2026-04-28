@@ -1,6 +1,6 @@
 use crate::task::domain::Task;
 
-#[derive(serde::Serialize, ts_rs::TS)]
+#[derive(serde::Serialize, serde::Deserialize, ts_rs::TS)]
 #[ts(export)]
 pub struct TaskDto {
     pub id: String,

@@ -66,4 +66,23 @@ impl TaskRepository for TaskRepositorySqlite {
         query.execute(&self.pools.writer).await?;
         Ok(())
     }
+
+    async fn update_task(&self, updated_task: Task) -> Result<(), RepositoryError> {
+        let row = TaskRepositorySqlite::task_to_row(updated_task);
+        let q = "UPDATE task SET text = ?, pomodoro_total = ?, pomodoro_completed = ? WHERE id = ?";
+        let query = sqlx::query(q)
+            .bind(row.text)
+            .bind(row.pomodoro_total)
+            .bind(row.pomodoro_completed)
+            .bind(row.id);
+        query.execute(&self.pools.writer).await?;
+        Ok(())
+    }
+
+    async fn delete_task(&self, id: String) -> Result<(), RepositoryError> {
+        let q = "DELETE FROM task WHERE id = ?";
+        let query = sqlx::query(q).bind(id);
+        query.execute(&self.pools.writer).await?;
+        Ok(())
+    }
 }

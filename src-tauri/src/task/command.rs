@@ -18,3 +18,25 @@ pub async fn create_task(
     service.create_task(text, pomodoro_total as u32).await?;
     Ok(())
 }
+
+#[tauri::command]
+pub async fn update_task(
+    service: State<'_, TaskService>,
+    updated_task: TaskDto,
+) -> Result<(), AppError> {
+    service
+        .update_task(
+            updated_task.id,
+            updated_task.text,
+            updated_task.pomodoro_total as u32,
+            updated_task.pomodoro_completed as u32,
+        )
+        .await?;
+    Ok(())
+}
+
+#[tauri::command]
+pub async fn delete_task(service: State<'_, TaskService>, id: String) -> Result<(), AppError> {
+    service.delete_task(id).await?;
+    Ok(())
+}
