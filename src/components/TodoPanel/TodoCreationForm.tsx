@@ -47,7 +47,10 @@ function TodoCreationForm() {
             />
             <Tooltip text="Add a todo" position="bottom-left">
                 <button
-                    className="p-1 rounded-sm hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700"
+                    className={classNames(
+                        'p-1 rounded-sm cursor-pointer',
+                        'hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700'
+                    )}
                     aria-label="Add a todo"
                 >
                     <AddIcon className="size-6" />
