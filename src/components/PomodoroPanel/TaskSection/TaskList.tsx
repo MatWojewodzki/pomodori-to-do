@@ -9,7 +9,11 @@ function TaskList() {
     })
     if (!result.isSuccess || result.data.length == 0) return
     return (
-        <ul className="flex flex-col gap-3">
+        <ul
+            role="radiogroup"
+            aria-label="tasks"
+            className="flex flex-col gap-3"
+        >
             {result.data.map((task) => (
                 <TaskListItem key={task.id} task={task} />
             ))}
