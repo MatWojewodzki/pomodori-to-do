@@ -17,7 +17,7 @@ function LeftMenu(props: LeftMenuProps) {
             <Tooltip text={tooltipText} position="bottom-right">
                 <button
                     className={classNames(
-                        'p-1 rounded-sm',
+                        'p-1 rounded-sm cursor-pointer',
                         'hover:bg-neutral-500 focus:outline-none focus-visible:bg-neutral-500',
                         { 'bg-neutral-600': props.isTodoPanelOpen }
                     )}

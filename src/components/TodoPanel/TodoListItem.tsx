@@ -41,7 +41,10 @@ function TodoListItem(props: TodoListItemProps) {
             )}
         >
             <button
-                className="shrink-0 p-1 rounded-md hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700"
+                className={classNames(
+                    'shrink-0 p-1 rounded-md cursor-pointer',
+                    'hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700'
+                )}
                 onClick={() =>
                     setCompletedMutation.mutate({
                         id: todo.id,
@@ -61,7 +64,7 @@ function TodoListItem(props: TodoListItemProps) {
             </span>
             <button
                 className={classNames(
-                    'p-1 shrink-0 rounded-md text-neutral-400',
+                    'p-1 shrink-0 rounded-md text-neutral-400 cursor-pointer',
                     'hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700',
                     'invisible group-hover:visible group-focus-within:visible'
                 )}
