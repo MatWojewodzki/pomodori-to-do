@@ -41,6 +41,7 @@ function TaskForm(props: TaskFormProps) {
                 value={props.taskDescription}
                 onChange={(e) => props.setTaskDescription(e.target.value)}
                 ref={taskDescriptionInputRef}
+                autoComplete="off"
             />
             <label
                 htmlFor="total-pomodori-count-spinbutton"
