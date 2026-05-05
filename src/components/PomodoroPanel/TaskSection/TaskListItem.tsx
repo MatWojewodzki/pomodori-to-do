@@ -57,7 +57,7 @@ function TaskListItem(props: TaskListItemProps) {
                         <DropdownMenu.Trigger asChild>
                             <Tooltip.Trigger asChild>
                                 <button
-                                    aria-label="More options"
+                                    aria-label="Open menu"
                                     className={classNames(
                                         'p-1 absolute z-10 right-3 top-3 rounded-md cursor-pointer',
                                         'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800',
