@@ -4,6 +4,8 @@ import classNames from 'classnames'
 import { DropdownMenu, Tooltip } from 'radix-ui'
 import EditIcon from '../../../assets/icons/edit_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
 import DeleteIcon from '../../../assets/icons/delete_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
+import taskApi from '../../../api/task.ts'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 type TaskListItemProps = {
     task: TaskDto
@@ -14,6 +16,15 @@ function TaskListItem(props: TaskListItemProps) {
     const preciseProgress =
         (task.pomodoro_completed / task.pomodoro_total) * 100
     const inputId = `task-${task.id}`
+
+    const queryClient = useQueryClient()
+    const deleteMutation = useMutation({
+        mutationFn: taskApi.deleteTask,
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({ queryKey: ['tasks'] })
+        },
+    })
+
     return (
         <li
             className="group relative rounded-md"
@@ -85,6 +96,11 @@ function TaskListItem(props: TaskListItemProps) {
                                             'flex justify-start items-center gap-4 px-4 py-2 cursor-pointer',
                                             'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800'
                                         )}
+                                        onClick={() =>
+                                            deleteMutation.mutate({
+                                                id: task.id,
+                                            })
+                                        }
                                     >
                                         <DeleteIcon className="size-5" />
                                         <span>Delete</span>
