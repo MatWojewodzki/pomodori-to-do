@@ -1,7 +1,7 @@
 import { TaskDto } from '../../../types/generated/TaskDto.ts'
 import MoreVertIcon from '../../../assets/icons/more_vert_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
 import classNames from 'classnames'
-import { DropdownMenu } from 'radix-ui'
+import { DropdownMenu, Tooltip } from 'radix-ui'
 import EditIcon from '../../../assets/icons/edit_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
 import DeleteIcon from '../../../assets/icons/delete_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
 
@@ -40,52 +40,71 @@ function TaskListItem(props: TaskListItemProps) {
                     {task.pomodoro_completed}/{task.pomodoro_total}
                 </span>
             </label>
-            <DropdownMenu.Root>
-                <DropdownMenu.Trigger asChild>
-                    <button
-                        aria-label="More options"
-                        className={classNames(
-                            'p-1 absolute z-10 right-3 top-3 rounded-md cursor-pointer',
-                            'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800',
-                            'invisible group-hover:visible group-focus-within:visible'
-                        )}
-                    >
-                        <MoreVertIcon className="size-6" />
-                    </button>
-                </DropdownMenu.Trigger>
-                <DropdownMenu.Portal>
-                    <DropdownMenu.Content
-                        align="end"
-                        sideOffset={4}
-                        className={classNames(
-                            'flex flex-col py-2 text-white text-sm rounded-md bg-neutral-900'
-                        )}
-                    >
-                        <DropdownMenu.Item asChild>
-                            <button
+            <Tooltip.Provider>
+                <Tooltip.Root>
+                    <DropdownMenu.Root>
+                        <DropdownMenu.Trigger asChild>
+                            <Tooltip.Trigger asChild>
+                                <button
+                                    aria-label="More options"
+                                    className={classNames(
+                                        'p-1 absolute z-10 right-3 top-3 rounded-md cursor-pointer',
+                                        'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800',
+                                        'invisible group-hover:visible group-focus-within:visible'
+                                    )}
+                                >
+                                    <MoreVertIcon className="size-6" />
+                                </button>
+                            </Tooltip.Trigger>
+                        </DropdownMenu.Trigger>
+                        <DropdownMenu.Portal>
+                            <DropdownMenu.Content
+                                align="end"
+                                sideOffset={4}
                                 className={classNames(
-                                    'flex justify-start items-center gap-4 px-4 py-2 cursor-pointer',
-                                    'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800'
+                                    'flex flex-col py-2 text-white text-sm rounded-md bg-neutral-900'
                                 )}
                             >
-                                <EditIcon className="size-5" />
-                                <span>Edit</span>
-                            </button>
-                        </DropdownMenu.Item>
-                        <DropdownMenu.Item asChild className="text-red-300">
-                            <button
-                                className={classNames(
-                                    'flex justify-start items-center gap-4 px-4 py-2 cursor-pointer',
-                                    'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800'
-                                )}
-                            >
-                                <DeleteIcon className="size-5" />
-                                <span>Delete</span>
-                            </button>
-                        </DropdownMenu.Item>
-                    </DropdownMenu.Content>
-                </DropdownMenu.Portal>
-            </DropdownMenu.Root>
+                                <DropdownMenu.Item asChild>
+                                    <button
+                                        className={classNames(
+                                            'flex justify-start items-center gap-4 px-4 py-2 cursor-pointer',
+                                            'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800'
+                                        )}
+                                    >
+                                        <EditIcon className="size-5" />
+                                        <span>Edit</span>
+                                    </button>
+                                </DropdownMenu.Item>
+                                <DropdownMenu.Item
+                                    asChild
+                                    className="text-red-300"
+                                >
+                                    <button
+                                        className={classNames(
+                                            'flex justify-start items-center gap-4 px-4 py-2 cursor-pointer',
+                                            'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800'
+                                        )}
+                                    >
+                                        <DeleteIcon className="size-5" />
+                                        <span>Delete</span>
+                                    </button>
+                                </DropdownMenu.Item>
+                            </DropdownMenu.Content>
+                        </DropdownMenu.Portal>
+                    </DropdownMenu.Root>
+                    <Tooltip.Portal>
+                        <Tooltip.Content
+                            side="bottom"
+                            align="end"
+                            sideOffset={4}
+                            className="px-2 py-1 text-neutral-300 text-xs rounded-md bg-neutral-900"
+                        >
+                            More options
+                        </Tooltip.Content>
+                    </Tooltip.Portal>
+                </Tooltip.Root>
+            </Tooltip.Provider>
         </li>
     )
 }
