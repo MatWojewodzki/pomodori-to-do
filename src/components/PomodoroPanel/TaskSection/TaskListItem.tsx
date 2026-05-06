@@ -51,76 +51,71 @@ function TaskListItem(props: TaskListItemProps) {
                     {task.pomodoro_completed}/{task.pomodoro_total}
                 </span>
             </label>
-            <Tooltip.Provider>
-                <Tooltip.Root>
-                    <DropdownMenu.Root>
-                        <DropdownMenu.Trigger asChild>
-                            <Tooltip.Trigger asChild>
-                                <button
-                                    aria-label="Open menu"
-                                    className={classNames(
-                                        'p-1 absolute z-10 right-3 top-3 rounded-md cursor-pointer',
-                                        'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800',
-                                        'invisible group-hover:visible group-focus-within:visible'
-                                    )}
-                                >
-                                    <MoreVertIcon className="size-6" />
-                                </button>
-                            </Tooltip.Trigger>
-                        </DropdownMenu.Trigger>
-                        <DropdownMenu.Portal>
-                            <DropdownMenu.Content
-                                align="end"
-                                sideOffset={4}
+            <Tooltip.Root>
+                <DropdownMenu.Root>
+                    <DropdownMenu.Trigger asChild>
+                        <Tooltip.Trigger asChild>
+                            <button
+                                aria-label="Open menu"
                                 className={classNames(
-                                    'flex flex-col py-2 text-white text-sm rounded-md bg-neutral-900'
+                                    'p-1 absolute z-10 right-3 top-3 rounded-md cursor-pointer',
+                                    'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800',
+                                    'invisible group-hover:visible group-focus-within:visible'
                                 )}
                             >
-                                <DropdownMenu.Item asChild>
-                                    <button
-                                        className={classNames(
-                                            'flex justify-start items-center gap-4 px-4 py-2 cursor-pointer',
-                                            'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800'
-                                        )}
-                                    >
-                                        <EditIcon className="size-5" />
-                                        <span>Edit</span>
-                                    </button>
-                                </DropdownMenu.Item>
-                                <DropdownMenu.Item
-                                    asChild
-                                    className="text-red-300"
-                                >
-                                    <button
-                                        className={classNames(
-                                            'flex justify-start items-center gap-4 px-4 py-2 cursor-pointer',
-                                            'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800'
-                                        )}
-                                        onClick={() =>
-                                            deleteMutation.mutate({
-                                                id: task.id,
-                                            })
-                                        }
-                                    >
-                                        <DeleteIcon className="size-5" />
-                                        <span>Delete</span>
-                                    </button>
-                                </DropdownMenu.Item>
-                            </DropdownMenu.Content>
-                        </DropdownMenu.Portal>
-                    </DropdownMenu.Root>
-                    <Tooltip.Portal>
-                        <Tooltip.Content
-                            side="bottom"
+                                <MoreVertIcon className="size-6" />
+                            </button>
+                        </Tooltip.Trigger>
+                    </DropdownMenu.Trigger>
+                    <DropdownMenu.Portal>
+                        <DropdownMenu.Content
                             align="end"
                             sideOffset={4}
-                            className="px-2 py-1 text-neutral-300 text-xs rounded-md bg-neutral-900"
+                            className={classNames(
+                                'flex flex-col py-2 text-white text-sm rounded-md bg-neutral-900'
+                            )}
                         >
-                            More options
-                        </Tooltip.Content>
-                    </Tooltip.Portal>
-                </Tooltip.Root>
-            </Tooltip.Provider>
+                            <DropdownMenu.Item asChild>
+                                <button
+                                    className={classNames(
+                                        'flex justify-start items-center gap-4 px-4 py-2 cursor-pointer',
+                                        'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800'
+                                    )}
+                                >
+                                    <EditIcon className="size-5" />
+                                    <span>Edit</span>
+                                </button>
+                            </DropdownMenu.Item>
+                            <DropdownMenu.Item asChild className="text-red-300">
+                                <button
+                                    className={classNames(
+                                        'flex justify-start items-center gap-4 px-4 py-2 cursor-pointer',
+                                        'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800'
+                                    )}
+                                    onClick={() =>
+                                        deleteMutation.mutate({
+                                            id: task.id,
+                                        })
+                                    }
+                                >
+                                    <DeleteIcon className="size-5" />
+                                    <span>Delete</span>
+                                </button>
+                            </DropdownMenu.Item>
+                        </DropdownMenu.Content>
+                    </DropdownMenu.Portal>
+                </DropdownMenu.Root>
+                <Tooltip.Portal>
+                    <Tooltip.Content
+                        side="bottom"
+                        align="end"
+                        sideOffset={4}
+                        className="px-2 py-1 text-neutral-300 text-xs rounded-md bg-neutral-900"
+                    >
+                        More options
+                    </Tooltip.Content>
+                </Tooltip.Portal>
+            </Tooltip.Root>
         </li>
     )
 }
