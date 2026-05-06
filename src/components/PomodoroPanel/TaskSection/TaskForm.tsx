@@ -64,7 +64,7 @@ function TaskForm(props: TaskFormProps) {
                         aria-label="decrease"
                         type="button"
                         className={classNames(
-                            'px-4 py-2 text-xl font-bold rounded-s-md',
+                            'px-4 py-2 text-xl font-bold rounded-s-md cursor-pointer',
                             'hover:bg-neutral-500 focus:outline-none focus-visible:bg-neutral-500'
                         )}
                         onClick={() => {
@@ -83,7 +83,7 @@ function TaskForm(props: TaskFormProps) {
                         aria-label="increase"
                         type="button"
                         className={classNames(
-                            'px-4 py-2 text-xl font-bold rounded-e-md',
+                            'px-4 py-2 text-xl font-bold rounded-e-md cursor-pointer',
                             'hover:bg-neutral-500 focus:outline-none focus-visible:bg-neutral-500'
                         )}
                         onClick={() =>
@@ -101,7 +101,7 @@ function TaskForm(props: TaskFormProps) {
                     type="button"
                     onClick={props.handleCancel}
                     className={classNames(
-                        'px-4 py-1 text-sm rounded-sm border-2 border-white',
+                        'px-4 py-1 text-sm rounded-sm border-2 border-white cursor-pointer',
                         'hover:bg-neutral-200 focus:outline-none focus-visible:bg-neutral-200',
                         'hover:border-neutral-200 focus-visible:border-neutral-200 hover:text-black focus-visible:text-black'
                     )}
@@ -111,7 +111,7 @@ function TaskForm(props: TaskFormProps) {
                 <button
                     type="submit"
                     className={classNames(
-                        'px-4 py-1 text-sm rounded-sm bg-white text-black',
+                        'px-4 py-1 text-sm rounded-sm bg-white text-black cursor-pointer',
                         'hover:bg-neutral-200 focus:outline-none focus-visible:bg-neutral-200'
                     )}
                 >
