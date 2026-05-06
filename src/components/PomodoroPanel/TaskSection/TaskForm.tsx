@@ -8,6 +8,7 @@ type TaskFormProps = {
     setTaskDescription: (value: string) => void
     totalPomodoriCount: number
     setTotalPomodoriCount: (value: number) => void
+    submitButtonText: string
 }
 
 function TaskForm(props: TaskFormProps) {
@@ -15,6 +16,7 @@ function TaskForm(props: TaskFormProps) {
 
     useEffect(() => {
         taskDescriptionInputRef.current?.focus()
+        taskDescriptionInputRef.current?.select()
     }, [])
 
     return (
@@ -113,7 +115,7 @@ function TaskForm(props: TaskFormProps) {
                         'hover:bg-neutral-200 focus:outline-none focus-visible:bg-neutral-200'
                     )}
                 >
-                    Add
+                    {props.submitButtonText}
                 </button>
             </div>
         </form>
