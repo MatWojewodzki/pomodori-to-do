@@ -1,5 +1,5 @@
 import { TaskDto } from '../../../types/generated/TaskDto.ts'
-import MoreVertIcon from '../../../assets/icons/more_vert_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
+import MoreVertIcon from '../../../assets/icons/more_vert_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
 import classNames from 'classnames'
 import { DropdownMenu, Tooltip } from 'radix-ui'
 import EditIcon from '../../../assets/icons/edit_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
@@ -58,12 +58,12 @@ function TaskDisplay(props: TaskDisplayProps) {
                         <DropdownMenu.Trigger
                             aria-label="Open menu"
                             className={classNames(
-                                'p-1 absolute z-10 right-3 top-3 rounded-md cursor-pointer',
+                                'p-1 absolute z-10 right-3.5 top-3.5 rounded-md cursor-pointer',
                                 'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800',
                                 'invisible group-hover:visible group-focus-within:visible'
                             )}
                         >
-                            <MoreVertIcon className="size-6" />
+                            <MoreVertIcon className="size-5" />
                         </DropdownMenu.Trigger>
                     </Tooltip.Trigger>
                     <DropdownMenu.Portal>
