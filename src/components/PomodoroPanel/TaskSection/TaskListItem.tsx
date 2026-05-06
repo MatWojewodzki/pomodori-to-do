@@ -53,20 +53,18 @@ function TaskListItem(props: TaskListItemProps) {
             </label>
             <Tooltip.Root>
                 <DropdownMenu.Root>
-                    <DropdownMenu.Trigger asChild>
-                        <Tooltip.Trigger asChild>
-                            <button
-                                aria-label="Open menu"
-                                className={classNames(
-                                    'p-1 absolute z-10 right-3 top-3 rounded-md cursor-pointer',
-                                    'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800',
-                                    'invisible group-hover:visible group-focus-within:visible'
-                                )}
-                            >
-                                <MoreVertIcon className="size-6" />
-                            </button>
-                        </Tooltip.Trigger>
-                    </DropdownMenu.Trigger>
+                    <Tooltip.Trigger asChild>
+                        <DropdownMenu.Trigger
+                            aria-label="Open menu"
+                            className={classNames(
+                                'p-1 absolute z-10 right-3 top-3 rounded-md cursor-pointer',
+                                'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800',
+                                'invisible group-hover:visible group-focus-within:visible'
+                            )}
+                        >
+                            <MoreVertIcon className="size-6" />
+                        </DropdownMenu.Trigger>
+                    </Tooltip.Trigger>
                     <DropdownMenu.Portal>
                         <DropdownMenu.Content
                             align="end"
@@ -75,32 +73,29 @@ function TaskListItem(props: TaskListItemProps) {
                                 'flex flex-col py-2 text-white text-sm rounded-md bg-neutral-900'
                             )}
                         >
-                            <DropdownMenu.Item asChild>
-                                <button
-                                    className={classNames(
-                                        'flex justify-start items-center gap-4 px-4 py-2 cursor-pointer',
-                                        'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800'
-                                    )}
-                                >
-                                    <EditIcon className="size-5" />
-                                    <span>Edit</span>
-                                </button>
+                            <DropdownMenu.Item
+                                className={classNames(
+                                    'flex justify-start items-center gap-4 px-4 py-2 cursor-pointer',
+                                    'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800'
+                                )}
+                            >
+                                <EditIcon className="size-5" />
+                                <span>Edit</span>
                             </DropdownMenu.Item>
-                            <DropdownMenu.Item asChild className="text-red-300">
-                                <button
-                                    className={classNames(
-                                        'flex justify-start items-center gap-4 px-4 py-2 cursor-pointer',
-                                        'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800'
-                                    )}
-                                    onClick={() =>
-                                        deleteMutation.mutate({
-                                            id: task.id,
-                                        })
-                                    }
-                                >
-                                    <DeleteIcon className="size-5" />
-                                    <span>Delete</span>
-                                </button>
+                            <DropdownMenu.Item
+                                className={classNames(
+                                    'flex justify-start items-center gap-4 px-4 py-2 cursor-pointer',
+                                    'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800',
+                                    'text-red-300'
+                                )}
+                                onSelect={() =>
+                                    deleteMutation.mutate({
+                                        id: task.id,
+                                    })
+                                }
+                            >
+                                <DeleteIcon className="size-5" />
+                                <span>Delete</span>
                             </DropdownMenu.Item>
                         </DropdownMenu.Content>
                     </DropdownMenu.Portal>
