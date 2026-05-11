@@ -1,26 +1,12 @@
-import { useEffect, useRef, useState } from 'react'
 import {
     isPermissionGranted,
     requestPermission,
     sendNotification,
 } from '@tauri-apps/plugin-notification'
-import useTimerType, { TimerType } from '../../../hooks/useTimerType.ts'
+import { TimerType } from '../../../hooks/useTimerType.ts'
 import TimerStateButton from './PomodoroStateButton.tsx'
 import TimerControlButton from './TimerControlButton.tsx'
-
-const POMODORI_TO_LONG_BREAK = 4
-
-const WORK_DURATION_S = 25
-const SHORT_BREAK_DURATION_S = 5
-const LONG_BREAK_DURATION_S = 15
-
-function getDurationS(state: TimerType) {
-    return state == TimerType.WORK
-        ? WORK_DURATION_S
-        : state == TimerType.SHORT_BREAK
-          ? SHORT_BREAK_DURATION_S
-          : LONG_BREAK_DURATION_S
-}
+import useTimer from '../../../hooks/useTimer.ts'
 
 function getOrdinal(n: number) {
     const s = ['th', 'st', 'nd', 'rd']
@@ -52,93 +38,9 @@ async function showNotification(
 }
 
 function TimerSection() {
-    const { timerType, setTimerType, setTimerTypeToNext } = useTimerType(
-        TimerType.WORK,
-        POMODORI_TO_LONG_BREAK
-    )
-    const [pomodoroCount, setPomodoroCount] = useState(1)
-    const duration_s = getDurationS(timerType)
-
-    const [endTime, setEndTime] = useState<number | null>(null)
-    const [secondsLeft, setSecondsLeft] = useState(duration_s)
-    const [pausedMsLeft, setPausedMsLeft] = useState<number | null>(null)
-    const intervalRef = useRef<number | null>(null)
-
-    function start() {
-        setEndTime(Date.now() + duration_s * 1000)
-        setPausedMsLeft(null)
-    }
-
-    function pause() {
-        if (!endTime) return
-        setPausedMsLeft(endTime - Date.now())
-    }
-
-    function resume() {
-        if (!pausedMsLeft) return
-        setEndTime(Date.now() + pausedMsLeft)
-        setPausedMsLeft(null)
-    }
-
-    function reset(newState: TimerType) {
-        setEndTime(null)
-        setPausedMsLeft(null)
-        setSecondsLeft(getDurationS(newState))
-    }
-
-    useEffect(() => {
-        if (!endTime || pausedMsLeft) {
-            if (intervalRef.current) clearInterval(intervalRef.current)
-            return
-        }
-
-        function handleFinish() {
-            setEndTime(null)
-            if (intervalRef.current) clearInterval(intervalRef.current)
-
-            if (timerType == TimerType.WORK) {
-                setPomodoroCount(pomodoroCount + 1)
-            }
-
-            const newState = setTimerTypeToNext(pomodoroCount)
-            const newDurationS = getDurationS(newState)
-
-            showNotification(
-                timerType,
-                pomodoroCount,
-                newState == TimerType.LONG_BREAK
-            ).then()
-
-            setSecondsLeft(newDurationS)
-        }
-
-        function updateTimeLeft() {
-            if (!endTime || pausedMsLeft) {
-                if (intervalRef.current) clearInterval(intervalRef.current)
-                return
-            }
-            const msLeft = endTime - Date.now()
-            if (msLeft <= 0) {
-                handleFinish()
-                return
-            }
-            const newSecondsLeft = Math.ceil(msLeft / 1000)
-            if (newSecondsLeft !== secondsLeft) {
-                setSecondsLeft(newSecondsLeft)
-            }
-        }
-        intervalRef.current = window.setInterval(updateTimeLeft, 150)
-
-        return () => {
-            if (intervalRef.current) clearInterval(intervalRef.current)
-        }
-    }, [endTime, pausedMsLeft, timerType, pomodoroCount])
-
-    const isRunning = endTime !== null
-    const isPaused = pausedMsLeft !== null
-
-    const minutes = Math.floor(secondsLeft / 60)
-    const seconds = secondsLeft % 60
+    const timer = useTimer({ showNotification })
+    const minutes = Math.floor(timer.secondsLeft / 60)
+    const seconds = timer.secondsLeft % 60
     const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds
         .toString()
         .padStart(2, '0')}`
@@ -152,28 +54,28 @@ function TimerSection() {
                     className="flex w-full justify-between"
                 >
                     <TimerStateButton
-                        active={timerType == TimerType.WORK}
+                        active={timer.timerType == TimerType.WORK}
                         onClick={() => {
-                            reset(TimerType.WORK)
-                            setTimerType(TimerType.WORK)
+                            timer.reset(TimerType.WORK)
+                            timer.setTimerType(TimerType.WORK)
                         }}
                     >
                         pomodoro
                     </TimerStateButton>
                     <TimerStateButton
-                        active={timerType == TimerType.SHORT_BREAK}
+                        active={timer.timerType == TimerType.SHORT_BREAK}
                         onClick={() => {
-                            reset(TimerType.SHORT_BREAK)
-                            setTimerType(TimerType.SHORT_BREAK)
+                            timer.reset(TimerType.SHORT_BREAK)
+                            timer.setTimerType(TimerType.SHORT_BREAK)
                         }}
                     >
                         short break
                     </TimerStateButton>
                     <TimerStateButton
-                        active={timerType == TimerType.LONG_BREAK}
+                        active={timer.timerType == TimerType.LONG_BREAK}
                         onClick={() => {
-                            reset(TimerType.LONG_BREAK)
-                            setTimerType(TimerType.LONG_BREAK)
+                            timer.reset(TimerType.LONG_BREAK)
+                            timer.setTimerType(TimerType.LONG_BREAK)
                         }}
                     >
                         long break
@@ -183,18 +85,18 @@ function TimerSection() {
                     {formattedTime}
                 </p>
                 <TimerControlButton
-                    running={isRunning}
-                    paused={isPaused}
-                    secondsLeft={secondsLeft}
+                    running={timer.isRunning}
+                    paused={timer.isPaused}
+                    secondsLeft={timer.secondsLeft}
                     onClick={() => {
-                        if (isRunning && isPaused) {
-                            resume()
+                        if (timer.isRunning && timer.isPaused) {
+                            timer.resume()
                         }
-                        if (isRunning && !isPaused) {
-                            pause()
+                        if (timer.isRunning && !timer.isPaused) {
+                            timer.pause()
                         }
-                        if (!isRunning) {
-                            start()
+                        if (!timer.isRunning) {
+                            timer.start()
                         }
                     }}
                 />
