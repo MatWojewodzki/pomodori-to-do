@@ -1,37 +1,23 @@
-import PomodoroStateButton from './PomodoroStateButton.tsx'
 import { useEffect, useRef, useState } from 'react'
-import TimerControlButton from './TimerControlButton.tsx'
 import {
     isPermissionGranted,
     requestPermission,
     sendNotification,
 } from '@tauri-apps/plugin-notification'
+import useTimerType, { TimerType } from '../../../hooks/useTimerType.ts'
+import TimerStateButton from './PomodoroStateButton.tsx'
+import TimerControlButton from './TimerControlButton.tsx'
 
 const POMODORI_TO_LONG_BREAK = 4
 
-const WORK_DURATION_S = 25 * 60
-const SHORT_BREAK_DURATION_S = 5 * 60
-const LONG_BREAK_DURATION_S = 15 * 60
+const WORK_DURATION_S = 25
+const SHORT_BREAK_DURATION_S = 5
+const LONG_BREAK_DURATION_S = 15
 
-enum PomodoroState {
-    WORK,
-    SHORT_BREAK,
-    LONG_BREAK,
-}
-
-function getNextState(prevState: PomodoroState, prevPomodoroCount: number) {
-    return prevState == PomodoroState.SHORT_BREAK ||
-        prevState == PomodoroState.LONG_BREAK
-        ? PomodoroState.WORK
-        : prevPomodoroCount % POMODORI_TO_LONG_BREAK == 0
-          ? PomodoroState.LONG_BREAK
-          : PomodoroState.SHORT_BREAK
-}
-
-function getDurationS(state: PomodoroState) {
-    return state == PomodoroState.WORK
+function getDurationS(state: TimerType) {
+    return state == TimerType.WORK
         ? WORK_DURATION_S
-        : state == PomodoroState.SHORT_BREAK
+        : state == TimerType.SHORT_BREAK
           ? SHORT_BREAK_DURATION_S
           : LONG_BREAK_DURATION_S
 }
@@ -43,7 +29,7 @@ function getOrdinal(n: number) {
 }
 
 async function showNotification(
-    finishedState: PomodoroState,
+    finishedState: TimerType,
     pomodoroCount: number,
     isLongBreakNext: boolean
 ) {
@@ -55,22 +41,23 @@ async function showNotification(
         }
     }
     const title =
-        finishedState == PomodoroState.WORK
+        finishedState == TimerType.WORK
             ? 'Good job!'
             : 'Time to get back to work!'
     const body =
-        finishedState == PomodoroState.WORK
+        finishedState == TimerType.WORK
             ? `You've just finished your ${getOrdinal(pomodoroCount)} pomodoro! ${isLongBreakNext ? 'You may take a longer break.' : 'Take a short break.'}`
             : ''
     sendNotification({ title, body })
 }
 
 function TimerSection() {
-    const [pomodoroState, setPomodoroState] = useState<PomodoroState>(
-        PomodoroState.WORK
+    const { timerType, setTimerType, setTimerTypeToNext } = useTimerType(
+        TimerType.WORK,
+        POMODORI_TO_LONG_BREAK
     )
     const [pomodoroCount, setPomodoroCount] = useState(1)
-    const duration_s = getDurationS(pomodoroState)
+    const duration_s = getDurationS(timerType)
 
     const [endTime, setEndTime] = useState<number | null>(null)
     const [secondsLeft, setSecondsLeft] = useState(duration_s)
@@ -93,7 +80,7 @@ function TimerSection() {
         setPausedMsLeft(null)
     }
 
-    function reset(newState: PomodoroState) {
+    function reset(newState: TimerType) {
         setEndTime(null)
         setPausedMsLeft(null)
         setSecondsLeft(getDurationS(newState))
@@ -109,20 +96,20 @@ function TimerSection() {
             setEndTime(null)
             if (intervalRef.current) clearInterval(intervalRef.current)
 
-            const newState = getNextState(pomodoroState, pomodoroCount)
+            if (timerType == TimerType.WORK) {
+                setPomodoroCount(pomodoroCount + 1)
+            }
+
+            const newState = setTimerTypeToNext(pomodoroCount)
             const newDurationS = getDurationS(newState)
 
             showNotification(
-                pomodoroState,
+                timerType,
                 pomodoroCount,
-                newState == PomodoroState.LONG_BREAK
+                newState == TimerType.LONG_BREAK
             ).then()
 
             setSecondsLeft(newDurationS)
-            if (pomodoroState == PomodoroState.WORK) {
-                setPomodoroCount(pomodoroCount + 1)
-            }
-            setPomodoroState(newState)
         }
 
         function updateTimeLeft() {
@@ -145,7 +132,7 @@ function TimerSection() {
         return () => {
             if (intervalRef.current) clearInterval(intervalRef.current)
         }
-    }, [endTime, pausedMsLeft, pomodoroState, pomodoroCount])
+    }, [endTime, pausedMsLeft, timerType, pomodoroCount])
 
     const isRunning = endTime !== null
     const isPaused = pausedMsLeft !== null
@@ -164,33 +151,33 @@ function TimerSection() {
                     aria-label="Pomodoro timer state"
                     className="flex w-full justify-between"
                 >
-                    <PomodoroStateButton
-                        active={pomodoroState == PomodoroState.WORK}
+                    <TimerStateButton
+                        active={timerType == TimerType.WORK}
                         onClick={() => {
-                            reset(PomodoroState.WORK)
-                            setPomodoroState(PomodoroState.WORK)
+                            reset(TimerType.WORK)
+                            setTimerType(TimerType.WORK)
                         }}
                     >
                         pomodoro
-                    </PomodoroStateButton>
-                    <PomodoroStateButton
-                        active={pomodoroState == PomodoroState.SHORT_BREAK}
+                    </TimerStateButton>
+                    <TimerStateButton
+                        active={timerType == TimerType.SHORT_BREAK}
                         onClick={() => {
-                            reset(PomodoroState.SHORT_BREAK)
-                            setPomodoroState(PomodoroState.SHORT_BREAK)
+                            reset(TimerType.SHORT_BREAK)
+                            setTimerType(TimerType.SHORT_BREAK)
                         }}
                     >
                         short break
-                    </PomodoroStateButton>
-                    <PomodoroStateButton
-                        active={pomodoroState == PomodoroState.LONG_BREAK}
+                    </TimerStateButton>
+                    <TimerStateButton
+                        active={timerType == TimerType.LONG_BREAK}
                         onClick={() => {
-                            reset(PomodoroState.LONG_BREAK)
-                            setPomodoroState(PomodoroState.LONG_BREAK)
+                            reset(TimerType.LONG_BREAK)
+                            setTimerType(TimerType.LONG_BREAK)
                         }}
                     >
                         long break
-                    </PomodoroStateButton>
+                    </TimerStateButton>
                 </div>
                 <p className="text-9xl font-bold text-center">
                     {formattedTime}
