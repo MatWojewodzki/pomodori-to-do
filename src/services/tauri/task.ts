@@ -20,6 +20,10 @@ const taskService = {
     async deleteTask(args: { id: string }): Promise<void> {
         return await tauriInvoke('delete_task', args)
     },
+
+    async incrementPomodoroCompleted(args: { id: string }): Promise<void> {
+        return await tauriInvoke('increment_pomodoro_completed', args)
+    },
 }
 
 export default taskService

@@ -40,4 +40,11 @@ impl TaskService {
     pub async fn delete_task(&self, id: String) -> Result<(), ServiceError> {
         Ok(self.task_repository.delete_task(id).await?)
     }
+
+    pub async fn increment_pomodoro_completed(&self, id: String) -> Result<(), ServiceError> {
+        Ok(self
+            .task_repository
+            .increment_pomodoro_completed(id)
+            .await?)
+    }
 }

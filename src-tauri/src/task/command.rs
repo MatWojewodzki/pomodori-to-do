@@ -40,3 +40,12 @@ pub async fn delete_task(service: State<'_, TaskService>, id: String) -> Result<
     service.delete_task(id).await?;
     Ok(())
 }
+
+#[tauri::command]
+pub async fn increment_pomodoro_completed(
+    service: State<'_, TaskService>,
+    id: String,
+) -> Result<(), AppError> {
+    service.increment_pomodoro_completed(id).await?;
+    Ok(())
+}

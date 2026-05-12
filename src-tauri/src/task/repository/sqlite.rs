@@ -85,4 +85,11 @@ impl TaskRepository for TaskRepositorySqlite {
         query.execute(&self.pools.writer).await?;
         Ok(())
     }
+
+    async fn increment_pomodoro_completed(&self, id: String) -> Result<(), RepositoryError> {
+        let q = "UPDATE task SET pomodoro_completed = pomodoro_completed + 1 WHERE id = ?";
+        let query = sqlx::query(q).bind(id);
+        query.execute(&self.pools.writer).await?;
+        Ok(())
+    }
 }
