@@ -23,7 +23,7 @@ function TaskForm(props: TaskFormProps) {
     return (
         <form
             className={classNames(
-                'flex-1 mt-3 p-4 flex flex-col rounded-md bg-neutral-600',
+                'flex-1 p-4 flex flex-col rounded-md bg-neutral-600',
                 { 'outline-2 outline-neutral-400': props.isActive }
             )}
             onSubmit={(e) => {

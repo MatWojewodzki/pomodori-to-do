@@ -14,7 +14,7 @@ function TaskList() {
         <ul
             role="radiogroup"
             aria-label="tasks"
-            className="flex flex-col gap-3"
+            className="flex flex-col gap-3 mb-3"
         >
             {result.data.map((task) => (
                 <TaskListItem

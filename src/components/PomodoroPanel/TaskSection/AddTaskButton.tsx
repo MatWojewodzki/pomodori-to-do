@@ -9,7 +9,7 @@ function AddTaskButton(props: AddTaskButtonProps) {
         <button
             aria-expanded="false"
             className={classNames(
-                'mt-3 p-4 flex-1 rounded-md border-2 border-neutral-700 cursor-pointer',
+                'p-4 flex-1 rounded-md border-2 border-neutral-700 cursor-pointer',
                 'hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700'
             )}
             onClick={props.onClick}
