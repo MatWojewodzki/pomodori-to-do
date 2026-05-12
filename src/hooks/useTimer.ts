@@ -1,5 +1,6 @@
 import useTimerType, { TimerType } from './useTimerType.ts'
 import { useEffect, useRef, useState } from 'react'
+import { showTimerNotification } from '../services/notifications.ts'
 
 const POMODORI_TO_LONG_BREAK = 4
 
@@ -15,15 +16,7 @@ function getDurationS(state: TimerType) {
           : LONG_BREAK_DURATION_S
 }
 
-export type UseTimerParams = {
-    showNotification: (
-        finishedState: TimerType,
-        pomodoroCount: number,
-        isLongBreakNext: boolean
-    ) => Promise<void>
-}
-
-export default function useTimer(params: UseTimerParams) {
+export default function useTimer() {
     const { timerType, setTimerType, setTimerTypeToNext } = useTimerType(
         TimerType.WORK,
         POMODORI_TO_LONG_BREAK
@@ -75,13 +68,11 @@ export default function useTimer(params: UseTimerParams) {
             const newState = setTimerTypeToNext(pomodoroCount)
             const newDurationS = getDurationS(newState)
 
-            params
-                .showNotification(
-                    timerType,
-                    pomodoroCount,
-                    newState == TimerType.LONG_BREAK
-                )
-                .then()
+            showTimerNotification(
+                timerType,
+                pomodoroCount,
+                newState == TimerType.LONG_BREAK
+            ).then()
 
             setSecondsLeft(newDurationS)
         }
