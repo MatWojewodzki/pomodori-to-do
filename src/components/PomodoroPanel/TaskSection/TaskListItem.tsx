@@ -5,6 +5,8 @@ import TaskEditForm from './TaskEditForm.tsx'
 
 type TaskListItemProps = {
     task: TaskDto
+    isActive: boolean
+    setAsActive: () => void
 }
 
 function TaskListItem(props: TaskListItemProps) {
@@ -20,6 +22,8 @@ function TaskListItem(props: TaskListItemProps) {
                 <TaskDisplay
                     task={props.task}
                     openEditForm={() => setIsEditing(true)}
+                    isActive={props.isActive}
+                    setAsActive={props.setAsActive}
                 />
             )}
         </li>

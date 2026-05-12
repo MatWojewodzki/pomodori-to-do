@@ -10,6 +10,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 type TaskDisplayProps = {
     task: TaskDto
     openEditForm: () => void
+    isActive: boolean
+    setAsActive: () => void
 }
 
 function TaskDisplay(props: TaskDisplayProps) {
@@ -38,12 +40,14 @@ function TaskDisplay(props: TaskDisplayProps) {
                 name="active-task"
                 id={inputId}
                 className="sr-only peer"
+                checked={props.isActive}
+                onChange={() => props.setAsActive()}
             />
             <label
                 htmlFor={inputId}
                 className={classNames(
                     'ps-4 pe-14 py-4 flex justify-between gap-2 rounded-md cursor-pointer',
-                    'peer-checked:outline-2 not-peer-checked:peer-focus-visible:outline-1', // peer-focus-visible could be deleted if it was guaranteed that a radio button would always be selected
+                    'peer-checked:outline-2 not-peer-checked:peer-focus-visible:outline-1',
                     'not-peer-checked:hover:outline-1 outline-neutral-400'
                 )}
             >
