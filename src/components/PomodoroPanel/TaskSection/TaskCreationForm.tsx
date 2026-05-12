@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import taskApi from '../../../api/task.ts'
+import taskService from '../../../services/tauri/task.ts'
 import TaskForm from './TaskForm.tsx'
 
 type TaskCreationFormProps = {
@@ -13,7 +13,7 @@ function TaskCreationForm(props: TaskCreationFormProps) {
 
     const queryClient = useQueryClient()
     const mutation = useMutation({
-        mutationFn: taskApi.createTask,
+        mutationFn: taskService.createTask,
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: ['tasks'] })
             setTaskDescription('')

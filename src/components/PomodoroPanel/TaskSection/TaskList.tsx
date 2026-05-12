@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import taskApi from '../../../api/task.ts'
+import taskService from '../../../services/tauri/task.ts'
 import TaskListItem from './TaskListItem.tsx'
 import { useState } from 'react'
 
@@ -7,7 +7,7 @@ function TaskList() {
     const [activeTask, setActiveTask] = useState<string | null>(null)
     const result = useQuery({
         queryKey: ['tasks'],
-        queryFn: taskApi.getTasks,
+        queryFn: taskService.getTasks,
     })
     if (!result.isSuccess || result.data.length == 0) return
     return (

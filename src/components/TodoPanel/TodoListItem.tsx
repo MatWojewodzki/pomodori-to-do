@@ -3,7 +3,7 @@ import { TodoDto } from '../../types/generated/TodoDto.ts'
 import CheckBox from '../../assets/icons/check_box_22dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
 import CheckBoxOutlineBlank from '../../assets/icons/check_box_outline_blank_22dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
 import DeleteIcon from '../../assets/icons/delete_22dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
-import todoApi from '../../api/todo.ts'
+import todoService from '../../services/tauri/todo.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export type TodoListItemProps = {
@@ -16,14 +16,14 @@ function TodoListItem(props: TodoListItemProps) {
     const queryClient = useQueryClient()
 
     const setCompletedMutation = useMutation({
-        mutationFn: todoApi.setCompleted,
+        mutationFn: todoService.setCompleted,
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: ['todos'] })
         },
     })
 
     const deleteMutation = useMutation({
-        mutationFn: todoApi.deleteTodo,
+        mutationFn: todoService.deleteTodo,
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: ['todos'] })
         },

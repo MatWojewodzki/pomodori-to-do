@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import taskApi from '../../../api/task.ts'
+import taskService from '../../../services/tauri/task.ts'
 import TaskForm from './TaskForm.tsx'
 import { TaskDto } from '../../../types/generated/TaskDto.ts'
 
@@ -19,7 +19,7 @@ function TaskEditForm(props: TaskEditFormProps) {
 
     const queryClient = useQueryClient()
     const mutation = useMutation({
-        mutationFn: taskApi.updateTask,
+        mutationFn: taskService.updateTask,
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: ['tasks'] })
             props.closeForm()

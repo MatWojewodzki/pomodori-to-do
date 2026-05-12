@@ -3,7 +3,7 @@ import AddIcon from '../../assets/icons/add_24dp_000000_FILL0_wght400_GRAD0_opsz
 import Tooltip from '../Tooltip.tsx'
 import classNames from 'classnames'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import todoApi from '../../api/todo.ts'
+import todoService from '../../services/tauri/todo.ts'
 
 function TodoCreationForm() {
     const [text, setText] = useState('')
@@ -11,7 +11,7 @@ function TodoCreationForm() {
     const queryClient = useQueryClient()
 
     const mutation = useMutation({
-        mutationFn: todoApi.createTodo,
+        mutationFn: todoService.createTodo,
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: ['todos'] })
             setText('')

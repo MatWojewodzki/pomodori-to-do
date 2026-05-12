@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import { DropdownMenu, Tooltip } from 'radix-ui'
 import EditIcon from '../../../assets/icons/edit_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
 import DeleteIcon from '../../../assets/icons/delete_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
-import taskApi from '../../../api/task.ts'
+import taskService from '../../../services/tauri/task.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 type TaskDisplayProps = {
@@ -22,7 +22,7 @@ function TaskDisplay(props: TaskDisplayProps) {
 
     const queryClient = useQueryClient()
     const deleteMutation = useMutation({
-        mutationFn: taskApi.deleteTask,
+        mutationFn: taskService.deleteTask,
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: ['tasks'] })
         },

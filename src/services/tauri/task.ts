@@ -1,7 +1,7 @@
 import { tauriInvoke } from './core.ts'
-import { TaskDto } from '../types/generated/TaskDto.ts'
+import { TaskDto } from '../../types/generated/TaskDto.ts'
 
-const taskApi = {
+const taskService = {
     async getTasks(): Promise<TaskDto[]> {
         return await tauriInvoke('get_tasks')
     },
@@ -22,4 +22,4 @@ const taskApi = {
     },
 }
 
-export default taskApi
+export default taskService

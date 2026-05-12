@@ -1,6 +1,6 @@
 import useTimerType, { TimerType } from './useTimerType.ts'
 import { useEffect, useRef, useState } from 'react'
-import { showTimerNotification } from '../services/notifications.ts'
+import { showTimerNotification } from '../services/notification.ts'
 
 const POMODORI_TO_LONG_BREAK = 4
 
