@@ -17,6 +17,7 @@ function TaskListItem(props: TaskListItemProps) {
                 <TaskEditForm
                     task={props.task}
                     closeForm={() => setIsEditing(false)}
+                    isActive={props.isActive}
                 />
             ) : (
                 <TaskDisplay

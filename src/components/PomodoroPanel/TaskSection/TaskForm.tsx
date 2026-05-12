@@ -9,6 +9,7 @@ type TaskFormProps = {
     totalPomodoriCount: number
     setTotalPomodoriCount: (value: number) => void
     submitButtonText: string
+    isActive?: boolean
 }
 
 function TaskForm(props: TaskFormProps) {
@@ -21,7 +22,10 @@ function TaskForm(props: TaskFormProps) {
 
     return (
         <form
-            className="flex-1 mt-3 p-4 flex flex-col rounded-md bg-neutral-600"
+            className={classNames(
+                'flex-1 mt-3 p-4 flex flex-col rounded-md bg-neutral-600',
+                { 'outline-2 outline-neutral-400': props.isActive }
+            )}
             onSubmit={(e) => {
                 e.preventDefault()
                 props.handleSubmit()

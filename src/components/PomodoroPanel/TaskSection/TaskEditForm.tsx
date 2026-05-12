@@ -7,6 +7,7 @@ import { TaskDto } from '../../../types/generated/TaskDto.ts'
 type TaskEditFormProps = {
     task: TaskDto
     closeForm: () => void
+    isActive: boolean
 }
 
 function TaskEditForm(props: TaskEditFormProps) {
@@ -44,6 +45,7 @@ function TaskEditForm(props: TaskEditFormProps) {
             handleSubmit={handleSubmit}
             handleCancel={props.closeForm}
             submitButtonText={'Save'}
+            isActive={props.isActive}
         />
     )
 }
