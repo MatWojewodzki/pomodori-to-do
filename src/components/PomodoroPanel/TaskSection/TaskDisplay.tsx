@@ -12,12 +12,11 @@ type TaskDisplayProps = {
     openEditForm: () => void
     isActive: boolean
     setAsActive: () => void
+    preciseProgress: number
 }
 
 function TaskDisplay(props: TaskDisplayProps) {
     const { task } = props
-    const preciseProgress =
-        (task.pomodoro_completed / task.pomodoro_total) * 100
     const inputId = `task-${task.id}`
 
     const queryClient = useQueryClient()
@@ -32,7 +31,7 @@ function TaskDisplay(props: TaskDisplayProps) {
         <div
             className="group relative rounded-md"
             style={{
-                background: `linear-gradient(to right, var(--color-neutral-600) ${preciseProgress}%, var(--color-neutral-700) ${preciseProgress}%)`,
+                background: `linear-gradient(to right, var(--color-neutral-600) ${props.preciseProgress}%, var(--color-neutral-700) ${props.preciseProgress}%)`,
             }}
         >
             <input

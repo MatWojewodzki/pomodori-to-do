@@ -1,10 +1,14 @@
 import { TimerType } from '../../../hooks/useTimerType.ts'
 import TimerStateButton from './PomodoroStateButton.tsx'
 import TimerControlButton from './TimerControlButton.tsx'
-import useTimer from '../../../hooks/useTimer.ts'
+import { Timer } from '../../../hooks/useTimer.ts'
 
-function TimerSection() {
-    const timer = useTimer()
+export type TimerSectionProps = {
+    timer: Timer
+}
+
+function TimerSection(props: TimerSectionProps) {
+    const { timer } = props
     const minutes = Math.floor(timer.secondsLeft / 60)
     const seconds = timer.secondsLeft % 60
     const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds

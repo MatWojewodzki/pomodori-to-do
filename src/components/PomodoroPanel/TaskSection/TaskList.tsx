@@ -2,8 +2,13 @@ import { useQuery } from '@tanstack/react-query'
 import taskService from '../../../services/tauri/task.ts'
 import TaskListItem from './TaskListItem.tsx'
 import { useState } from 'react'
+import { Timer } from '../../../hooks/useTimer.ts'
 
-function TaskList() {
+export type TaskListProps = {
+    timer: Timer
+}
+
+function TaskList(props: TaskListProps) {
     const [activeTask, setActiveTask] = useState<string | null>(null)
     const result = useQuery({
         queryKey: ['tasks'],
@@ -22,6 +27,7 @@ function TaskList() {
                     task={task}
                     isActive={task.id === activeTask}
                     setAsActive={() => setActiveTask(task.id)}
+                    timer={props.timer}
                 />
             ))}
         </ul>

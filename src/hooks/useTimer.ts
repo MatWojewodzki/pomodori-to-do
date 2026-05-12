@@ -102,10 +102,13 @@ export default function useTimer() {
     const isRunning = endTime !== null
     const isPaused = pausedMsLeft !== null
 
+    const percentageCompleted = (1 - secondsLeft / duration_s) * 100
+
     return {
         secondsLeft,
         isRunning,
         isPaused,
+        percentageCompleted,
         timerType,
         setTimerType,
         start,
@@ -114,3 +117,5 @@ export default function useTimer() {
         reset,
     }
 }
+
+export type Timer = ReturnType<typeof useTimer>

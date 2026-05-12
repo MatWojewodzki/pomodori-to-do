@@ -3,12 +3,14 @@ import Panel from '../Panel/Panel.tsx'
 import classNames from 'classnames'
 import TimerSection from './TimerSection/TimerSection.tsx'
 import TaskSection from './TaskSection/TaskSection.tsx'
+import useTimer from '../../hooks/useTimer.ts'
 
 type PomodoroPanelProps = {
     isTodoPanelOpen: boolean
 }
 
 function PomodoroPanel(props: PomodoroPanelProps) {
+    const timer = useTimer()
     return (
         <Panel
             className={classNames('min-w-0 flex-1', {
@@ -16,8 +18,8 @@ function PomodoroPanel(props: PomodoroPanelProps) {
             })}
         >
             <PanelHeader>Pomodoro Timer</PanelHeader>
-            <TimerSection />
-            <TaskSection />
+            <TimerSection timer={timer} />
+            <TaskSection timer={timer} />
         </Panel>
     )
 }

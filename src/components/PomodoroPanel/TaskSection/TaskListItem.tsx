@@ -2,15 +2,28 @@ import { TaskDto } from '../../../types/generated/TaskDto.ts'
 import { useState } from 'react'
 import TaskDisplay from './TaskDisplay.tsx'
 import TaskEditForm from './TaskEditForm.tsx'
+import { TimerType } from '../../../hooks/useTimerType.ts'
+import { Timer } from '../../../hooks/useTimer.ts'
 
 type TaskListItemProps = {
     task: TaskDto
     isActive: boolean
     setAsActive: () => void
+    timer: Timer
 }
 
 function TaskListItem(props: TaskListItemProps) {
+    const { timer } = props
     const [isEditing, setIsEditing] = useState(false)
+
+    const standardProgress =
+        (props.task.pomodoro_completed / props.task.pomodoro_total) * 100
+    const timerProgress =
+        standardProgress + timer.percentageCompleted / props.task.pomodoro_total
+    const preciseProgress =
+        props.isActive && timer.isRunning && timer.timerType == TimerType.WORK
+            ? timerProgress
+            : standardProgress
     return (
         <li>
             {isEditing ? (
@@ -25,6 +38,7 @@ function TaskListItem(props: TaskListItemProps) {
                     openEditForm={() => setIsEditing(true)}
                     isActive={props.isActive}
                     setAsActive={props.setAsActive}
+                    preciseProgress={preciseProgress}
                 />
             )}
         </li>
