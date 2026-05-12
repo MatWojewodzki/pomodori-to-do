@@ -16,7 +16,11 @@ function getDurationS(state: TimerType) {
           : LONG_BREAK_DURATION_S
 }
 
-export default function useTimer() {
+export type UseTimerOptions = {
+    workFinishCallback?: () => void
+}
+
+export default function useTimer(options?: UseTimerOptions) {
     const { timerType, setTimerType, setTimerTypeToNext } = useTimerType(
         TimerType.WORK,
         POMODORI_TO_LONG_BREAK
@@ -67,6 +71,7 @@ export default function useTimer() {
 
             const newState = setTimerTypeToNext(pomodoroCount)
             const newDurationS = getDurationS(newState)
+            setSecondsLeft(newDurationS)
 
             showTimerNotification(
                 timerType,
@@ -74,7 +79,7 @@ export default function useTimer() {
                 newState == TimerType.LONG_BREAK
             ).then()
 
-            setSecondsLeft(newDurationS)
+            options?.workFinishCallback?.()
         }
 
         function updateTimeLeft() {
