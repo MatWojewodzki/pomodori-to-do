@@ -66,7 +66,7 @@ export default function useTimer(options?: UseTimerOptions) {
             if (intervalRef.current) clearInterval(intervalRef.current)
 
             if (timerType == TimerType.WORK) {
-                setPomodoroCount(pomodoroCount + 1)
+                setPomodoroCount((val) => val + 1)
             }
 
             const newState = setTimerTypeToNext(pomodoroCount)
@@ -102,7 +102,15 @@ export default function useTimer(options?: UseTimerOptions) {
         return () => {
             if (intervalRef.current) clearInterval(intervalRef.current)
         }
-    }, [endTime, pausedMsLeft, timerType, pomodoroCount])
+    }, [
+        endTime,
+        pausedMsLeft,
+        timerType,
+        pomodoroCount,
+        secondsLeft,
+        options?.workFinishCallback,
+        setTimerTypeToNext,
+    ])
 
     const isRunning = endTime !== null
     const isPaused = pausedMsLeft !== null

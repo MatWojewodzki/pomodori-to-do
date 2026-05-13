@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 export enum TimerType {
     WORK,
@@ -25,15 +25,18 @@ export default function useTimerType(
 ) {
     const [timerType, setTimerType] = useState<TimerType>(initialValue)
 
-    function setTimerTypeToNext(completedPomodoroCount: number) {
-        const nextState = getNextState(
-            pomodoriToLongBreak,
-            timerType,
-            completedPomodoroCount
-        )
-        setTimerType(nextState)
-        return nextState
-    }
+    const setTimerTypeToNext = useCallback(
+        (completedPomodoroCount: number) => {
+            const nextState = getNextState(
+                pomodoriToLongBreak,
+                timerType,
+                completedPomodoroCount
+            )
+            setTimerType(nextState)
+            return nextState
+        },
+        [pomodoriToLongBreak, timerType]
+    )
 
     return {
         timerType,
