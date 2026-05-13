@@ -6,7 +6,7 @@ import TaskSection from './TaskSection/TaskSection.tsx'
 import useTimer from '../../hooks/useTimer.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import taskService from '../../services/tauri/task.ts'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 type PomodoroPanelProps = {
     isTodoPanelOpen: boolean
@@ -23,12 +23,14 @@ function PomodoroPanel(props: PomodoroPanelProps) {
         },
     })
 
+    const handleWorkFinish = useCallback(() => {
+        if (activeTask) {
+            mutation.mutate({ id: activeTask })
+        }
+    }, [activeTask, mutation])
+
     const timer = useTimer({
-        workFinishCallback: () => {
-            if (activeTask) {
-                mutation.mutate({ id: activeTask })
-            }
-        },
+        workFinishCallback: handleWorkFinish,
     })
     return (
         <Panel
