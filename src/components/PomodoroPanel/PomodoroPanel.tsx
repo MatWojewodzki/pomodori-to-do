@@ -1,13 +1,35 @@
 import PanelHeader from '../Panel/PanelHeader.tsx'
 import Panel from '../Panel/Panel.tsx'
 import classNames from 'classnames'
-import Timer from './Timer.tsx'
+import TimerSection from './TimerSection/TimerSection.tsx'
+import TaskSection from './TaskSection/TaskSection.tsx'
+import useTimer from '../../hooks/useTimer.ts'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import taskService from '../../services/tauri/task.ts'
+import { useState } from 'react'
 
 type PomodoroPanelProps = {
     isTodoPanelOpen: boolean
 }
 
 function PomodoroPanel(props: PomodoroPanelProps) {
+    const [activeTask, setActiveTask] = useState<string | null>(null)
+
+    const queryClient = useQueryClient()
+    const mutation = useMutation({
+        mutationFn: taskService.incrementPomodoroCompleted,
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({ queryKey: ['tasks'] })
+        },
+    })
+
+    const timer = useTimer({
+        workFinishCallback: () => {
+            if (activeTask) {
+                mutation.mutate({ id: activeTask })
+            }
+        },
+    })
     return (
         <Panel
             className={classNames('min-w-0 flex-1', {
@@ -15,7 +37,12 @@ function PomodoroPanel(props: PomodoroPanelProps) {
             })}
         >
             <PanelHeader>Pomodoro Timer</PanelHeader>
-            <Timer />
+            <TimerSection timer={timer} />
+            <TaskSection
+                activeTask={activeTask}
+                setActiveTask={setActiveTask}
+                timer={timer}
+            />
         </Panel>
     )
 }

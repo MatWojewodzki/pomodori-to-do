@@ -1,8 +1,8 @@
 import { tauriInvoke } from './core.ts'
-import type { TodoDto } from '../types/generated/TodoDto.ts'
-import type { CreateTodoDto } from '../types/generated/CreateTodoDto.ts'
+import type { TodoDto } from '../../types/generated/TodoDto.ts'
+import type { CreateTodoDto } from '../../types/generated/CreateTodoDto.ts'
 
-const todoApi = {
+const todoService = {
     async getTodos(): Promise<TodoDto[]> {
         return await tauriInvoke('get_todos')
     },
@@ -23,4 +23,4 @@ const todoApi = {
     },
 }
 
-export default todoApi
+export default todoService

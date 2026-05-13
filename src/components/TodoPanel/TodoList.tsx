@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
-import todoApi from '../../api/todo.ts'
+import todoService from '../../services/tauri/todo.ts'
 import TodoListItem from './TodoListItem.tsx'
 
 function TodoList() {
     const result = useQuery({
         queryKey: ['todos'],
-        queryFn: todoApi.getTodos,
+        queryFn: todoService.getTodos,
     })
     if (!result.isSuccess) return
     if (result.data.length > 0) {
