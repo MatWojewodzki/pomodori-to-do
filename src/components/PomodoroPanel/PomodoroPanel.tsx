@@ -6,14 +6,18 @@ import TaskSection from './TaskSection/TaskSection.tsx'
 import useTimer from '../../hooks/useTimer.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import taskService from '../../services/tauri/task.ts'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
+import useSessionStorage from '../../hooks/useSessionStorage.ts'
 
 type PomodoroPanelProps = {
     isTodoPanelOpen: boolean
 }
 
 function PomodoroPanel(props: PomodoroPanelProps) {
-    const [activeTask, setActiveTask] = useState<string | null>(null)
+    const [activeTask, setActiveTask] = useSessionStorage<string | null>(
+        'activeTask',
+        null
+    )
 
     const queryClient = useQueryClient()
     const mutation = useMutation({
