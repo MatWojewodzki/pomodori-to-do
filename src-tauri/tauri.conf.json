@@ -23,7 +23,7 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["nsis"],
+    "targets": ["deb", "appimage", "nsis", "dmg"],
     "publisher": "Mateusz Wojewódzki",
     "licenseFile": "../LICENSE",
     "icon": [

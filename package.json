@@ -1,6 +1,6 @@
 {
     "name": "pomodori-to-do",
-    "description": "Windows app providing pomodoro timer with a todo list.",
+    "description": "Desktop app providing pomodoro timer with a todo list.",
     "author": "Mateusz Wojewódzki matwojewodzki@gmail.com",
     "license": "MIT",
     "repository": "https://github.com/MatWojewodzki/pomodori-to-do",

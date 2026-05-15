@@ -1,0 +1,124 @@
+# https://github.com/tauri-apps/tauri-action?tab=readme-ov-file#example
+# https://v2.tauri.app/distribute/pipelines/github/#example-workflow
+name: release
+permissions:
+    contents: read
+on:
+    push:
+        tags:
+            - 'v*.*.*'
+    workflow_dispatch:
+        inputs:
+            tag-name:
+                description: 'Release tag name'
+                required: true
+
+jobs:
+    resolve-tag:
+        runs-on: ubuntu-latest
+        outputs:
+            tag_name: ${{ steps.validate-tag.outputs.tag_name }}
+        steps:
+            - name: validate tag
+              id: validate-tag
+              shell: bash
+              env:
+                  TAG_NAME: ${{ github.event.inputs.tag-name || github.ref_name }}
+              run: |
+                  set -euo pipefail
+
+                  echo "Validating tag: $TAG_NAME"
+
+                  if [[ ! "$TAG_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                      echo "Invalid tag format. Expected 'vX.Y.Z'."
+                      exit 1
+                  fi
+
+                  echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
+
+    build:
+        needs: resolve-tag
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - name: mac-arm
+                      platform: 'macos-latest'
+                      rust_target: 'aarch64-apple-darwin'
+
+                    - name: mac-intel
+                      platform: 'macos-26-intel'
+                      rust_target: 'x86_64-apple-darwin'
+
+                    - name: linux
+                      platform: 'ubuntu-22.04' # If updated, change the value below accordingly.
+                      rust_target: 'x86_64-unknown-linux-gnu'
+
+                    - name: windows
+                      platform: 'windows-latest'
+                      rust_target: 'x86_64-pc-windows-msvc'
+        runs-on: ${{ matrix.platform }}
+        steps:
+            - name: checkout repository
+              uses: actions/checkout@v6
+              with:
+                  ref: ${{ needs.resolve-tag.outputs.tag_name }}
+
+            - name: install dependencies (ubuntu only)
+              if: matrix.platform == 'ubuntu-22.04' # This must match the platform value defined above.
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+
+            - name: install pnpm
+              uses: pnpm/action-setup@v6
+              with:
+                  version: 10
+
+            - name: setup node
+              uses: actions/setup-node@v6
+              with:
+                  node-version: lts/*
+                  cache: 'pnpm'
+
+            - name: install Rust stable
+              uses: dtolnay/rust-toolchain@stable
+              with:
+                  targets: ${{ matrix.rust_target }}
+
+            - name: install frontend dependencies
+              run: 'pnpm install --frozen-lockfile'
+
+            - name: build app
+              run: 'pnpm tauri build --ci --target ${{ matrix.rust_target }}'
+
+            - name: upload artifacts
+              uses: actions/upload-artifact@v7
+              with:
+                  name: bundle-${{ matrix.rust_target }}-${{ matrix.platform }}
+                  path: 'src-tauri/target/**/release/bundle/**/*'
+                  if-no-files-found: error
+
+    publish-github:
+        needs: [resolve-tag, build]
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        steps:
+            - name: download artifacts
+              uses: actions/download-artifact@v8
+              with:
+                  pattern: bundle-*
+                  path: target
+                  merge-multiple: true
+
+            - name: create github release
+              uses: softprops/action-gh-release@v3
+              with:
+                  tag_name: ${{ needs.resolve-tag.outputs.tag_name }}
+                  files: target/**/*
+                  draft: false
+                  prerelease: false
+                  generate_release_notes: true
+                  fail_on_unmatched_files: true
+                  make_latest: true
