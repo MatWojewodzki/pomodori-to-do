@@ -1,6 +1,8 @@
 # https://github.com/tauri-apps/tauri-action?tab=readme-ov-file#example
 # https://v2.tauri.app/distribute/pipelines/github/#example-workflow
 name: release
+permissions:
+    contents: read
 on:
     push:
         tags:
@@ -67,6 +69,8 @@ jobs:
     publish-github:
         needs: build
         runs-on: ubuntu-latest
+        permissions:
+            contents: write
         steps:
             - name: download artifacts
               uses: actions/download-artifact@v8
