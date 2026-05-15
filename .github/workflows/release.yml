@@ -63,7 +63,7 @@ jobs:
               uses: actions/upload-artifact@v7
               with:
                   name: bundle-${{ matrix.rust_target || 'default' }}-${{ matrix.platform }}
-                  path: 'src-tauri/target/release/bundle/**/*'
+                  path: 'src-tauri/target/**/release/bundle/**/*'
                   if-no-files-found: error
 
     publish-github:
@@ -76,13 +76,13 @@ jobs:
               uses: actions/download-artifact@v8
               with:
                   pattern: bundle-*
-                  path: bundle
+                  path: target
                   merge-multiple: true
 
             - name: create github release
               uses: softprops/action-gh-release@v2
               with:
-                  files: bundle/*
+                  files: target/**/*
                   draft: false
                   prerelease: false
                   generate_release_notes: true
