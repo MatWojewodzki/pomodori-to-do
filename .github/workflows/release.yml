@@ -19,9 +19,6 @@ jobs:
         outputs:
             tag_name: ${{ steps.validate-tag.outputs.tag_name }}
         steps:
-            - name: checkout repository
-              uses: actions/checkout@v6
-
             - name: validate tag
               id: validate-tag
               shell: bash
@@ -34,13 +31,6 @@ jobs:
 
                   if [[ ! "$TAG_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
                       echo "Invalid tag format. Expected 'vX.Y.Z'."
-                      exit 1
-                  fi
-
-                  git fetch --tags --force
-
-                  if ! git rev-parse -q --verify "refs/tags/$TAG_NAME" >/dev/null; then
-                      echo "Tag not found."
                       exit 1
                   fi
 
