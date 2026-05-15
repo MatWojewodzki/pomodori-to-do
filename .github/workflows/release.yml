@@ -53,16 +53,12 @@ jobs:
             matrix:
                 include:
                     - platform: 'macos-latest' # for Arm based macs (M1 and above).
-                      tauri_args: '--target aarch64-apple-darwin'
                       rust_target: 'aarch64-apple-darwin'
                     - platform: 'macos-latest' # for Intel based macs.
-                      tauri_args: '--target x86_64-apple-darwin'
                       rust_target: 'x86_64-apple-darwin'
                     - platform: 'ubuntu-22.04'
-                      tauri_args: ''
                       rust_target: ''
                     - platform: 'windows-latest'
-                      tauri_args: ''
                       rust_target: ''
         runs-on: ${{ matrix.platform }}
         steps:
@@ -97,7 +93,7 @@ jobs:
               run: 'pnpm install --frozen-lockfile'
 
             - name: build app
-              run: 'pnpm tauri build --ci ${{ matrix.tauri_args }}'
+              run: 'pnpm tauri build --ci --target ${{ matrix.rust_target }}'
 
             - name: upload artifacts
               uses: actions/upload-artifact@v7
