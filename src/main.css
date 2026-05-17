@@ -1,37 +1,37 @@
 @import 'tailwindcss';
 
 @font-face {
-    font-family: 'Nunito';
-    src: url('assets/fonts/Nunito-VariableFont_wght.ttf') format('truetype');
-    font-weight: 100 900;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'Nunito';
+  src: url('assets/fonts/Nunito-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
 }
 
 @theme {
-    --font-sans:
-        'Nunito', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
-        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-sans:
+    'Nunito', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
 *::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+  width: 4px;
+  height: 4px;
 }
 
 *::-webkit-scrollbar-track {
-    background: transparent;
+  background: transparent;
 }
 
 *::-webkit-scrollbar-thumb {
-    background: var(--color-neutral-600);
-    border-radius: 9999px;
+  background: var(--color-neutral-600);
+  border-radius: 9999px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-    background: var(--color-neutral-500);
+  background: var(--color-neutral-500);
 }
 
 *::-webkit-scrollbar-button {
-    display: none;
+  display: none;
 }

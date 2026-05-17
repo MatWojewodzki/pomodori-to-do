@@ -6,21 +6,21 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Tooltip } from 'radix-ui'
 
 const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            staleTime: Infinity,
-            retry: false,
-        },
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+      retry: false,
     },
+  },
 })
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    <React.StrictMode>
-        <Tooltip.Provider>
-            <QueryClientProvider client={queryClient}>
-                <App />
-                <ReactQueryDevtools initialIsOpen={false} />
-            </QueryClientProvider>
-        </Tooltip.Provider>
-    </React.StrictMode>
+  <React.StrictMode>
+    <Tooltip.Provider>
+      <QueryClientProvider client={queryClient}>
+        <App />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </Tooltip.Provider>
+  </React.StrictMode>
 )
