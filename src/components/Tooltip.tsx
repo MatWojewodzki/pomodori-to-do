@@ -1,38 +1,28 @@
+import { Tooltip as RadixTooltip } from 'radix-ui'
 import React from 'react'
-import classNames from 'classnames'
+import type { ComponentPropsWithoutRef } from 'react'
 
 export type TooltipProps = {
   text: string
-  children?: React.ReactNode
-  id?: string
-  position: 'bottom-right' | 'bottom-left'
-}
+  children: React.ReactNode
+} & Omit<ComponentPropsWithoutRef<typeof RadixTooltip.Content>, 'children'>
 
 function Tooltip(props: TooltipProps) {
+  const { text, children, ...contentProps } = props
   return (
-    <div className="relative group flex justify-center items-center">
-      {props.children}
-      <div
-        id={props.id}
-        className={classNames(
-          'absolute max-w-2xs px-2 py-1 w-max',
-          {
-            '-right-1 translate-x-full -bottom-1 translate-y-full':
-              props.position === 'bottom-right',
-          },
-          {
-            '-left-1 -translate-x-full -bottom-1 translate-y-full':
-              props.position === 'bottom-left',
-          },
-          'bg-neutral-700 text-white font-sans rounded-md text-xs pointer-events-none',
-          'opacity-0 invisible transition-opacity duration-150 ease-in-out',
-          'group-hover:opacity-100 group-hover:visible',
-          'group-focus-within:opacity-100 group-focus-within:visible'
-        )}
-      >
-        {props.text}
-      </div>
-    </div>
+    <RadixTooltip.Root>
+      <RadixTooltip.Trigger asChild>{children}</RadixTooltip.Trigger>
+      <RadixTooltip.Portal>
+        <RadixTooltip.Content
+          side="bottom"
+          sideOffset={8}
+          className="px-2 py-1 text-neutral-300 text-xs rounded-md bg-neutral-900"
+          {...contentProps}
+        >
+          {text}
+        </RadixTooltip.Content>
+      </RadixTooltip.Portal>
+    </RadixTooltip.Root>
   )
 }
 
