@@ -5,9 +5,9 @@ import useSessionStorage from './useSessionStorage.ts'
 
 const POMODORI_TO_LONG_BREAK = 4
 
-const WORK_DURATION_S = 25
-const SHORT_BREAK_DURATION_S = 5
-const LONG_BREAK_DURATION_S = 15
+const WORK_DURATION_S = 25 * 60
+const SHORT_BREAK_DURATION_S = 5 * 60
+const LONG_BREAK_DURATION_S = 15 * 60
 
 function getDurationS(state: TimerType) {
   return state == TimerType.WORK
