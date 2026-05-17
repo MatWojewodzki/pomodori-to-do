@@ -14,9 +14,11 @@ type TaskFormProps = {
 }
 
 function TaskForm(props: TaskFormProps) {
-  const taskDescriptionInputRef = useRef<HTMLInputElement>(null)
+  const formRef = useRef<HTMLFormElement | null>(null)
+  const taskDescriptionInputRef = useRef<HTMLInputElement | null>(null)
 
   useEffect(() => {
+    formRef.current?.scrollIntoView()
     taskDescriptionInputRef.current?.focus()
     taskDescriptionInputRef.current?.select()
   }, [])
@@ -31,6 +33,7 @@ function TaskForm(props: TaskFormProps) {
         e.preventDefault()
         props.handleSubmit()
       }}
+      ref={formRef}
     >
       <label
         htmlFor="task-description-input"
