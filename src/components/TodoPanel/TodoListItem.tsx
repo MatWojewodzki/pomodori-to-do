@@ -5,6 +5,7 @@ import CheckBoxOutlineBlank from '../../assets/icons/check_box_outline_blank_22d
 import DeleteIcon from '../../assets/icons/delete_22dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
 import todoService from '../../services/tauri/todo.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import Tooltip from '../Tooltip.tsx'
 
 export type TodoListItemProps = {
   todo: TodoDto
@@ -40,38 +41,44 @@ function TodoListItem(props: TodoListItemProps) {
         { 'line-through': todo.completed }
       )}
     >
-      <button
-        className={classNames(
-          'shrink-0 p-1 rounded-md cursor-pointer',
-          'hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700'
-        )}
-        onClick={() =>
-          setCompletedMutation.mutate({
-            id: todo.id,
-            completed: !todo.completed,
-          })
-        }
-        aria-label={checkBoxTooltip}
-      >
-        {todo.completed ? (
-          <CheckBox className="size-5.5" />
-        ) : (
-          <CheckBoxOutlineBlank className="size-5.5" />
-        )}
-      </button>
+      <Tooltip text={checkBoxTooltip}>
+        <button
+          role="checkbox"
+          className={classNames(
+            'shrink-0 p-1 rounded-md cursor-pointer',
+            'hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700'
+          )}
+          onClick={() =>
+            setCompletedMutation.mutate({
+              id: todo.id,
+              completed: !todo.completed,
+            })
+          }
+          aria-label={checkBoxTooltip}
+        >
+          {todo.completed ? (
+            <CheckBox className="size-5.5" />
+          ) : (
+            <CheckBoxOutlineBlank className="size-5.5" />
+          )}
+        </button>
+      </Tooltip>
       <span className="min-w-0 pt-1 flex-1 overflow-hidden text-ellipsis">
         {todo.text}
       </span>
-      <button
-        className={classNames(
-          'p-1 shrink-0 rounded-md text-neutral-400 cursor-pointer',
-          'hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700',
-          'invisible group-hover:visible group-focus-within:visible'
-        )}
-        onClick={() => deleteMutation.mutate({ id: todo.id })}
-      >
-        <DeleteIcon className="size-5.5" />
-      </button>
+      <Tooltip text="Delete todo">
+        <button
+          className={classNames(
+            'p-1 shrink-0 rounded-md text-neutral-400 cursor-pointer',
+            'hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700',
+            'invisible group-hover:visible group-focus-within:visible'
+          )}
+          onClick={() => deleteMutation.mutate({ id: todo.id })}
+          aria-label="Delete todo"
+        >
+          <DeleteIcon className="size-5.5" />
+        </button>
+      </Tooltip>
     </li>
   )
 }

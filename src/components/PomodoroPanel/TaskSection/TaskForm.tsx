@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import classNames from 'classnames'
+import Tooltip from '../../Tooltip.tsx'
 
 type TaskFormProps = {
   handleSubmit: () => void
@@ -64,36 +65,40 @@ function TaskForm(props: TaskFormProps) {
           aria-live="polite"
           className="flex rounded-md bg-neutral-700"
         >
-          <button
-            aria-label="decrease"
-            type="button"
-            className={classNames(
-              'px-4 py-2 text-xl font-bold rounded-s-md cursor-pointer',
-              'hover:bg-neutral-500 focus:outline-none focus-visible:bg-neutral-500'
-            )}
-            onClick={() => {
-              if (props.totalPomodoriCount > 1)
-                props.setTotalPomodoriCount(props.totalPomodoriCount - 1)
-            }}
-          >
-            -
-          </button>
+          <Tooltip text="Decrease">
+            <button
+              aria-label="decrease"
+              type="button"
+              className={classNames(
+                'px-4 py-2 text-xl font-bold rounded-s-md cursor-pointer',
+                'hover:bg-neutral-500 focus:outline-none focus-visible:bg-neutral-500'
+              )}
+              onClick={() => {
+                if (props.totalPomodoriCount > 1)
+                  props.setTotalPomodoriCount(props.totalPomodoriCount - 1)
+              }}
+            >
+              -
+            </button>
+          </Tooltip>
           <span className="w-12 py-2 flex justify-center items-center ">
             {props.totalPomodoriCount}
           </span>
-          <button
-            aria-label="increase"
-            type="button"
-            className={classNames(
-              'px-4 py-2 text-xl font-bold rounded-e-md cursor-pointer',
-              'hover:bg-neutral-500 focus:outline-none focus-visible:bg-neutral-500'
-            )}
-            onClick={() =>
-              props.setTotalPomodoriCount(props.totalPomodoriCount + 1)
-            }
-          >
-            +
-          </button>
+          <Tooltip text="Increase">
+            <button
+              aria-label="increase"
+              type="button"
+              className={classNames(
+                'px-4 py-2 text-xl font-bold rounded-e-md cursor-pointer',
+                'hover:bg-neutral-500 focus:outline-none focus-visible:bg-neutral-500'
+              )}
+              onClick={() =>
+                props.setTotalPomodoriCount(props.totalPomodoriCount + 1)
+              }
+            >
+              +
+            </button>
+          </Tooltip>
         </div>
       </div>
       <div className="mt-6 flex justify-end gap-4">

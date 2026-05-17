@@ -45,7 +45,7 @@ function TodoCreationForm() {
         )}
         autoComplete="off"
       />
-      <Tooltip text="Add a todo" position="bottom-left">
+      <Tooltip text="Add a todo">
         <button
           className={classNames(
             'p-1 rounded-sm cursor-pointer',
