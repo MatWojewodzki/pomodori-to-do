@@ -10,8 +10,8 @@ type LeftMenuProps = {
 
 function LeftMenu(props: LeftMenuProps) {
   const tooltipText = props.isTodoPanelOpen
-    ? 'Hide To-do List'
-    : 'Show To-do List'
+    ? 'Hide Todo List'
+    : 'Show Todo List'
   return (
     <div className="px-1 py-2">
       <Tooltip text={tooltipText} side="right">
