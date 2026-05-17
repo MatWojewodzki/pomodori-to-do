@@ -6,43 +6,43 @@ import { TimerType } from '../../../hooks/useTimerType.ts'
 import { Timer } from '../../../hooks/useTimer.ts'
 
 type TaskListItemProps = {
-    task: TaskDto
-    isActive: boolean
-    setAsActive: () => void
-    timer: Timer
+  task: TaskDto
+  isActive: boolean
+  setAsActive: () => void
+  timer: Timer
 }
 
 function TaskListItem(props: TaskListItemProps) {
-    const { timer } = props
-    const [isEditing, setIsEditing] = useState(false)
+  const { timer } = props
+  const [isEditing, setIsEditing] = useState(false)
 
-    const standardProgress =
-        (props.task.pomodoro_completed / props.task.pomodoro_total) * 100
-    const timerProgress =
-        standardProgress + timer.percentageCompleted / props.task.pomodoro_total
-    const preciseProgress =
-        props.isActive && timer.isRunning && timer.timerType == TimerType.WORK
-            ? timerProgress
-            : standardProgress
-    return (
-        <li>
-            {isEditing ? (
-                <TaskEditForm
-                    task={props.task}
-                    closeForm={() => setIsEditing(false)}
-                    isActive={props.isActive}
-                />
-            ) : (
-                <TaskDisplay
-                    task={props.task}
-                    openEditForm={() => setIsEditing(true)}
-                    isActive={props.isActive}
-                    setAsActive={props.setAsActive}
-                    preciseProgress={preciseProgress}
-                />
-            )}
-        </li>
-    )
+  const standardProgress =
+    (props.task.pomodoro_completed / props.task.pomodoro_total) * 100
+  const timerProgress =
+    standardProgress + timer.percentageCompleted / props.task.pomodoro_total
+  const preciseProgress =
+    props.isActive && timer.isRunning && timer.timerType == TimerType.WORK
+      ? timerProgress
+      : standardProgress
+  return (
+    <li>
+      {isEditing ? (
+        <TaskEditForm
+          task={props.task}
+          closeForm={() => setIsEditing(false)}
+          isActive={props.isActive}
+        />
+      ) : (
+        <TaskDisplay
+          task={props.task}
+          openEditForm={() => setIsEditing(true)}
+          isActive={props.isActive}
+          setAsActive={props.setAsActive}
+          preciseProgress={preciseProgress}
+        />
+      )}
+    </li>
+  )
 }
 
 export default TaskListItem

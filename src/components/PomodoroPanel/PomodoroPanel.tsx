@@ -10,47 +10,47 @@ import { useCallback } from 'react'
 import useSessionStorage from '../../hooks/useSessionStorage.ts'
 
 type PomodoroPanelProps = {
-    isTodoPanelOpen: boolean
+  isTodoPanelOpen: boolean
 }
 
 function PomodoroPanel(props: PomodoroPanelProps) {
-    const [activeTask, setActiveTask] = useSessionStorage<string | null>(
-        'activeTask',
-        null
-    )
+  const [activeTask, setActiveTask] = useSessionStorage<string | null>(
+    'activeTask',
+    null
+  )
 
-    const queryClient = useQueryClient()
-    const mutation = useMutation({
-        mutationFn: taskService.incrementPomodoroCompleted,
-        onSuccess: async () => {
-            await queryClient.invalidateQueries({ queryKey: ['tasks'] })
-        },
-    })
+  const queryClient = useQueryClient()
+  const mutation = useMutation({
+    mutationFn: taskService.incrementPomodoroCompleted,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['tasks'] })
+    },
+  })
 
-    const handleWorkFinish = useCallback(() => {
-        if (activeTask) {
-            mutation.mutate({ id: activeTask })
-        }
-    }, [activeTask, mutation])
+  const handleWorkFinish = useCallback(() => {
+    if (activeTask) {
+      mutation.mutate({ id: activeTask })
+    }
+  }, [activeTask, mutation])
 
-    const timer = useTimer({
-        workFinishCallback: handleWorkFinish,
-    })
-    return (
-        <Panel
-            className={classNames('min-w-0 flex-1', {
-                'rounded-s-lg': props.isTodoPanelOpen,
-            })}
-        >
-            <PanelHeader>Pomodoro Timer</PanelHeader>
-            <TimerSection timer={timer} />
-            <TaskSection
-                activeTask={activeTask}
-                setActiveTask={setActiveTask}
-                timer={timer}
-            />
-        </Panel>
-    )
+  const timer = useTimer({
+    workFinishCallback: handleWorkFinish,
+  })
+  return (
+    <Panel
+      className={classNames('min-w-0 flex-1', {
+        'rounded-s-lg': props.isTodoPanelOpen,
+      })}
+    >
+      <PanelHeader>Pomodoro Timer</PanelHeader>
+      <TimerSection timer={timer} />
+      <TaskSection
+        activeTask={activeTask}
+        setActiveTask={setActiveTask}
+        timer={timer}
+      />
+    </Panel>
+  )
 }
 
 export default PomodoroPanel

@@ -6,58 +6,58 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import todoService from '../../services/tauri/todo.ts'
 
 function TodoCreationForm() {
-    const [text, setText] = useState('')
+  const [text, setText] = useState('')
 
-    const queryClient = useQueryClient()
+  const queryClient = useQueryClient()
 
-    const mutation = useMutation({
-        mutationFn: todoService.createTodo,
-        onSuccess: async () => {
-            await queryClient.invalidateQueries({ queryKey: ['todos'] })
-            setText('')
-        },
-    })
+  const mutation = useMutation({
+    mutationFn: todoService.createTodo,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['todos'] })
+      setText('')
+    },
+  })
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault()
-        const todo = text.trim()
-        if (todo === '') return
-        mutation.mutate({ createTodo: { text: todo } })
-    }
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    const todo = text.trim()
+    if (todo === '') return
+    mutation.mutate({ createTodo: { text: todo } })
+  }
 
-    return (
-        <form
-            className=" w-full px-5 mb-4 flex items-center gap-2"
-            onSubmit={handleSubmit}
+  return (
+    <form
+      className=" w-full px-5 mb-4 flex items-center gap-2"
+      onSubmit={handleSubmit}
+    >
+      <label className="sr-only" htmlFor="add-todo-input">
+        {'Add a new todo'}
+      </label>
+      <input
+        id="add-todo-input"
+        type="text"
+        placeholder="Add a todo"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        className={classNames(
+          'min-w-0 flex-1 px-2 py-1 text-white',
+          'rounded-md bg-neutral-600 active:outline-1 outline-neutral-600'
+        )}
+        autoComplete="off"
+      />
+      <Tooltip text="Add a todo" position="bottom-left">
+        <button
+          className={classNames(
+            'p-1 rounded-sm cursor-pointer',
+            'hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700'
+          )}
+          aria-label="Add a todo"
         >
-            <label className="sr-only" htmlFor="add-todo-input">
-                {'Add a new todo'}
-            </label>
-            <input
-                id="add-todo-input"
-                type="text"
-                placeholder="Add a todo"
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                className={classNames(
-                    'min-w-0 flex-1 px-2 py-1 text-white',
-                    'rounded-md bg-neutral-600 active:outline-1 outline-neutral-600'
-                )}
-                autoComplete="off"
-            />
-            <Tooltip text="Add a todo" position="bottom-left">
-                <button
-                    className={classNames(
-                        'p-1 rounded-sm cursor-pointer',
-                        'hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700'
-                    )}
-                    aria-label="Add a todo"
-                >
-                    <AddIcon className="size-6" />
-                </button>
-            </Tooltip>
-        </form>
-    )
+          <AddIcon className="size-6" />
+        </button>
+      </Tooltip>
+    </form>
+  )
 }
 
 export default TodoCreationForm

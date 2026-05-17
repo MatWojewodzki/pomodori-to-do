@@ -1,46 +1,46 @@
 {
-    "name": "pomodori-to-do",
-    "description": "Desktop app providing pomodoro timer with a todo list.",
-    "author": "Mateusz Wojewódzki matwojewodzki@gmail.com",
-    "license": "MIT",
-    "repository": "https://github.com/MatWojewodzki/pomodori-to-do",
-    "private": true,
-    "version": "0.1.0",
-    "type": "module",
-    "scripts": {
-        "dev": "vite",
-        "typecheck": "tsc --noEmit",
-        "build": "tsc && vite build",
-        "preview": "vite preview",
-        "tauri": "tauri",
-        "prepare": "husky"
-    },
-    "dependencies": {
-        "@tailwindcss/vite": "^4.2.1",
-        "@tanstack/react-query": "^5.96.1",
-        "@tauri-apps/api": "^2",
-        "@tauri-apps/plugin-notification": "~2.3.3",
-        "@tauri-apps/plugin-opener": "^2",
-        "classnames": "^2.5.1",
-        "radix-ui": "^1.4.3",
-        "react": "^18.3.1",
-        "react-dom": "^18.3.1",
-        "tailwindcss": "^4.2.1"
-    },
-    "devDependencies": {
-        "@tanstack/react-query-devtools": "^5.96.1",
-        "@tauri-apps/cli": "^2",
-        "@types/react": "^18.3.1",
-        "@types/react-dom": "^18.3.1",
-        "@vitejs/plugin-react": "^4.3.4",
-        "husky": "^9.1.7",
-        "lint-staged": "^16.2.7",
-        "prettier": "3.8.1",
-        "typescript": "~5.6.2",
-        "vite": "^6.0.3",
-        "vite-plugin-svgr": "^4.5.0"
-    },
-    "lint-staged": {
-        "**/*": "prettier --write --ignore-unknown"
-    }
+  "name": "pomodori-to-do",
+  "description": "Desktop app providing pomodoro timer with a todo list.",
+  "author": "Mateusz Wojewódzki matwojewodzki@gmail.com",
+  "license": "MIT",
+  "repository": "https://github.com/MatWojewodzki/pomodori-to-do",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.2.1",
+    "@tanstack/react-query": "^5.96.1",
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-notification": "~2.3.3",
+    "@tauri-apps/plugin-opener": "^2",
+    "classnames": "^2.5.1",
+    "radix-ui": "^1.4.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^4.2.1"
+  },
+  "devDependencies": {
+    "@tanstack/react-query-devtools": "^5.96.1",
+    "@tauri-apps/cli": "^2",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "3.8.1",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.3",
+    "vite-plugin-svgr": "^4.5.0"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  }
 }

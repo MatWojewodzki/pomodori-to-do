@@ -12,5 +12,13 @@ node_modules
 
 public
 
-src-tauri
+*.rs
+*.toml
+Cargo.lock
+
+src-tauri/gen
+src-tauri/target
+
+*.sqlite
+
 src/types/generated

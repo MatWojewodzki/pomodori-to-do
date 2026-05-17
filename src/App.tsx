@@ -7,27 +7,25 @@ import { useState } from 'react'
 import classNames from 'classnames'
 
 function App() {
-    const [todoPanelWidth, setTodoPanelWidth] = useState(400)
-    const [isTodoPanelOpen, setIsTodoPanelOpen] = useState(true)
-    return (
-        <div
-            className={classNames(
-                'w-screen h-screen flex items-stretch bg-neutral-700 text-white'
-            )}
-        >
-            <LeftMenu
-                isTodoPanelOpen={isTodoPanelOpen}
-                setIsTodoPanelOpen={setIsTodoPanelOpen}
-            />
-            <div className="grow flex items-stretch overflow-hidden">
-                {isTodoPanelOpen && <TodoPanel width={todoPanelWidth} />}
-                {isTodoPanelOpen && (
-                    <PanelGap setTodoPanelWidth={setTodoPanelWidth} />
-                )}
-                <PomodoroPanel isTodoPanelOpen={isTodoPanelOpen} />
-            </div>
-        </div>
-    )
+  const [todoPanelWidth, setTodoPanelWidth] = useState(400)
+  const [isTodoPanelOpen, setIsTodoPanelOpen] = useState(true)
+  return (
+    <div
+      className={classNames(
+        'w-screen h-screen flex items-stretch bg-neutral-700 text-white'
+      )}
+    >
+      <LeftMenu
+        isTodoPanelOpen={isTodoPanelOpen}
+        setIsTodoPanelOpen={setIsTodoPanelOpen}
+      />
+      <div className="grow flex items-stretch overflow-hidden">
+        {isTodoPanelOpen && <TodoPanel width={todoPanelWidth} />}
+        {isTodoPanelOpen && <PanelGap setTodoPanelWidth={setTodoPanelWidth} />}
+        <PomodoroPanel isTodoPanelOpen={isTodoPanelOpen} />
+      </div>
+    </div>
+  )
 }
 
 export default App

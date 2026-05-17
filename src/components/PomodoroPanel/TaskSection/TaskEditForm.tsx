@@ -5,49 +5,49 @@ import TaskForm from './TaskForm.tsx'
 import { TaskDto } from '../../../types/generated/TaskDto.ts'
 
 type TaskEditFormProps = {
-    task: TaskDto
-    closeForm: () => void
-    isActive: boolean
+  task: TaskDto
+  closeForm: () => void
+  isActive: boolean
 }
 
 function TaskEditForm(props: TaskEditFormProps) {
-    const task = props.task
-    const [taskDescription, setTaskDescription] = useState(task.text)
-    const [totalPomodoriCount, setTotalPomodoriCount] = useState(
-        task.pomodoro_total
-    )
+  const task = props.task
+  const [taskDescription, setTaskDescription] = useState(task.text)
+  const [totalPomodoriCount, setTotalPomodoriCount] = useState(
+    task.pomodoro_total
+  )
 
-    const queryClient = useQueryClient()
-    const mutation = useMutation({
-        mutationFn: taskService.updateTask,
-        onSuccess: async () => {
-            await queryClient.invalidateQueries({ queryKey: ['tasks'] })
-            props.closeForm()
-        },
+  const queryClient = useQueryClient()
+  const mutation = useMutation({
+    mutationFn: taskService.updateTask,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['tasks'] })
+      props.closeForm()
+    },
+  })
+
+  function handleSubmit() {
+    if (taskDescription.trim() === '') return
+    mutation.mutate({
+      updatedTask: {
+        ...task,
+        text: taskDescription,
+        pomodoro_total: totalPomodoriCount,
+      },
     })
-
-    function handleSubmit() {
-        if (taskDescription.trim() === '') return
-        mutation.mutate({
-            updatedTask: {
-                ...task,
-                text: taskDescription,
-                pomodoro_total: totalPomodoriCount,
-            },
-        })
-    }
-    return (
-        <TaskForm
-            taskDescription={taskDescription}
-            setTaskDescription={setTaskDescription}
-            totalPomodoriCount={totalPomodoriCount}
-            setTotalPomodoriCount={setTotalPomodoriCount}
-            handleSubmit={handleSubmit}
-            handleCancel={props.closeForm}
-            submitButtonText={'Save'}
-            isActive={props.isActive}
-        />
-    )
+  }
+  return (
+    <TaskForm
+      taskDescription={taskDescription}
+      setTaskDescription={setTaskDescription}
+      totalPomodoriCount={totalPomodoriCount}
+      setTotalPomodoriCount={setTotalPomodoriCount}
+      handleSubmit={handleSubmit}
+      handleCancel={props.closeForm}
+      submitButtonText={'Save'}
+      isActive={props.isActive}
+    />
+  )
 }
 
 export default TaskEditForm
