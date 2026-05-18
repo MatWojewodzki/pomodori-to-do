@@ -7,6 +7,8 @@ import DeleteIcon from '../../../assets/icons/delete_20dp_000000_FILL0_wght400_G
 import taskService from '../../../services/tauri/task.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Tooltip from '../../Tooltip.tsx'
+import CheckBoxOutlineBlankIcon from '../../../assets/icons/check_box_outline_blank_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
+import CheckBoxIcon from '../../../assets/icons/check_box_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
 
 type TaskDisplayProps = {
   task: TaskDto
@@ -28,6 +30,16 @@ function TaskDisplay(props: TaskDisplayProps) {
     },
   })
 
+  const setCompletedMutation = useMutation({
+    mutationFn: taskService.setTaskCompleted,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['tasks'] })
+    },
+  })
+
+  const checkBoxTooltip = task.completed
+    ? 'Mark as incomplete'
+    : 'Mark as complete'
   return (
     <div
       className="group relative rounded-md"
@@ -43,15 +55,38 @@ function TaskDisplay(props: TaskDisplayProps) {
         checked={props.isActive}
         onChange={() => props.setAsActive()}
       />
+      <Tooltip text={checkBoxTooltip}>
+        <button
+          type="button"
+          aria-pressed={task.completed}
+          aria-label={checkBoxTooltip}
+          className={classNames(
+            'absolute left-3 top-3 shrink-0 p-1 rounded-md cursor-pointer',
+            'hover:bg-neutral-800 focus-visible:outline-none focus-visible:bg-neutral-800'
+          )}
+          onClick={() => {
+            setCompletedMutation.mutate({
+              id: task.id,
+              completed: !task.completed,
+            })
+          }}
+        >
+          {task.completed ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+        </button>
+      </Tooltip>
       <label
         htmlFor={inputId}
         className={classNames(
-          'ps-4 pe-14 py-4 flex justify-between gap-2 rounded-md cursor-pointer',
+          'px-14 py-4 flex justify-between gap-3 rounded-md cursor-pointer',
           'peer-checked:outline-2 not-peer-checked:peer-focus-visible:outline-1',
           'not-peer-checked:hover:outline-1 outline-neutral-400'
         )}
       >
-        <span className="flex-1">{task.text}</span>
+        <span
+          className={classNames('flex-1', { 'line-through': task.completed })}
+        >
+          {task.text}
+        </span>
         <span className="shrink-0 tabular-nums">
           {task.pomodoro_completed}/{task.pomodoro_total}
         </span>
@@ -62,7 +97,7 @@ function TaskDisplay(props: TaskDisplayProps) {
             aria-label="Open menu"
             className={classNames(
               'p-1 absolute z-10 right-3.5 top-3.5 rounded-md cursor-pointer',
-              'hover:outline-1 focus-visible:outline-1 outline-neutral-400',
+              'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800',
               'invisible group-hover:visible group-focus-within:visible'
             )}
           >

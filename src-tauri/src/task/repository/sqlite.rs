@@ -11,6 +11,7 @@ pub struct TaskRow {
     pub text: String,
     pub pomodoro_total: u32,
     pub pomodoro_completed: u32,
+    pub completed: bool,
 }
 
 pub struct TaskRepositorySqlite {
@@ -30,6 +31,7 @@ impl TaskRepositorySqlite {
             text: task.text,
             pomodoro_total: task.pomodoro_total,
             pomodoro_completed: task.pomodoro_completed,
+            completed: task.completed,
         }
     }
     fn task_from_row(row: TaskRow) -> Task {
@@ -38,12 +40,20 @@ impl TaskRepositorySqlite {
             text: row.text,
             pomodoro_total: row.pomodoro_total,
             pomodoro_completed: row.pomodoro_completed,
+            completed: row.completed,
         }
     }
 }
 
 #[async_trait]
 impl TaskRepository for TaskRepositorySqlite {
+    async fn get_task(&self, id: String) -> Result<Task, RepositoryError> {
+        let q = "SELECT * FROM task WHERE id = ?";
+        let query = sqlx::query_as::<_, TaskRow>(q).bind(id);
+        let row = query.fetch_one(&self.pools.reader).await?;
+        Ok(TaskRepositorySqlite::task_from_row(row))
+    }
+
     async fn get_tasks(&self) -> Result<Vec<Task>, RepositoryError> {
         let q = "SELECT * FROM task";
         let query = sqlx::query_as::<_, TaskRow>(q);
@@ -57,12 +67,13 @@ impl TaskRepository for TaskRepositorySqlite {
     async fn create_task(&self, task: Task) -> Result<(), RepositoryError> {
         let row = TaskRepositorySqlite::task_to_row(task);
         let q =
-            "INSERT INTO task (id, text, pomodoro_total, pomodoro_completed) VALUES (?, ?, ?, ?)";
+            "INSERT INTO task (id, text, pomodoro_total, pomodoro_completed, completed) VALUES (?, ?, ?, ?, ?)";
         let query = sqlx::query(q)
             .bind(row.id)
             .bind(row.text)
             .bind(row.pomodoro_total)
-            .bind(row.pomodoro_completed);
+            .bind(row.pomodoro_completed)
+            .bind(row.completed);
         query.execute(&self.pools.writer).await?;
         Ok(())
     }
@@ -89,6 +100,13 @@ impl TaskRepository for TaskRepositorySqlite {
     async fn increment_pomodoro_completed(&self, id: String) -> Result<(), RepositoryError> {
         let q = "UPDATE task SET pomodoro_completed = pomodoro_completed + 1 WHERE id = ?";
         let query = sqlx::query(q).bind(id);
+        query.execute(&self.pools.writer).await?;
+        Ok(())
+    }
+
+    async fn set_completed(&self, id: String, completed: bool) -> Result<(), RepositoryError> {
+        let q = "UPDATE task SET completed = ? WHERE id = ?";
+        let query = sqlx::query(q).bind(completed).bind(id);
         query.execute(&self.pools.writer).await?;
         Ok(())
     }

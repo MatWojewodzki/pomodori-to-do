@@ -43,7 +43,9 @@ function TodoListItem(props: TodoListItemProps) {
     >
       <Tooltip text={checkBoxTooltip}>
         <button
-          role="checkbox"
+          type="button"
+          aria-pressed={todo.completed}
+          aria-label={checkBoxTooltip}
           className={classNames(
             'shrink-0 p-1 rounded-md cursor-pointer',
             'hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700'
@@ -54,7 +56,6 @@ function TodoListItem(props: TodoListItemProps) {
               completed: !todo.completed,
             })
           }
-          aria-label={checkBoxTooltip}
         >
           {todo.completed ? (
             <CheckBox className="size-5.5" />

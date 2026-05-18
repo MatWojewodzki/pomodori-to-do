@@ -52,6 +52,7 @@ pub fn run() {
             task::command::update_task,
             task::command::delete_task,
             task::command::increment_pomodoro_completed,
+            task::command::set_task_completed,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

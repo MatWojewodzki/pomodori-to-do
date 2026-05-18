@@ -6,6 +6,7 @@ pub struct Task {
     pub text: String,
     pub pomodoro_total: u32,
     pub pomodoro_completed: u32,
+    pub completed: bool,
 }
 
 impl Task {
@@ -21,6 +22,7 @@ impl Task {
             text: text.to_string(),
             pomodoro_total,
             pomodoro_completed: 0,
+            completed: false,
         })
     }
 }

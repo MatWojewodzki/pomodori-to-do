@@ -27,14 +27,18 @@ impl TaskService {
         text: String,
         pomodoro_total: u32,
         pomodoro_completed: u32,
+        completed: bool,
     ) -> Result<(), ServiceError> {
         let task = Task {
-            id,
+            id: id.clone(),
             text,
             pomodoro_total,
             pomodoro_completed,
+            completed,
         };
-        Ok(self.task_repository.update_task(task).await?)
+        self.task_repository.update_task(task).await?;
+        self.update_task_completed(id).await?;
+        Ok(())
     }
 
     pub async fn delete_task(&self, id: String) -> Result<(), ServiceError> {
@@ -42,9 +46,26 @@ impl TaskService {
     }
 
     pub async fn increment_pomodoro_completed(&self, id: String) -> Result<(), ServiceError> {
-        Ok(self
-            .task_repository
-            .increment_pomodoro_completed(id)
-            .await?)
+        self.task_repository
+            .increment_pomodoro_completed(id.clone())
+            .await?;
+        self.update_task_completed(id).await?;
+        Ok(())
+    }
+
+    pub async fn set_task_completed(
+        &self,
+        id: String,
+        completed: bool,
+    ) -> Result<(), ServiceError> {
+        Ok(self.task_repository.set_completed(id, completed).await?)
+    }
+
+    async fn update_task_completed(&self, id: String) -> Result<(), ServiceError> {
+        let task = self.task_repository.get_task(id.clone()).await?;
+        self.task_repository
+            .set_completed(id, task.pomodoro_completed >= task.pomodoro_total)
+            .await?;
+        Ok(())
     }
 }
