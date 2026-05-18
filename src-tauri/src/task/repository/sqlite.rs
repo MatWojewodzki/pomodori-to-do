@@ -96,4 +96,11 @@ impl TaskRepository for TaskRepositorySqlite {
         query.execute(&self.pools.writer).await?;
         Ok(())
     }
+
+    async fn set_completed(&self, id: String, completed: bool) -> Result<(), RepositoryError> {
+        let q = "UPDATE task SET completed = ? WHERE id = ?";
+        let query = sqlx::query(q).bind(completed).bind(id);
+        query.execute(&self.pools.writer).await?;
+        Ok(())
+    }
 }

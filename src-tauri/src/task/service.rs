@@ -49,4 +49,8 @@ impl TaskService {
             .increment_pomodoro_completed(id)
             .await?)
     }
+
+    pub async fn set_completed(&self, id: String, completed: bool) -> Result<(), ServiceError> {
+        Ok(self.task_repository.set_completed(id, completed).await?)
+    }
 }

@@ -50,3 +50,13 @@ pub async fn increment_pomodoro_completed(
     service.increment_pomodoro_completed(id).await?;
     Ok(())
 }
+
+#[tauri::command]
+pub async fn set_task_completed(
+    service: State<'_, TaskService>,
+    id: String,
+    completed: bool,
+) -> Result<(), AppError> {
+    service.set_completed(id, completed).await?;
+    Ok(())
+}

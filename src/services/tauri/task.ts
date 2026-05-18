@@ -24,6 +24,13 @@ const taskService = {
   async incrementPomodoroCompleted(args: { id: string }): Promise<void> {
     return await tauriInvoke('increment_pomodoro_completed', args)
   },
+
+  async setTaskCompleted(args: {
+    id: string
+    completed: boolean
+  }): Promise<void> {
+    return await tauriInvoke('set_task_completed', args)
+  },
 }
 
 export default taskService
