@@ -44,10 +44,18 @@ impl TaskService {
     }
 
     pub async fn increment_pomodoro_completed(&self, id: String) -> Result<(), ServiceError> {
-        Ok(self
-            .task_repository
-            .increment_pomodoro_completed(id)
-            .await?)
+        self.task_repository
+            .increment_pomodoro_completed(id.clone())
+            .await?;
+        let tasks = self.task_repository.get_tasks().await?;
+        let task = tasks
+            .into_iter()
+            .find(|t| t.id == id)
+            .expect("Task not found.");
+        if task.pomodoro_completed >= task.pomodoro_total {
+            self.task_repository.set_completed(id, true).await?;
+        }
+        Ok(())
     }
 
     pub async fn set_completed(&self, id: String, completed: bool) -> Result<(), ServiceError> {
