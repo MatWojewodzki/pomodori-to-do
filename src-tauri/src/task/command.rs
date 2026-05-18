@@ -30,6 +30,7 @@ pub async fn update_task(
             updated_task.text,
             updated_task.pomodoro_total as u32,
             updated_task.pomodoro_completed as u32,
+            updated_task.completed,
         )
         .await?;
     Ok(())

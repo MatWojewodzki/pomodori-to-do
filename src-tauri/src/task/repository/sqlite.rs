@@ -11,6 +11,7 @@ pub struct TaskRow {
     pub text: String,
     pub pomodoro_total: u32,
     pub pomodoro_completed: u32,
+    pub completed: bool,
 }
 
 pub struct TaskRepositorySqlite {
@@ -30,6 +31,7 @@ impl TaskRepositorySqlite {
             text: task.text,
             pomodoro_total: task.pomodoro_total,
             pomodoro_completed: task.pomodoro_completed,
+            completed: task.completed,
         }
     }
     fn task_from_row(row: TaskRow) -> Task {
@@ -38,6 +40,7 @@ impl TaskRepositorySqlite {
             text: row.text,
             pomodoro_total: row.pomodoro_total,
             pomodoro_completed: row.pomodoro_completed,
+            completed: row.completed,
         }
     }
 }
@@ -57,12 +60,13 @@ impl TaskRepository for TaskRepositorySqlite {
     async fn create_task(&self, task: Task) -> Result<(), RepositoryError> {
         let row = TaskRepositorySqlite::task_to_row(task);
         let q =
-            "INSERT INTO task (id, text, pomodoro_total, pomodoro_completed) VALUES (?, ?, ?, ?)";
+            "INSERT INTO task (id, text, pomodoro_total, pomodoro_completed, completed) VALUES (?, ?, ?, ?, ?)";
         let query = sqlx::query(q)
             .bind(row.id)
             .bind(row.text)
             .bind(row.pomodoro_total)
-            .bind(row.pomodoro_completed);
+            .bind(row.pomodoro_completed)
+            .bind(row.completed);
         query.execute(&self.pools.writer).await?;
         Ok(())
     }

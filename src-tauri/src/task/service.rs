@@ -27,12 +27,14 @@ impl TaskService {
         text: String,
         pomodoro_total: u32,
         pomodoro_completed: u32,
+        completed: bool,
     ) -> Result<(), ServiceError> {
         let task = Task {
             id,
             text,
             pomodoro_total,
             pomodoro_completed,
+            completed,
         };
         Ok(self.task_repository.update_task(task).await?)
     }

@@ -7,6 +7,7 @@ pub struct TaskDto {
     pub text: String,
     pub pomodoro_total: i32,
     pub pomodoro_completed: i32,
+    pub completed: bool,
 }
 
 impl From<Task> for TaskDto {
@@ -16,6 +17,7 @@ impl From<Task> for TaskDto {
             text: task.text,
             pomodoro_total: task.pomodoro_total as i32,
             pomodoro_completed: task.pomodoro_completed as i32,
+            completed: task.completed,
         }
     }
 }
