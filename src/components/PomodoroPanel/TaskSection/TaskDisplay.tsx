@@ -97,7 +97,7 @@ function TaskDisplay(props: TaskDisplayProps) {
             aria-label="Open menu"
             className={classNames(
               'p-1 absolute z-10 right-3.5 top-3.5 rounded-md cursor-pointer',
-              'hover:outline-1 focus-visible:outline-1 outline-neutral-400',
+              'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800',
               'invisible group-hover:visible group-focus-within:visible'
             )}
           >
