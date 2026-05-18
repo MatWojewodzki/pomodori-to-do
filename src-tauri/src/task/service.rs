@@ -30,13 +30,15 @@ impl TaskService {
         completed: bool,
     ) -> Result<(), ServiceError> {
         let task = Task {
-            id,
+            id: id.clone(),
             text,
             pomodoro_total,
             pomodoro_completed,
             completed,
         };
-        Ok(self.task_repository.update_task(task).await?)
+        self.task_repository.update_task(task).await?;
+        self.update_task_completed(id).await?;
+        Ok(())
     }
 
     pub async fn delete_task(&self, id: String) -> Result<(), ServiceError> {
@@ -47,18 +49,23 @@ impl TaskService {
         self.task_repository
             .increment_pomodoro_completed(id.clone())
             .await?;
-        let tasks = self.task_repository.get_tasks().await?;
-        let task = tasks
-            .into_iter()
-            .find(|t| t.id == id)
-            .expect("Task not found.");
-        if task.pomodoro_completed >= task.pomodoro_total {
-            self.task_repository.set_completed(id, true).await?;
-        }
+        self.update_task_completed(id).await?;
         Ok(())
     }
 
-    pub async fn set_completed(&self, id: String, completed: bool) -> Result<(), ServiceError> {
+    pub async fn set_task_completed(
+        &self,
+        id: String,
+        completed: bool,
+    ) -> Result<(), ServiceError> {
         Ok(self.task_repository.set_completed(id, completed).await?)
+    }
+
+    async fn update_task_completed(&self, id: String) -> Result<(), ServiceError> {
+        let task = self.task_repository.get_task(id.clone()).await?;
+        self.task_repository
+            .set_completed(id, task.pomodoro_completed >= task.pomodoro_total)
+            .await?;
+        Ok(())
     }
 }

@@ -47,6 +47,13 @@ impl TaskRepositorySqlite {
 
 #[async_trait]
 impl TaskRepository for TaskRepositorySqlite {
+    async fn get_task(&self, id: String) -> Result<Task, RepositoryError> {
+        let q = "SELECT * FROM task WHERE id = ?";
+        let query = sqlx::query_as::<_, TaskRow>(q).bind(id);
+        let row = query.fetch_one(&self.pools.reader).await?;
+        Ok(TaskRepositorySqlite::task_from_row(row))
+    }
+
     async fn get_tasks(&self) -> Result<Vec<Task>, RepositoryError> {
         let q = "SELECT * FROM task";
         let query = sqlx::query_as::<_, TaskRow>(q);

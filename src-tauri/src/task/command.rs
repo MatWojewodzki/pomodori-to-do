@@ -57,6 +57,6 @@ pub async fn set_task_completed(
     id: String,
     completed: bool,
 ) -> Result<(), AppError> {
-    service.set_completed(id, completed).await?;
+    service.set_task_completed(id, completed).await?;
     Ok(())
 }
