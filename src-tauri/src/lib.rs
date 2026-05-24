@@ -1,8 +1,11 @@
 mod db;
 pub mod error;
+pub mod settings;
 pub mod task;
 pub mod todo;
 
+use crate::settings::repository::sqlite::SettingsRepositorySqlite;
+use crate::settings::service::SettingsService;
 use crate::task::repository::sqlite::TaskRepositorySqlite;
 use crate::task::service::TaskService;
 use crate::todo::repository::sqlite::TodoRepositorySqlite;
@@ -32,14 +35,20 @@ pub fn run() {
 
             // setup repositories
             let todo_repository = Arc::new(TodoRepositorySqlite::new(pools.clone()));
-            let task_repository = Arc::new(TaskRepositorySqlite::new(pools));
+            let task_repository = Arc::new(TaskRepositorySqlite::new(pools.clone()));
+            let settings_repository = Arc::new(SettingsRepositorySqlite::new(pools));
+            tauri::async_runtime::block_on(settings_repository.initialize())
+                .expect("Failed to initialize settings repository.");
 
             // setup services
             let todo_service = TodoService::new(todo_repository);
             let task_service = TaskService::new(task_repository);
+            let settings_service = SettingsService::new(settings_repository);
 
             app.manage(todo_service);
             app.manage(task_service);
+            app.manage(settings_service);
+
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
@@ -53,6 +62,8 @@ pub fn run() {
             task::command::delete_task,
             task::command::increment_pomodoro_completed,
             task::command::set_task_completed,
+            settings::command::get_settings,
+            settings::command::set_settings,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
