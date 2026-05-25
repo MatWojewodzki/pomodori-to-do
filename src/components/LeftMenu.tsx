@@ -2,6 +2,7 @@ import ChecklistIcon from '../assets/icons/checklist_20dp_000000_FILL0_wght400_G
 import classNames from 'classnames'
 import React from 'react'
 import Tooltip from './Tooltip.tsx'
+import Settings from './Settings/Settings.tsx'
 
 type LeftMenuProps = {
   isTodoPanelOpen: boolean
@@ -13,22 +14,27 @@ function LeftMenu(props: LeftMenuProps) {
     ? 'Hide Todo List'
     : 'Show Todo List'
   return (
-    <div className="px-1 py-2">
-      <Tooltip text={tooltipText} side="right">
-        <button
-          className={classNames(
-            'p-1 rounded-sm cursor-pointer',
-            'hover:bg-neutral-500 focus:outline-none focus-visible:bg-neutral-500',
-            { 'bg-neutral-600': props.isTodoPanelOpen }
-          )}
-          onClick={() => props.setIsTodoPanelOpen((value) => !value)}
-          aria-label={tooltipText}
-          aria-expanded={props.isTodoPanelOpen}
-          aria-controls="todo-panel"
-        >
-          <ChecklistIcon className="size-5" />
-        </button>
-      </Tooltip>
+    <div className="flex flex-col px-1 py-2">
+      <div className="grow">
+        <Tooltip text={tooltipText} side="right">
+          <button
+            className={classNames(
+              'p-1 rounded-sm cursor-pointer',
+              'hover:bg-neutral-500 focus:outline-none focus-visible:bg-neutral-500',
+              { 'bg-neutral-600': props.isTodoPanelOpen }
+            )}
+            onClick={() => props.setIsTodoPanelOpen((value) => !value)}
+            aria-label={tooltipText}
+            aria-expanded={props.isTodoPanelOpen}
+            aria-controls="todo-panel"
+          >
+            <ChecklistIcon className="size-5" />
+          </button>
+        </Tooltip>
+      </div>
+      <div>
+        <Settings />
+      </div>
     </div>
   )
 }
