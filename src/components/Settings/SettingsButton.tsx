@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import SettingsIcon from '../../assets/icons/settings_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
 import CloseIcon from '../../assets/icons/close_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
 import Tooltip from '../Tooltip.tsx'
+import Settings from './Settings.tsx'
 
 function SettingsButton() {
   return (
@@ -39,6 +40,7 @@ function SettingsButton() {
           >
             <CloseIcon className="size-5" />
           </Dialog.Close>
+          <Settings />
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
