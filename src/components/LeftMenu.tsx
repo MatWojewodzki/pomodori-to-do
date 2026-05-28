@@ -2,7 +2,7 @@ import ChecklistIcon from '../assets/icons/checklist_20dp_000000_FILL0_wght400_G
 import classNames from 'classnames'
 import React from 'react'
 import Tooltip from './Tooltip.tsx'
-import Settings from './Settings/Settings.tsx'
+import SettingsButton from './Settings/SettingsButton.tsx'
 
 type LeftMenuProps = {
   isTodoPanelOpen: boolean
@@ -33,7 +33,7 @@ function LeftMenu(props: LeftMenuProps) {
         </Tooltip>
       </div>
       <div>
-        <Settings />
+        <SettingsButton />
       </div>
     </div>
   )

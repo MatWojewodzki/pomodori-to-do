@@ -4,7 +4,7 @@ import SettingsIcon from '../../assets/icons/settings_20dp_000000_FILL0_wght400_
 import CloseIcon from '../../assets/icons/close_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
 import Tooltip from '../Tooltip.tsx'
 
-function Settings() {
+function SettingsButton() {
   return (
     <Dialog.Root>
       <Tooltip text="Settings" side="right">
@@ -45,4 +45,4 @@ function Settings() {
   )
 }
 
-export default Settings
+export default SettingsButton
