@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 type NumberSettingProps = {
   label: string
@@ -10,7 +10,12 @@ type NumberSettingProps = {
 
 function NumberSetting(props: NumberSettingProps) {
   const [innerValue, setInnerValue] = useState(props.value.toString())
+  const inputRef = useRef<HTMLInputElement | null>(null)
   const inputId = `${props.label}-numberInput`
+
+  function handleFocus() {
+    inputRef.current?.select()
+  }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const newValue = e.target.value.replace(/\D/g, '')
@@ -35,6 +40,7 @@ function NumberSetting(props: NumberSettingProps) {
         {props.label}
       </label>
       <input
+        ref={inputRef}
         id={inputId}
         type="text"
         className={classNames(
@@ -42,6 +48,7 @@ function NumberSetting(props: NumberSettingProps) {
           'rounded-md bg-neutral-700 border border-neutral-600'
         )}
         value={innerValue}
+        onFocus={handleFocus}
         onChange={handleChange}
         onBlur={handleBlur}
         autoComplete="off"
