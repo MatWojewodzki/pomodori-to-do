@@ -1,21 +1,16 @@
-import SettingsSectionHeader from './SettingsSectionHeader.tsx'
-import DurationSetting from './DurationSetting.tsx'
-import SettingsList from './SettingsList.tsx'
-import NumberSetting from './NumberSetting.tsx'
+import settingsService from '../../services/tauri/settings.ts'
+import { useQuery } from '@tanstack/react-query'
+import SettingsForm from './SettingsForm'
 
 function Settings() {
+  const result = useQuery({
+    queryKey: ['settings'],
+    queryFn: settingsService.getSettings,
+  })
+  if (!result.isSuccess) return <div>Loading...</div>
   return (
     <div>
-      <SettingsSectionHeader>Timer</SettingsSectionHeader>
-      <SettingsList>
-        <DurationSetting label="Work duration" />
-        <DurationSetting label="Short break duration" />
-        <DurationSetting label="Long break duration" />
-        <NumberSetting
-          label="Number of pomodoro cycles between long breaks"
-          minValue={1}
-        />
-      </SettingsList>
+      <SettingsForm settings={result.data} />
     </div>
   )
 }

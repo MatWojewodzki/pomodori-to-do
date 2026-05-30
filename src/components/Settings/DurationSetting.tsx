@@ -1,13 +1,21 @@
 import DurationInput, { DurationInputHandle } from './DurationInput.tsx'
-import { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 type DurationSettingProps = {
   label: string
+  value: number
+  setValue: React.Dispatch<React.SetStateAction<number>>
 }
 
 function DurationSetting(props: DurationSettingProps) {
-  const [minutes, setMinutes] = useState('00')
-  const [seconds, setSeconds] = useState('00')
+  const [minutes, setMinutes] = useState(
+    Math.floor(props.value / 60)
+      .toString()
+      .padStart(2, '0')
+  )
+  const [seconds, setSeconds] = useState(
+    (props.value % 60).toString().padStart(2, '0')
+  )
   const secondsRef = useRef<DurationInputHandle | null>(null)
 
   const minutesInputId = `${props.label}-minutesInput`
