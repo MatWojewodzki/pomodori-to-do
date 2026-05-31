@@ -34,6 +34,9 @@ function SettingsButton() {
           <Dialog.Title className="mb-8 font-bold text-xl text-center">
             Settings
           </Dialog.Title>
+          <Dialog.Description className="sr-only">
+            Adjust your settings. Changes won't be applied until you click Save.
+          </Dialog.Description>
           <Dialog.Close
             aria-label="Close settings"
             className={classNames(
