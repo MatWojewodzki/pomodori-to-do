@@ -18,6 +18,24 @@ function DurationSetting(props: DurationSettingProps) {
   )
   const secondsRef = useRef<DurationInputHandle | null>(null)
 
+  function updateValue(currentMinutes: string, currentSeconds: string) {
+    const minutesValue =
+      currentMinutes.length === 0 ? 0 : parseInt(currentMinutes)
+    const secondsValue =
+      currentSeconds.length === 0 ? 0 : parseInt(currentSeconds)
+    props.setValue(minutesValue * 60 + secondsValue)
+  }
+
+  function handleMinutesChange(newValue: string) {
+    updateValue(newValue, seconds)
+    setMinutes(newValue)
+  }
+
+  function handleSecondsChange(newValue: string) {
+    updateValue(minutes, newValue)
+    setSeconds(newValue)
+  }
+
   const minutesInputId = `${props.label}-minutesInput`
   const secondsInputId = `${props.label}-secondsInput`
 
@@ -32,7 +50,7 @@ function DurationSetting(props: DurationSettingProps) {
         <DurationInput
           id={minutesInputId}
           value={minutes}
-          setValue={setMinutes}
+          setValue={handleMinutesChange}
           blurAfterFilled={false}
           focusNextInput={() => secondsRef.current?.focus()}
         />
@@ -43,7 +61,7 @@ function DurationSetting(props: DurationSettingProps) {
         <DurationInput
           id={secondsInputId}
           value={seconds}
-          setValue={setSeconds}
+          setValue={handleSecondsChange}
           blurAfterFilled={true}
           ref={secondsRef}
         />

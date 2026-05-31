@@ -1,15 +1,10 @@
 import classNames from 'classnames'
-import React, {
-  ChangeEvent,
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-} from 'react'
+import { ChangeEvent, forwardRef, useImperativeHandle, useRef } from 'react'
 
 type DurationInputProps = {
   id: string
   value: string
-  setValue: React.Dispatch<React.SetStateAction<string>>
+  setValue: (value: string) => void
   focusNextInput?: () => void
   blurAfterFilled: boolean
 }
