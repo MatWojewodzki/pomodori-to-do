@@ -11,7 +11,7 @@ function Settings(props: SettingsProps) {
     queryKey: ['settings'],
     queryFn: settingsService.getSettings,
   })
-  if (!result.isSuccess) return <div>Loading...</div>
+  if (!result.isSuccess) return <div>Loading...</div> // TODO: proper loading indicator
   return <SettingsForm settings={result.data} closeDialog={props.closeDialog} />
 }
 

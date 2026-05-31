@@ -21,7 +21,7 @@ function getNextState(
 
 export default function useTimerType(
   initialValue: TimerType,
-  pomodoriToLongBreak: number
+  pomodoriBetweenLongBreaks: number
 ) {
   const [timerType, setTimerType] = useSessionStorage<TimerType>(
     'timerType',
@@ -31,14 +31,14 @@ export default function useTimerType(
   const setTimerTypeToNext = useCallback(
     (completedPomodoroCount: number) => {
       const nextState = getNextState(
-        pomodoriToLongBreak,
+        pomodoriBetweenLongBreaks,
         timerType,
         completedPomodoroCount
       )
       setTimerType(nextState)
       return nextState
     },
-    [pomodoriToLongBreak, timerType]
+    [pomodoriBetweenLongBreaks, timerType]
   )
 
   return {
