@@ -14,7 +14,6 @@ pub async fn set_settings(
     service: State<'_, SettingsService>,
     settings: SettingsDto,
 ) -> Result<(), AppError> {
-    println!("Command called");
     service
         .set_settings(
             settings.work_duration,
