@@ -43,7 +43,8 @@ function NumberSetting(props: NumberSettingProps) {
         type="text"
         className={classNames(
           'w-[4ch] text-center tabular-nums',
-          'rounded-md bg-neutral-700 border border-neutral-600'
+          'rounded-md bg-neutral-700 border border-neutral-600',
+          'focus-visible:outline-2 outline-neutral-300'
         )}
         value={innerValue}
         onFocus={handleFocus}
