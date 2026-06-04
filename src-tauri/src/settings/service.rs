@@ -22,12 +22,14 @@ impl SettingsService {
         short_break_duration: u32,
         long_break_duration: u32,
         pomodori_between_long_breaks: u32,
+        enable_notifications: bool,
     ) -> Result<(), ServiceError> {
         let settings = Settings {
             work_duration,
             short_break_duration,
             long_break_duration,
             pomodori_between_long_breaks,
+            enable_notifications,
         };
         self.task_repository.set_settings(settings).await?;
         Ok(())

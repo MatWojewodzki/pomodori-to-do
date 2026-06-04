@@ -3,5 +3,6 @@ CREATE TABLE IF NOT EXISTS settings (
     work_duration INTEGER NOT NULL,
     short_break_duration INTEGER NOT NULL,
     long_break_duration INTEGER NOT NULL,
-    pomodori_between_long_breaks INTEGER NOT NULL
+    pomodori_between_long_breaks INTEGER NOT NULL,
+    enable_notifications INTEGER NOT NULL CHECK (enable_notifications IN (0, 1))
 )

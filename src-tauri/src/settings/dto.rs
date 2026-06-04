@@ -7,6 +7,7 @@ pub struct SettingsDto {
     pub short_break_duration: u32,
     pub long_break_duration: u32,
     pub pomodori_between_long_breaks: u32,
+    pub enable_notifications: bool,
 }
 
 impl From<Settings> for SettingsDto {
@@ -16,6 +17,7 @@ impl From<Settings> for SettingsDto {
             short_break_duration: value.short_break_duration,
             long_break_duration: value.long_break_duration,
             pomodori_between_long_breaks: value.pomodori_between_long_breaks,
+            enable_notifications: value.enable_notifications,
         }
     }
 }

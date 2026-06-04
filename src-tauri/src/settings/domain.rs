@@ -3,6 +3,7 @@ pub struct Settings {
     pub short_break_duration: u32,
     pub long_break_duration: u32,
     pub pomodori_between_long_breaks: u32,
+    pub enable_notifications: bool,
 }
 
 impl Default for Settings {
@@ -12,6 +13,7 @@ impl Default for Settings {
             short_break_duration: 5 * 60,
             long_break_duration: 15 * 60,
             pomodori_between_long_breaks: 4,
+            enable_notifications: true,
         }
     }
 }

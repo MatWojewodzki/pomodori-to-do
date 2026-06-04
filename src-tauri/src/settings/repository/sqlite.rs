@@ -11,6 +11,7 @@ struct SettingsRow {
     short_break_duration: u32,
     long_break_duration: u32,
     pomodori_between_long_breaks: u32,
+    enable_notifications: i32,
 }
 
 pub struct SettingsRepositorySqlite {
@@ -28,6 +29,7 @@ impl SettingsRepositorySqlite {
             short_break_duration: settings.short_break_duration,
             long_break_duration: settings.long_break_duration,
             pomodori_between_long_breaks: settings.pomodori_between_long_breaks,
+            enable_notifications: if settings.enable_notifications { 1 } else { 0 },
         }
     }
 
@@ -37,6 +39,7 @@ impl SettingsRepositorySqlite {
             short_break_duration: row.short_break_duration,
             long_break_duration: row.long_break_duration,
             pomodori_between_long_breaks: row.pomodori_between_long_breaks,
+            enable_notifications: row.enable_notifications != 0,
         }
     }
 
@@ -54,14 +57,16 @@ impl SettingsRepositorySqlite {
                 work_duration,
                 short_break_duration,
                 long_break_duration,
-                pomodori_between_long_breaks)
-            VALUES (1, ?, ?, ?, ?)
+                pomodori_between_long_breaks,
+                enable_notifications)
+            VALUES (1, ?, ?, ?, ?, ?)
             ";
             let query = sqlx::query(q)
                 .bind(row.work_duration)
                 .bind(row.short_break_duration)
                 .bind(row.long_break_duration)
-                .bind(row.pomodori_between_long_breaks);
+                .bind(row.pomodori_between_long_breaks)
+                .bind(row.enable_notifications);
             query.execute(&self.pools.writer).await?;
         }
         Ok(())
@@ -84,14 +89,16 @@ impl SettingsRepository for SettingsRepositorySqlite {
             SET work_duration = ?, 
                 short_break_duration = ?, 
                 long_break_duration = ?, 
-                pomodori_between_long_breaks = ? 
+                pomodori_between_long_breaks = ?,
+                enable_notifications = ?
             WHERE id = 1
         ";
         let query = sqlx::query(q)
             .bind(row.work_duration)
             .bind(row.short_break_duration)
             .bind(row.long_break_duration)
-            .bind(row.pomodori_between_long_breaks);
+            .bind(row.pomodori_between_long_breaks)
+            .bind(row.enable_notifications);
         query.execute(&self.pools.writer).await?;
         Ok(())
     }

@@ -25,6 +25,9 @@ function SettingsForm(props: SettingsFormProps) {
   const [pomodoriBetweenLongBreaks, setPomodoriBetweenLongBreaks] = useState(
     props.settings.pomodori_between_long_breaks
   )
+  const [enableNotifications, setEnableNotifications] = useState(
+    props.settings.enable_notifications
+  )
 
   const queryClient = useQueryClient()
   const mutation = useMutation({
@@ -43,11 +46,10 @@ function SettingsForm(props: SettingsFormProps) {
         short_break_duration: shortBreakDuration,
         long_break_duration: longBreakDuration,
         pomodori_between_long_breaks: pomodoriBetweenLongBreaks,
+        enable_notifications: enableNotifications,
       },
     })
   }
-
-  const [enableSettings, setEnableSettings] = useState(false)
 
   return (
     <form className="grow flex flex-col" onSubmit={handleSubmit}>
@@ -55,8 +57,8 @@ function SettingsForm(props: SettingsFormProps) {
         <SettingsSection title="Notifications">
           <SwitchSetting
             label="Enable notifications"
-            value={enableSettings}
-            setValue={setEnableSettings}
+            value={enableNotifications}
+            setValue={setEnableNotifications}
           />
         </SettingsSection>
         <SettingsSection title="Timer">
