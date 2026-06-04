@@ -1,6 +1,5 @@
 import useTimerType, { TimerType } from './useTimerType.ts'
 import { useEffect, useRef, useState } from 'react'
-import { showTimerNotification } from '../services/notification.ts'
 import useSessionStorage from './useSessionStorage.ts'
 
 function getDurationS(
@@ -44,7 +43,11 @@ export type UseTimerOptions = {
   shortBreakDurationS: number
   longBreakDurationS: number
   pomodoriBetweenLongBreaks: number
-  workFinishCallback?: () => void
+  timerFinishCallback?: (
+    prevState: TimerType,
+    newState: TimerType,
+    pomodoroCount: number
+  ) => void
 }
 
 export default function useTimer({
@@ -52,7 +55,7 @@ export default function useTimer({
   shortBreakDurationS,
   longBreakDurationS,
   pomodoriBetweenLongBreaks,
-  workFinishCallback,
+  timerFinishCallback,
 }: UseTimerOptions) {
   const { timerType, setTimerType, setTimerTypeToNext } = useTimerType(
     TimerType.WORK,
@@ -149,7 +152,6 @@ export default function useTimer({
 
       if (timerType == TimerType.WORK) {
         setPomodoroCount((val) => val + 1)
-        workFinishCallback?.()
       }
 
       const newState = setTimerTypeToNext(pomodoroCount)
@@ -161,11 +163,7 @@ export default function useTimer({
       )
       setSecondsLeft(newDurationS)
 
-      showTimerNotification(
-        timerType,
-        pomodoroCount,
-        newState == TimerType.LONG_BREAK
-      ).then()
+      timerFinishCallback?.(timerType, newState, pomodoroCount)
     }
 
     function updateTimeLeft() {
@@ -201,7 +199,7 @@ export default function useTimer({
     pausedMsLeft,
     timerType,
     pomodoroCount,
-    workFinishCallback,
+    timerFinishCallback,
     setTimerTypeToNext,
   ])
 
