@@ -8,13 +8,13 @@ export enum TimerType {
 }
 
 function getNextState(
-  pomodoriToLongBreak: number,
+  pomodoriBetweenLongBreaks: number,
   prevState: TimerType,
   completedPomodoroCount: number
 ) {
   return prevState == TimerType.SHORT_BREAK || prevState == TimerType.LONG_BREAK
     ? TimerType.WORK
-    : completedPomodoroCount % pomodoriToLongBreak == 0
+    : completedPomodoroCount % pomodoriBetweenLongBreaks == 0
       ? TimerType.LONG_BREAK
       : TimerType.SHORT_BREAK
 }
