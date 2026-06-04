@@ -7,6 +7,7 @@ import classNames from 'classnames'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import settingsService from '../../services/tauri/settings.ts'
 import SettingsSection from './SettingsSection.tsx'
+import SwitchSetting from './SwitchSetting.tsx'
 
 type SettingsFormProps = {
   settings: SettingsDto
@@ -46,9 +47,18 @@ function SettingsForm(props: SettingsFormProps) {
     })
   }
 
+  const [enableSettings, setEnableSettings] = useState(false)
+
   return (
     <form className="grow flex flex-col" onSubmit={handleSubmit}>
       <div className="grow">
+        <SettingsSection title="Notifications">
+          <SwitchSetting
+            label="Enable notifications"
+            value={enableSettings}
+            setValue={setEnableSettings}
+          />
+        </SettingsSection>
         <SettingsSection title="Timer">
           <DurationSetting
             label="Work duration"
