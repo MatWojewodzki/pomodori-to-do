@@ -29,7 +29,7 @@ function PomodoroPanelContent(props: PomodoroPanelContentProps) {
     },
   })
 
-  const notificationsEnabled = props.settings.enable_notifications
+  const notificationsEnabled = props.settings.notifications_enabled
   const handleTimerFinish = useCallback(
     (prevState: TimerType, newState: TimerType, pomodoroCount: number) => {
       if (notificationsEnabled) {

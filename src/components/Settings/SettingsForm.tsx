@@ -25,8 +25,8 @@ function SettingsForm(props: SettingsFormProps) {
   const [pomodoriBetweenLongBreaks, setPomodoriBetweenLongBreaks] = useState(
     props.settings.pomodori_between_long_breaks
   )
-  const [enableNotifications, setEnableNotifications] = useState(
-    props.settings.enable_notifications
+  const [notificationsEnabled, setNotificationsEnabled] = useState(
+    props.settings.notifications_enabled
   )
 
   const queryClient = useQueryClient()
@@ -46,7 +46,7 @@ function SettingsForm(props: SettingsFormProps) {
         short_break_duration: shortBreakDuration,
         long_break_duration: longBreakDuration,
         pomodori_between_long_breaks: pomodoriBetweenLongBreaks,
-        enable_notifications: enableNotifications,
+        notifications_enabled: notificationsEnabled,
       },
     })
   }
@@ -57,8 +57,8 @@ function SettingsForm(props: SettingsFormProps) {
         <SettingsSection title="Notifications">
           <SwitchSetting
             label="Enable notifications"
-            value={enableNotifications}
-            setValue={setEnableNotifications}
+            value={notificationsEnabled}
+            setValue={setNotificationsEnabled}
           />
         </SettingsSection>
         <SettingsSection title="Timer">

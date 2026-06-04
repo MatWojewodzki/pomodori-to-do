@@ -20,7 +20,7 @@ pub async fn set_settings(
             settings.short_break_duration,
             settings.long_break_duration,
             settings.pomodori_between_long_breaks,
-            settings.enable_notifications,
+            settings.notifications_enabled,
         )
         .await?;
     Ok(())

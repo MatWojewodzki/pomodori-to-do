@@ -4,5 +4,5 @@ CREATE TABLE IF NOT EXISTS settings (
     short_break_duration INTEGER NOT NULL,
     long_break_duration INTEGER NOT NULL,
     pomodori_between_long_breaks INTEGER NOT NULL,
-    enable_notifications INTEGER NOT NULL CHECK (enable_notifications IN (0, 1))
+    notifications_enabled INTEGER NOT NULL CHECK (notifications_enabled IN (0, 1))
 )

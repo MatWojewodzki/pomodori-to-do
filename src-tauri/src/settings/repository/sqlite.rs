@@ -11,7 +11,7 @@ struct SettingsRow {
     short_break_duration: u32,
     long_break_duration: u32,
     pomodori_between_long_breaks: u32,
-    enable_notifications: i32,
+    notifications_enabled: i32,
 }
 
 pub struct SettingsRepositorySqlite {
@@ -29,7 +29,7 @@ impl SettingsRepositorySqlite {
             short_break_duration: settings.short_break_duration,
             long_break_duration: settings.long_break_duration,
             pomodori_between_long_breaks: settings.pomodori_between_long_breaks,
-            enable_notifications: if settings.enable_notifications { 1 } else { 0 },
+            notifications_enabled: if settings.notifications_enabled { 1 } else { 0 },
         }
     }
 
@@ -39,7 +39,7 @@ impl SettingsRepositorySqlite {
             short_break_duration: row.short_break_duration,
             long_break_duration: row.long_break_duration,
             pomodori_between_long_breaks: row.pomodori_between_long_breaks,
-            enable_notifications: row.enable_notifications != 0,
+            notifications_enabled: row.notifications_enabled != 0,
         }
     }
 
@@ -58,7 +58,7 @@ impl SettingsRepositorySqlite {
                 short_break_duration,
                 long_break_duration,
                 pomodori_between_long_breaks,
-                enable_notifications)
+                notifications_enabled)
             VALUES (1, ?, ?, ?, ?, ?)
             ";
             let query = sqlx::query(q)
@@ -66,7 +66,7 @@ impl SettingsRepositorySqlite {
                 .bind(row.short_break_duration)
                 .bind(row.long_break_duration)
                 .bind(row.pomodori_between_long_breaks)
-                .bind(row.enable_notifications);
+                .bind(row.notifications_enabled);
             query.execute(&self.pools.writer).await?;
         }
         Ok(())
@@ -85,12 +85,12 @@ impl SettingsRepository for SettingsRepositorySqlite {
     async fn set_settings(&self, settings: Settings) -> Result<(), RepositoryError> {
         let row = SettingsRepositorySqlite::settings_to_row(settings);
         let q = "
-            UPDATE settings 
-            SET work_duration = ?, 
-                short_break_duration = ?, 
-                long_break_duration = ?, 
+            UPDATE settings
+            SET work_duration = ?,
+                short_break_duration = ?,
+                long_break_duration = ?,
                 pomodori_between_long_breaks = ?,
-                enable_notifications = ?
+                notifications_enabled = ?
             WHERE id = 1
         ";
         let query = sqlx::query(q)
@@ -98,7 +98,7 @@ impl SettingsRepository for SettingsRepositorySqlite {
             .bind(row.short_break_duration)
             .bind(row.long_break_duration)
             .bind(row.pomodori_between_long_breaks)
-            .bind(row.enable_notifications);
+            .bind(row.notifications_enabled);
         query.execute(&self.pools.writer).await?;
         Ok(())
     }
