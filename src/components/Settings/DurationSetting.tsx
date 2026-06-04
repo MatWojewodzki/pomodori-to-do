@@ -40,33 +40,35 @@ function DurationSetting(props: DurationSettingProps) {
   const secondsInputId = `${props.label}-secondsInput`
 
   return (
-    <fieldset className="flex items-center py-3">
-      <legend className="sr-only">{props.label}</legend>
-      <div className="flex-1">{props.label}</div>
-      <div className="flex items-center gap-1">
-        <label htmlFor={minutesInputId} className="sr-only">
-          Minutes
-        </label>
-        <DurationInput
-          id={minutesInputId}
-          value={minutes}
-          setValue={handleMinutesChange}
-          blurAfterFilled={false}
-          focusNextInput={() => secondsRef.current?.focus()}
-        />
-        <span>:</span>
-        <label htmlFor={secondsInputId} className="sr-only">
-          Seconds
-        </label>
-        <DurationInput
-          id={secondsInputId}
-          value={seconds}
-          setValue={handleSecondsChange}
-          blurAfterFilled={true}
-          ref={secondsRef}
-        />
-      </div>
-    </fieldset>
+    <li>
+      <fieldset className="flex items-center">
+        <legend className="sr-only">{props.label}</legend>
+        <div className="flex-1">{props.label}</div>
+        <div className="flex items-center gap-1">
+          <label htmlFor={minutesInputId} className="sr-only">
+            Minutes
+          </label>
+          <DurationInput
+            id={minutesInputId}
+            value={minutes}
+            setValue={handleMinutesChange}
+            blurAfterFilled={false}
+            focusNextInput={() => secondsRef.current?.focus()}
+          />
+          <span>:</span>
+          <label htmlFor={secondsInputId} className="sr-only">
+            Seconds
+          </label>
+          <DurationInput
+            id={secondsInputId}
+            value={seconds}
+            setValue={handleSecondsChange}
+            blurAfterFilled={true}
+            ref={secondsRef}
+          />
+        </div>
+      </fieldset>
+    </li>
   )
 }
 

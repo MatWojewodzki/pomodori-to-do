@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import React, { useRef, useState } from 'react'
+import Setting from './Setting.tsx'
 
 type NumberSettingProps = {
   label: string
@@ -35,10 +36,7 @@ function NumberSetting(props: NumberSettingProps) {
   }
 
   return (
-    <div className="py-3 flex items-center">
-      <label htmlFor={inputId} className="flex-1">
-        {props.label}
-      </label>
+    <Setting label={props.label} inputId={inputId}>
       <input
         ref={inputRef}
         id={inputId}
@@ -53,7 +51,7 @@ function NumberSetting(props: NumberSettingProps) {
         onBlur={handleBlur}
         autoComplete="off"
       />
-    </div>
+    </Setting>
   )
 }
 

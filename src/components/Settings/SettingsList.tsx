@@ -5,7 +5,7 @@ type SettingsListProps = {
 }
 
 function SettingsList(props: SettingsListProps) {
-  return <ul className="flex flex-col">{props.children}</ul>
+  return <ul className="flex flex-col gap-4">{props.children}</ul>
 }
 
 export default SettingsList
