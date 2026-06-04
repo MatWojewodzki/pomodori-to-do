@@ -31,7 +31,7 @@ function SettingsButton() {
             'border border-neutral-600'
           )}
         >
-          <Dialog.Title className="mb-8 font-bold text-xl text-center">
+          <Dialog.Title className="font-bold text-xl text-center">
             Settings
           </Dialog.Title>
           <Dialog.Description className="sr-only">
