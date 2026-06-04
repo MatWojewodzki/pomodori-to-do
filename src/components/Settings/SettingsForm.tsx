@@ -1,5 +1,3 @@
-import SettingsSectionHeader from './SettingsSectionHeader'
-import SettingsList from './SettingsList'
 import DurationSetting from './DurationSetting'
 import NumberSetting from './NumberSetting'
 import { SettingsDto } from '../../types/generated/SettingsDto.ts'
@@ -8,6 +6,7 @@ import { Dialog } from 'radix-ui'
 import classNames from 'classnames'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import settingsService from '../../services/tauri/settings.ts'
+import SettingsSection from './SettingsSection.tsx'
 
 type SettingsFormProps = {
   settings: SettingsDto
@@ -50,8 +49,7 @@ function SettingsForm(props: SettingsFormProps) {
   return (
     <form className="grow flex flex-col" onSubmit={handleSubmit}>
       <div className="grow">
-        <SettingsSectionHeader>Timer</SettingsSectionHeader>
-        <SettingsList>
+        <SettingsSection title="Timer">
           <DurationSetting
             label="Work duration"
             value={workDuration}
@@ -73,7 +71,7 @@ function SettingsForm(props: SettingsFormProps) {
             setValue={setPomodoriBetweenLongBreaks}
             minValue={1}
           />
-        </SettingsList>
+        </SettingsSection>
       </div>
       <div className="flex justify-end gap-4">
         <Dialog.Close
