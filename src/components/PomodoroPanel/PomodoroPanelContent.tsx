@@ -29,19 +29,21 @@ function PomodoroPanelContent(props: PomodoroPanelContentProps) {
     },
   })
 
+  const notificationsEnabled = props.settings.enable_notifications
   const handleTimerFinish = useCallback(
     (prevState: TimerType, newState: TimerType, pomodoroCount: number) => {
-      showTimerNotification(
-        prevState,
-        pomodoroCount,
-        newState == TimerType.LONG_BREAK
-      ).then()
-
+      if (notificationsEnabled) {
+        showTimerNotification(
+          prevState,
+          pomodoroCount,
+          newState == TimerType.LONG_BREAK
+        ).then()
+      }
       if (prevState == TimerType.WORK && activeTask) {
         mutation.mutate({ id: activeTask })
       }
     },
-    [activeTask, mutation]
+    [activeTask, mutation, notificationsEnabled]
   )
 
   const timer = useTimer({
