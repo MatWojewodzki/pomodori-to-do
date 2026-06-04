@@ -47,6 +47,7 @@ impl SettingsRepositorySqlite {
 
         if id.is_none() {
             let settings = Settings::default();
+            let row = SettingsRepositorySqlite::settings_to_row(settings);
             let q = "\
             INSERT INTO settings (
                 id,
@@ -57,10 +58,10 @@ impl SettingsRepositorySqlite {
             VALUES (1, ?, ?, ?, ?)
             ";
             let query = sqlx::query(q)
-                .bind(settings.work_duration)
-                .bind(settings.short_break_duration)
-                .bind(settings.long_break_duration)
-                .bind(settings.pomodori_between_long_breaks);
+                .bind(row.work_duration)
+                .bind(row.short_break_duration)
+                .bind(row.long_break_duration)
+                .bind(row.pomodori_between_long_breaks);
             query.execute(&self.pools.writer).await?;
         }
         Ok(())
