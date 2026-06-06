@@ -85,7 +85,7 @@ function SettingsForm(props: SettingsFormProps) {
           />
         </SettingsSection>
       </div>
-      <div className="flex justify-end gap-4">
+      <div className="mt-16 flex justify-end gap-4">
         <Dialog.Close
           type="button"
           className={classNames(

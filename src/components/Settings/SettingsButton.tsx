@@ -25,10 +25,10 @@ function SettingsButton() {
         <Dialog.Overlay className="fixed inset-0 bg-neutral-500/30" />
         <Dialog.Content
           className={classNames(
-            'flex flex-col',
+            'flex flex-col p-6 text-white overflow-y-auto',
             'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
-            'w-[90vw] max-w-xl h-[90vh] p-6 rounded-md bg-neutral-800 text-white',
-            'border border-neutral-600'
+            'w-screen max-w-xl max-h-screen',
+            'rounded-md bg-neutral-800 border border-neutral-600'
           )}
         >
           <Dialog.Title className="font-bold text-xl text-center">
