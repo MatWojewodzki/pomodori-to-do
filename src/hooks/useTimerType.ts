@@ -8,37 +8,50 @@ export enum TimerType {
 }
 
 function getNextState(
-  pomodoriToLongBreak: number,
+  pomodoriBetweenLongBreaks: number,
   prevState: TimerType,
-  completedPomodoroCount: number
+  completedPomodoroCount: number,
+  lastPomodoroCountWithLongBreak: number
 ) {
   return prevState == TimerType.SHORT_BREAK || prevState == TimerType.LONG_BREAK
     ? TimerType.WORK
-    : completedPomodoroCount % pomodoriToLongBreak == 0
+    : completedPomodoroCount - lastPomodoroCountWithLongBreak >=
+        pomodoriBetweenLongBreaks
       ? TimerType.LONG_BREAK
       : TimerType.SHORT_BREAK
 }
 
 export default function useTimerType(
   initialValue: TimerType,
-  pomodoriToLongBreak: number
+  pomodoriBetweenLongBreaks: number
 ) {
   const [timerType, setTimerType] = useSessionStorage<TimerType>(
     'timerType',
     initialValue
   )
+  const [lastPomodoroCountWithLongBreak, setLastPomodoroCountWithLongBreak] =
+    useSessionStorage('lastPomodoroCountWithLongBreak', 0)
 
   const setTimerTypeToNext = useCallback(
     (completedPomodoroCount: number) => {
       const nextState = getNextState(
-        pomodoriToLongBreak,
+        pomodoriBetweenLongBreaks,
         timerType,
-        completedPomodoroCount
+        completedPomodoroCount,
+        lastPomodoroCountWithLongBreak
       )
       setTimerType(nextState)
+      if (nextState == TimerType.LONG_BREAK) {
+        setLastPomodoroCountWithLongBreak(completedPomodoroCount)
+      }
       return nextState
     },
-    [pomodoriToLongBreak, timerType]
+    [
+      pomodoriBetweenLongBreaks,
+      timerType,
+      lastPomodoroCountWithLongBreak,
+      setLastPomodoroCountWithLongBreak,
+    ]
   )
 
   return {

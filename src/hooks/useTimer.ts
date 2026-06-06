@@ -1,20 +1,18 @@
 import useTimerType, { TimerType } from './useTimerType.ts'
 import { useEffect, useRef, useState } from 'react'
-import { showTimerNotification } from '../services/notification.ts'
 import useSessionStorage from './useSessionStorage.ts'
 
-const POMODORI_TO_LONG_BREAK = 4
-
-const WORK_DURATION_S = 25 * 60
-const SHORT_BREAK_DURATION_S = 5 * 60
-const LONG_BREAK_DURATION_S = 15 * 60
-
-function getDurationS(state: TimerType) {
+function getDurationS(
+  workDurationS: number,
+  shortBreakDurationS: number,
+  longBreakDurationS: number,
+  state: TimerType
+) {
   return state == TimerType.WORK
-    ? WORK_DURATION_S
+    ? workDurationS
     : state == TimerType.SHORT_BREAK
-      ? SHORT_BREAK_DURATION_S
-      : LONG_BREAK_DURATION_S
+      ? shortBreakDurationS
+      : longBreakDurationS
 }
 
 function getInitialEndTime(pausedMsLeft: number | null) {
@@ -22,20 +20,46 @@ function getInitialEndTime(pausedMsLeft: number | null) {
   return null
 }
 
-function getSecondsLeft(timerType: TimerType, endTime: number | null) {
-  if (!endTime) return getDurationS(timerType)
+function getSecondsLeft(
+  workDurationS: number,
+  shortBreakDurationS: number,
+  longBreakDurationS: number,
+  timerType: TimerType,
+  endTime: number | null
+) {
+  if (!endTime)
+    return getDurationS(
+      workDurationS,
+      shortBreakDurationS,
+      longBreakDurationS,
+      timerType
+    )
   const msLeft = endTime - Date.now()
   return Math.ceil(msLeft / 1000)
 }
 
 export type UseTimerOptions = {
-  workFinishCallback?: () => void
+  workDurationS: number
+  shortBreakDurationS: number
+  longBreakDurationS: number
+  pomodoriBetweenLongBreaks: number
+  timerFinishCallback?: (
+    prevState: TimerType,
+    newState: TimerType,
+    pomodoroCount: number
+  ) => void
 }
 
-export default function useTimer(options?: UseTimerOptions) {
+export default function useTimer({
+  workDurationS,
+  shortBreakDurationS,
+  longBreakDurationS,
+  pomodoriBetweenLongBreaks,
+  timerFinishCallback,
+}: UseTimerOptions) {
   const { timerType, setTimerType, setTimerTypeToNext } = useTimerType(
     TimerType.WORK,
-    POMODORI_TO_LONG_BREAK
+    pomodoriBetweenLongBreaks
   )
   const [pausedMsLeft, setPausedMsLeft] = useSessionStorage<number | null>(
     'pausedMsLeft',
@@ -45,7 +69,12 @@ export default function useTimer(options?: UseTimerOptions) {
     'pomodoroCount',
     1
   )
-  const duration_s = getDurationS(timerType)
+  const durationS = getDurationS(
+    workDurationS,
+    shortBreakDurationS,
+    longBreakDurationS,
+    timerType
+  )
 
   const initialEndTime = getInitialEndTime(pausedMsLeft)
   const [endTime, setEndTime] = useSessionStorage<number | null>(
@@ -54,12 +83,18 @@ export default function useTimer(options?: UseTimerOptions) {
     initialEndTime !== null
   )
   const [secondsLeft, setSecondsLeft] = useState(
-    getSecondsLeft(timerType, endTime)
+    getSecondsLeft(
+      workDurationS,
+      shortBreakDurationS,
+      longBreakDurationS,
+      timerType,
+      endTime
+    )
   )
   const intervalRef = useRef<number | null>(null)
 
   function start() {
-    setEndTime(Date.now() + duration_s * 1000)
+    setEndTime(Date.now() + durationS * 1000)
     setPausedMsLeft(null)
   }
 
@@ -77,8 +112,34 @@ export default function useTimer(options?: UseTimerOptions) {
   function reset(newState: TimerType) {
     setEndTime(null)
     setPausedMsLeft(null)
-    setSecondsLeft(getDurationS(newState))
+    setSecondsLeft(
+      getDurationS(
+        workDurationS,
+        shortBreakDurationS,
+        longBreakDurationS,
+        newState
+      )
+    )
   }
+
+  useEffect(() => {
+    if (endTime) return
+    setSecondsLeft(
+      getDurationS(
+        workDurationS,
+        shortBreakDurationS,
+        longBreakDurationS,
+        timerType
+      )
+    )
+  }, [
+    workDurationS,
+    shortBreakDurationS,
+    longBreakDurationS,
+    endTime,
+    setSecondsLeft,
+    timerType,
+  ])
 
   useEffect(() => {
     if (!endTime || pausedMsLeft) {
@@ -91,18 +152,18 @@ export default function useTimer(options?: UseTimerOptions) {
 
       if (timerType == TimerType.WORK) {
         setPomodoroCount((val) => val + 1)
-        options?.workFinishCallback?.()
       }
 
       const newState = setTimerTypeToNext(pomodoroCount)
-      const newDurationS = getDurationS(newState)
+      const newDurationS = getDurationS(
+        workDurationS,
+        shortBreakDurationS,
+        longBreakDurationS,
+        newState
+      )
       setSecondsLeft(newDurationS)
 
-      showTimerNotification(
-        timerType,
-        pomodoroCount,
-        newState == TimerType.LONG_BREAK
-      ).then()
+      timerFinishCallback?.(timerType, newState, pomodoroCount)
     }
 
     function updateTimeLeft() {
@@ -111,7 +172,13 @@ export default function useTimer(options?: UseTimerOptions) {
         return
       }
 
-      const newSecondsLeft = getSecondsLeft(timerType, endTime)
+      const newSecondsLeft = getSecondsLeft(
+        workDurationS,
+        shortBreakDurationS,
+        longBreakDurationS,
+        timerType,
+        endTime
+      )
       if (newSecondsLeft <= 0) {
         if (intervalRef.current) clearInterval(intervalRef.current)
         handleFinish()
@@ -125,18 +192,21 @@ export default function useTimer(options?: UseTimerOptions) {
       if (intervalRef.current) clearInterval(intervalRef.current)
     }
   }, [
+    workDurationS,
+    shortBreakDurationS,
+    longBreakDurationS,
     endTime,
     pausedMsLeft,
     timerType,
     pomodoroCount,
-    options?.workFinishCallback,
+    timerFinishCallback,
     setTimerTypeToNext,
   ])
 
   const isRunning = endTime !== null
   const isPaused = pausedMsLeft !== null
 
-  const percentageCompleted = (1 - secondsLeft / duration_s) * 100
+  const percentageCompleted = (1 - secondsLeft / durationS) * 100
 
   return {
     secondsLeft: Math.max(0, secondsLeft),
