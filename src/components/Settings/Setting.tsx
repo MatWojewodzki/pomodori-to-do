@@ -8,7 +8,7 @@ type SettingProps = {
 
 function Setting(props: SettingProps) {
   return (
-    <li className="flex items-center">
+    <li className="flex items-center gap-6">
       <label htmlFor={props.inputId} className="flex-1">
         {props.label}
       </label>

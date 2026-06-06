@@ -41,7 +41,7 @@ function DurationSetting(props: DurationSettingProps) {
 
   return (
     <li>
-      <fieldset className="flex items-center">
+      <fieldset className="flex items-center gap-6">
         <legend className="sr-only">{props.label}</legend>
         <div className="flex-1">{props.label}</div>
         <div className="flex items-center gap-1">
