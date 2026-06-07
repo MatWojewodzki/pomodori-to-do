@@ -1,6 +1,7 @@
 import useTimerType, { TimerType } from './useTimerType.ts'
 import { useEffect, useRef, useState } from 'react'
 import useSessionStorage from './useSessionStorage.ts'
+import useSettings from './useSettings.ts'
 
 function getDurationS(
   workDurationS: number,
@@ -39,10 +40,6 @@ function getSecondsLeft(
 }
 
 export type UseTimerOptions = {
-  workDurationS: number
-  shortBreakDurationS: number
-  longBreakDurationS: number
-  pomodoriBetweenLongBreaks: number
   timerFinishCallback?: (
     prevState: TimerType,
     newState: TimerType,
@@ -50,13 +47,14 @@ export type UseTimerOptions = {
   ) => void
 }
 
-export default function useTimer({
-  workDurationS,
-  shortBreakDurationS,
-  longBreakDurationS,
-  pomodoriBetweenLongBreaks,
-  timerFinishCallback,
-}: UseTimerOptions) {
+export default function useTimer({ timerFinishCallback }: UseTimerOptions) {
+  const {
+    work_duration: workDurationS,
+    short_break_duration: shortBreakDurationS,
+    long_break_duration: longBreakDurationS,
+    pomodori_between_long_breaks: pomodoriBetweenLongBreaks,
+  } = useSettings()
+
   const { timerType, setTimerType, setTimerTypeToNext } = useTimerType(
     TimerType.WORK,
     pomodoriBetweenLongBreaks
