@@ -9,14 +9,14 @@ import taskService from '../../services/tauri/task.ts'
 import { useCallback } from 'react'
 import { TimerType } from '../../hooks/useTimerType.ts'
 import useTimer from '../../hooks/useTimer.ts'
-import useSettings from '../../hooks/useSettings.ts'
-import { showTimerNotification } from '../../services/notification.ts'
+import useNotification from '../../hooks/useNotification.ts'
 
 type PomodoroPanelProps = {
   isTodoPanelOpen: boolean
 }
 
 function PomodoroPanel(props: PomodoroPanelProps) {
+  const { trySendTimerNotification } = useNotification()
   const [activeTask, setActiveTask] = useSessionStorage<string | null>(
     'activeTask',
     null
@@ -30,21 +30,18 @@ function PomodoroPanel(props: PomodoroPanelProps) {
     },
   })
 
-  const { notifications_enabled: notificationsEnabled } = useSettings()
   const handleTimerFinish = useCallback(
     (prevState: TimerType, newState: TimerType, pomodoroCount: number) => {
-      if (notificationsEnabled) {
-        showTimerNotification(
-          prevState,
-          pomodoroCount,
-          newState == TimerType.LONG_BREAK
-        ).then()
-      }
+      trySendTimerNotification(
+        prevState,
+        pomodoroCount,
+        newState == TimerType.LONG_BREAK
+      ).then()
       if (prevState == TimerType.WORK && activeTask) {
         mutation.mutate({ id: activeTask })
       }
     },
-    [activeTask, mutation, notificationsEnabled]
+    [activeTask, mutation, trySendTimerNotification]
   )
 
   const timer = useTimer({
