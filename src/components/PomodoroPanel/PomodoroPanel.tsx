@@ -10,7 +10,7 @@ import { useCallback } from 'react'
 import { TimerType } from '../../hooks/useTimerType.ts'
 import useTimer from '../../hooks/useTimer.ts'
 import notificationService from '../../services/notification.ts'
-import useSettings from '../../hooks/useSettings.ts'
+import useSettings from '../../contexts/settings.tsx'
 
 type PomodoroPanelProps = {
   isTodoPanelOpen: boolean

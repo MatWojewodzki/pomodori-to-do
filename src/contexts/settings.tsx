@@ -1,4 +1,4 @@
-import React, { createContext } from 'react'
+import React, { createContext, useContext } from 'react'
 import { SettingsDto } from '../types/generated/SettingsDto.ts'
 import settingsService from '../services/tauri/settings.ts'
 import { useQuery } from '@tanstack/react-query'
@@ -31,4 +31,12 @@ export function SettingsProvider(props: SettingsContextProviderProps) {
       {props.children}
     </SettingsContext.Provider>
   )
+}
+
+export default function useSettings() {
+  const contextValue = useContext(SettingsContext)
+  if (!contextValue) {
+    throw new Error('useSettings must be used within a SettingsProvider')
+  }
+  return contextValue.settings
 }

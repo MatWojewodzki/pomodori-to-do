@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import settingsService from '../../services/tauri/settings.ts'
 import SettingsSection from './SettingsSection.tsx'
 import SwitchSetting from './SwitchSetting.tsx'
-import useSettings from '../../hooks/useSettings.ts'
+import useSettings from '../../contexts/settings.tsx'
 
 type SettingsFormProps = {
   closeDialog: () => void

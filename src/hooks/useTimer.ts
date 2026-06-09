@@ -1,7 +1,7 @@
 import useTimerType, { TimerType } from './useTimerType.ts'
 import { useEffect, useRef, useState } from 'react'
 import useSessionStorage from './useSessionStorage.ts'
-import useSettings from './useSettings.ts'
+import useSettings from './../contexts/settings.tsx'
 
 function getDurationS(
   workDurationS: number,
