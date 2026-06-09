@@ -8,8 +8,6 @@ import settingsService from '../../services/tauri/settings.ts'
 import SettingsSection from './SettingsSection.tsx'
 import SwitchSetting from './SwitchSetting.tsx'
 import useSettings from '../../hooks/useSettings.ts'
-import useNotification from '../../hooks/useNotification.ts'
-import Warning from './Warning.tsx'
 
 type SettingsFormProps = {
   closeDialog: () => void
@@ -17,8 +15,6 @@ type SettingsFormProps = {
 
 function Settings(props: SettingsFormProps) {
   const settings = useSettings()
-  const { notificationPermissionGranted, requestNotificationPermission } =
-    useNotification()
 
   const [workDuration, setWorkDuration] = useState(settings.work_duration)
   const [shortBreakDuration, setShortBreakDuration] = useState(
@@ -43,13 +39,6 @@ function Settings(props: SettingsFormProps) {
     },
   })
 
-  function handleNotificationsEnabledChange(value: boolean) {
-    if (!notificationPermissionGranted && value) {
-      requestNotificationPermission().then()
-    }
-    setNotificationsEnabled(value)
-  }
-
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     mutation.mutate({
@@ -70,11 +59,8 @@ function Settings(props: SettingsFormProps) {
           <SwitchSetting
             label="Enable notifications"
             value={notificationsEnabled}
-            setValue={handleNotificationsEnabledChange}
+            setValue={setNotificationsEnabled}
           />
-          {!notificationPermissionGranted && notificationsEnabled && (
-            <Warning text="Notifications are currently blocked by your system settings." />
-          )}
         </SettingsSection>
         <SettingsSection title="Timer">
           <DurationSetting

@@ -1,9 +1,5 @@
 import { TimerType } from '../hooks/useTimerType.ts'
-import {
-  isPermissionGranted,
-  requestPermission as tauriRequestPermission,
-  sendNotification,
-} from '@tauri-apps/plugin-notification'
+import { sendNotification } from '@tauri-apps/plugin-notification'
 
 function getOrdinal(n: number) {
   const s = ['th', 'st', 'nd', 'rd']
@@ -12,13 +8,6 @@ function getOrdinal(n: number) {
 }
 
 const notificationService = {
-  isPermissionGranted,
-
-  requestPermission: async () => {
-    const permission = await tauriRequestPermission()
-    return permission === 'granted'
-  },
-
   sendTimerNotification: async (
     finishedState: TimerType,
     pomodoroCount: number,

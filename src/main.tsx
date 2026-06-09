@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Tooltip } from 'radix-ui'
 import { SettingsProvider } from './contexts/settings.tsx'
-import { NotificationProvider } from './contexts/notification.tsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,10 +20,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <Tooltip.Provider>
       <QueryClientProvider client={queryClient}>
         <SettingsProvider>
-          <NotificationProvider>
-            <App />
-            <ReactQueryDevtools initialIsOpen={false} />
-          </NotificationProvider>
+          <App />
+          <ReactQueryDevtools initialIsOpen={false} />
         </SettingsProvider>
       </QueryClientProvider>
     </Tooltip.Provider>
