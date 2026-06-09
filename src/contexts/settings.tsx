@@ -2,6 +2,7 @@ import React, { createContext } from 'react'
 import { SettingsDto } from '../types/generated/SettingsDto.ts'
 import settingsService from '../services/tauri/settings.ts'
 import { useQuery } from '@tanstack/react-query'
+import ErrorMessage from '../components/ErrorMessage.tsx'
 
 type SettingsContextType = {
   settings: SettingsDto
@@ -19,13 +20,10 @@ export function SettingsProvider(props: SettingsContextProviderProps) {
     queryFn: settingsService.getSettings,
   })
 
-  if (settingsResult.isPending) {
-    return <div>Loading...</div> // TODO: proper loading indicator
-  }
   if (settingsResult.isError) {
-    return <div>Error loading settings</div> // TODO: proper error handling
+    return <ErrorMessage text="Failed to load settings" />
   }
-
+  if (!settingsResult.isSuccess) return
   return (
     <SettingsContext.Provider value={{ settings: settingsResult.data }}>
       {props.children}
