@@ -2,10 +2,12 @@ import React, { createContext } from 'react'
 import useSessionStorage from '../hooks/useSessionStorage.ts'
 import notificationService from '../services/notification.ts'
 import useSettings from '../hooks/useSettings.ts'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 export type NotificationContextType = {
-  allowNextPermissionPrompt: () => void
+  notificationPermissionGranted: boolean
   trySendTimerNotification: typeof notificationService.sendTimerNotification
+  requestNotificationPermission: () => Promise<boolean>
 }
 
 export const NotificationContext =
@@ -22,7 +24,20 @@ export function NotificationProvider(props: NotificationProviderProps) {
     false
   )
 
-  const allowNextPermissionPrompt = () => setHasAskedPermission(false)
+  const queryClient = useQueryClient()
+  const permissionGrantedResult = useQuery({
+    queryKey: ['notificationPermissionGranted'],
+    queryFn: notificationService.isPermissionGranted,
+  })
+
+  async function requestNotificationPermission() {
+    setHasAskedPermission(true)
+    const newPermission = await notificationService.requestPermission()
+    await queryClient.invalidateQueries({
+      queryKey: ['notificationPermissionGranted'],
+    })
+    return newPermission
+  }
 
   const trySendTimerNotification = async (
     finishedState: Parameters<
@@ -44,8 +59,7 @@ export function NotificationProvider(props: NotificationProviderProps) {
         isLongBreakNext
       )
     } else if (!hasAskedPermission) {
-      const newPermissionGranted = await notificationService.requestPermission()
-      setHasAskedPermission(true)
+      const newPermissionGranted = await requestNotificationPermission()
       if (newPermissionGranted) {
         await notificationService.sendTimerNotification(
           finishedState,
@@ -56,11 +70,19 @@ export function NotificationProvider(props: NotificationProviderProps) {
     }
   }
 
+  if (permissionGrantedResult.isPending) {
+    return <div>Loading...</div> // TODO: proper loading indicator
+  }
+  if (permissionGrantedResult.isError) {
+    return <div>Error while loading notification permission state</div> // TODO: proper error handling
+  }
+
   return (
     <NotificationContext.Provider
       value={{
-        allowNextPermissionPrompt,
+        notificationPermissionGranted: permissionGrantedResult.data,
         trySendTimerNotification,
+        requestNotificationPermission,
       }}
     >
       {props.children}
