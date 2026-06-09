@@ -5,7 +5,7 @@ import CheckBoxOutlineBlank from '../../assets/icons/check_box_outline_blank_22d
 import DeleteIcon from '../../assets/icons/delete_22dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
 import todoService from '../../services/tauri/todo.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import Tooltip from '../Tooltip.tsx'
+import Tooltip from '../common/Tooltip.tsx'
 
 export type TodoListItemProps = {
   todo: TodoDto

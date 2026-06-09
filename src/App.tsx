@@ -1,8 +1,8 @@
 import './main.css'
-import LeftMenu from './components/LeftMenu.tsx'
+import LeftMenu from './components/layout/LeftMenu.tsx'
 import TodoPanel from './components/TodoPanel/TodoPanel.tsx'
 import PomodoroPanel from './components/PomodoroPanel/PomodoroPanel.tsx'
-import PanelGap from './components/PanelGap.tsx'
+import PanelGap from './components/layout/PanelGap.tsx'
 import { useState } from 'react'
 import classNames from 'classnames'
 

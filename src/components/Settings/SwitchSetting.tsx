@@ -1,5 +1,5 @@
 import Setting from './Setting.tsx'
-import Switch from '../Switch.tsx'
+import Switch from '../common/Switch.tsx'
 
 type SwitchSettingProps = {
   label: string

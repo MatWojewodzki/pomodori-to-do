@@ -6,7 +6,7 @@ import TaskCreationForm from './TaskCreationForm.tsx'
 import { Timer } from '../../../hooks/useTimer.ts'
 import { useQuery } from '@tanstack/react-query'
 import taskService from '../../../services/tauri/task.ts'
-import ErrorMessage from '../../ErrorMessage.tsx'
+import ErrorMessage from '../../common/ErrorMessage.tsx'
 
 export type TaskSectionProps = {
   activeTask: string | null

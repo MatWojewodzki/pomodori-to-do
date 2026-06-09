@@ -2,7 +2,7 @@ import React, { createContext, useContext } from 'react'
 import { SettingsDto } from '../types/generated/SettingsDto.ts'
 import settingsService from '../services/tauri/settings.ts'
 import { useQuery } from '@tanstack/react-query'
-import ErrorMessage from '../components/ErrorMessage.tsx'
+import ErrorMessage from '../components/common/ErrorMessage.tsx'
 
 type SettingsContextType = {
   settings: SettingsDto

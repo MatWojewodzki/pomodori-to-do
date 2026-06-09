@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import todoService from '../../services/tauri/todo.ts'
 import TodoListItem from './TodoListItem.tsx'
-import ErrorMessage from '../ErrorMessage.tsx'
+import ErrorMessage from '../common/ErrorMessage.tsx'
 
 function TodoList() {
   const result = useQuery({

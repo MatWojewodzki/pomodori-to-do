@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import classNames from 'classnames'
-import Tooltip from '../../Tooltip.tsx'
+import Tooltip from '../../common/Tooltip.tsx'
 
 type TaskFormProps = {
   handleSubmit: () => void
