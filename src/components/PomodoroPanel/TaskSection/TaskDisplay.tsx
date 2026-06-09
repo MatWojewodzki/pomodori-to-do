@@ -6,7 +6,7 @@ import EditIcon from '../../../assets/icons/edit_20dp_000000_FILL0_wght400_GRAD0
 import DeleteIcon from '../../../assets/icons/delete_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
 import taskService from '../../../services/tauri/task.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import Tooltip from '../../Tooltip.tsx'
+import Tooltip from '../../common/Tooltip.tsx'
 import CheckBoxOutlineBlankIcon from '../../../assets/icons/check_box_outline_blank_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
 import CheckBoxIcon from '../../../assets/icons/check_box_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
 

@@ -2,7 +2,7 @@ import { Dialog } from 'radix-ui'
 import classNames from 'classnames'
 import SettingsIcon from '../../assets/icons/settings_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
 import CloseIcon from '../../assets/icons/close_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
-import Tooltip from '../Tooltip.tsx'
+import Tooltip from '../common/Tooltip.tsx'
 import Settings from './Settings.tsx'
 import { useState } from 'react'
 

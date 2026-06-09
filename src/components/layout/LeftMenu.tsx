@@ -1,8 +1,8 @@
-import ChecklistIcon from '../assets/icons/checklist_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
+import ChecklistIcon from '../../assets/icons/checklist_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
 import classNames from 'classnames'
 import React from 'react'
-import Tooltip from './Tooltip.tsx'
-import SettingsButton from './Settings/SettingsButton.tsx'
+import Tooltip from '../common/Tooltip.tsx'
+import SettingsButton from '../Settings/SettingsButton.tsx'
 
 type LeftMenuProps = {
   isTodoPanelOpen: boolean
