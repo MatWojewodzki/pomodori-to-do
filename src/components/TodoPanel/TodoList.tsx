@@ -1,12 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
 import todoService from '../../services/tauri/todo.ts'
 import TodoListItem from './TodoListItem.tsx'
+import ErrorMessage from '../ErrorMessage.tsx'
 
 function TodoList() {
   const result = useQuery({
     queryKey: ['todos'],
     queryFn: todoService.getTodos,
   })
+  if (result.isError) return <ErrorMessage text="Failed to load todos." />
   if (!result.isSuccess) return
   if (result.data.length > 0) {
     return (
