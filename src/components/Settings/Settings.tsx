@@ -9,6 +9,7 @@ import SettingsSection from './SettingsSection.tsx'
 import SwitchSetting from './SwitchSetting.tsx'
 import useSettings from '../../hooks/useSettings.ts'
 import useNotification from '../../hooks/useNotification.ts'
+import Warning from './Warning.tsx'
 
 type SettingsFormProps = {
   closeDialog: () => void
@@ -71,6 +72,9 @@ function Settings(props: SettingsFormProps) {
             value={notificationsEnabled}
             setValue={handleNotificationsEnabledChange}
           />
+          {!notificationPermissionGranted && notificationsEnabled && (
+            <Warning text="Notifications are currently blocked by your system settings." />
+          )}
         </SettingsSection>
         <SettingsSection title="Timer">
           <DurationSetting
