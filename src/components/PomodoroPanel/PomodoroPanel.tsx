@@ -1,22 +1,57 @@
 import Panel from '../Panel/Panel.tsx'
 import classNames from 'classnames'
-import settingsService from '../../services/tauri/settings.ts'
-import { useQuery } from '@tanstack/react-query'
-import PomodoroPanelContent from './PomodoroPanelContent.tsx'
+import PanelHeader from '../Panel/PanelHeader.tsx'
+import TimerSection from './TimerSection/TimerSection.tsx'
+import TaskSection from './TaskSection/TaskSection.tsx'
+import useSessionStorage from '../../hooks/useSessionStorage.ts'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import taskService from '../../services/tauri/task.ts'
+import { useCallback } from 'react'
+import { TimerType } from '../../hooks/useTimerType.ts'
+import useTimer from '../../hooks/useTimer.ts'
+import notificationService from '../../services/notification.ts'
+import useSettings from '../../hooks/useSettings.ts'
 
 type PomodoroPanelProps = {
   isTodoPanelOpen: boolean
 }
 
 function PomodoroPanel(props: PomodoroPanelProps) {
-  const settingsResult = useQuery({
-    queryKey: ['settings'],
-    queryFn: settingsService.getSettings,
+  const { notifications_enabled: notificationsEnabled } = useSettings()
+  const [activeTask, setActiveTask] = useSessionStorage<string | null>(
+    'activeTask',
+    null
+  )
+
+  const queryClient = useQueryClient()
+  const mutation = useMutation({
+    mutationFn: taskService.incrementPomodoroCompleted,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['tasks'] })
+    },
   })
-  if (!settingsResult.isSuccess)
-    return (
-      <div>Loading...</div> // TODO: proper loading indicator
-    )
+
+  const handleTimerFinish = useCallback(
+    (prevState: TimerType, newState: TimerType, pomodoroCount: number) => {
+      if (notificationsEnabled) {
+        notificationService
+          .sendTimerNotification(
+            prevState,
+            pomodoroCount,
+            newState == TimerType.LONG_BREAK
+          )
+          .then()
+      }
+      if (prevState === TimerType.WORK && activeTask) {
+        mutation.mutate({ id: activeTask })
+      }
+    },
+    [activeTask, mutation, notificationsEnabled]
+  )
+
+  const timer = useTimer({
+    timerFinishCallback: handleTimerFinish,
+  })
 
   return (
     <Panel
@@ -24,9 +59,12 @@ function PomodoroPanel(props: PomodoroPanelProps) {
         'rounded-s-lg': props.isTodoPanelOpen,
       })}
     >
-      <PomodoroPanelContent
-        isTodoPanelOpen={props.isTodoPanelOpen}
-        settings={settingsResult.data}
+      <PanelHeader>Pomodoro Timer</PanelHeader>
+      <TimerSection timer={timer} />
+      <TaskSection
+        activeTask={activeTask}
+        setActiveTask={setActiveTask}
+        timer={timer}
       />
     </Panel>
   )
