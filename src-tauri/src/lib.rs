@@ -1,5 +1,6 @@
 mod db;
 pub mod error;
+pub mod ordering;
 pub mod settings;
 pub mod task;
 pub mod todo;

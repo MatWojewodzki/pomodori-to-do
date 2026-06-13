@@ -11,4 +11,5 @@ pub trait TodoRepository: Send + Sync {
     async fn create_todo(&self, todo: Todo) -> Result<Todo, RepositoryError>;
     async fn delete_todo(&self, id: String) -> Result<(), RepositoryError>;
     async fn set_completed(&self, id: String, completed: bool) -> Result<(), RepositoryError>;
+    async fn get_last_order_key(&self) -> Result<u32, RepositoryError>;
 }
