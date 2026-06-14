@@ -91,7 +91,7 @@ impl TodoRepository for TodoRepositorySqlite {
         Ok(())
     }
 
-    async fn get_last_order_key(&self) -> Result<u32, RepositoryError> {
+    async fn get_greatest_order_key(&self) -> Result<u32, RepositoryError> {
         let q = "SELECT MAX(order_key) FROM todo";
         let order_key: Option<u32> = sqlx::query_scalar(q)
             .fetch_optional(&self.pools.reader)

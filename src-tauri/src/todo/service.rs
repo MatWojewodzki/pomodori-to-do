@@ -1,5 +1,5 @@
 use crate::error::ServiceError;
-use crate::ordering::next_order_key;
+use crate::ordering::new_order_key;
 use crate::todo::domain::Todo;
 use crate::todo::repository::TodoRepository;
 use std::sync::Arc;
@@ -19,7 +19,7 @@ impl TodoService {
     }
 
     pub async fn create_todo(&self, text: String) -> Result<Todo, ServiceError> {
-        let order_key = next_order_key(self.todo_repository.get_last_order_key().await?);
+        let order_key = new_order_key(self.todo_repository.get_greatest_order_key().await?);
         let todo = Todo::new(text, order_key)?;
         let created = self.todo_repository.create_todo(todo).await?;
         Ok(created)
