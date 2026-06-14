@@ -5,11 +5,11 @@ pub struct Todo {
     pub id: String,
     pub text: String,
     pub completed: bool,
-    pub order_key: u32,
+    pub order_key: i32,
 }
 
 impl Todo {
-    pub fn new(text: String, order_key: u32) -> Result<Self, ValidationError> {
+    pub fn new(text: String, order_key: i32) -> Result<Self, ValidationError> {
         let text = text.trim();
 
         if text.is_empty() {

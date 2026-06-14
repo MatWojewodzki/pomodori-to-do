@@ -10,7 +10,7 @@ pub struct TodoRow {
     pub id: String,
     pub text: String,
     pub completed: i8,
-    pub order_key: u32,
+    pub order_key: i32,
 }
 
 pub struct TodoRepositorySqlite {
@@ -91,9 +91,9 @@ impl TodoRepository for TodoRepositorySqlite {
         Ok(())
     }
 
-    async fn get_greatest_order_key(&self) -> Result<u32, RepositoryError> {
+    async fn get_greatest_order_key(&self) -> Result<i32, RepositoryError> {
         let q = "SELECT MAX(order_key) FROM todo";
-        let order_key: Option<u32> = sqlx::query_scalar(q)
+        let order_key: Option<i32> = sqlx::query_scalar(q)
             .fetch_optional(&self.pools.reader)
             .await?;
         Ok(order_key.unwrap_or(0))
