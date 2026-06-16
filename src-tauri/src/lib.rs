@@ -57,6 +57,7 @@ pub fn run() {
             todo::command::create_todo,
             todo::command::delete_todo,
             todo::command::set_completed,
+            todo::command::move_todo,
             task::command::get_tasks,
             task::command::create_task,
             task::command::update_task,

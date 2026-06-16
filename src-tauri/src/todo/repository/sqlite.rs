@@ -98,4 +98,52 @@ impl TodoRepository for TodoRepositorySqlite {
             .await?;
         Ok(order_key.unwrap_or(0))
     }
+
+    async fn shift_order_keys_greater_than(
+        &self,
+        order_key: i32,
+        delta: i32,
+    ) -> Result<(), RepositoryError> {
+        let q = "UPDATE todo SET order_key = order_key + ? WHERE order_key > ?";
+        let query = sqlx::query(q).bind(delta).bind(order_key);
+        query.execute(&self.pools.writer).await?;
+        Ok(())
+    }
+
+    async fn update_order_key(&self, id: String, order_key: i32) -> Result<(), RepositoryError> {
+        let q = "UPDATE todo SET order_key = ? WHERE id = ?";
+        let query = sqlx::query(q).bind(order_key).bind(id);
+        query.execute(&self.pools.writer).await?;
+        Ok(())
+    }
+
+    async fn get_todo(&self, index: u32) -> Result<Todo, RepositoryError> {
+        let q = "SELECT * FROM todo ORDER BY order_key LIMIT 1 OFFSET ?";
+        let query = sqlx::query_as::<_, TodoRow>(q).bind(index);
+        let row = query.fetch_one(&self.pools.reader).await?;
+        Ok(TodoRepositorySqlite::todo_from_row(row))
+    }
+
+    async fn get_adjacent(
+        &self,
+        gap_index: u32,
+    ) -> Result<(Option<Todo>, Option<Todo>), RepositoryError> {
+        let q = "SELECT * FROM todo ORDER BY order_key LIMIT ? OFFSET ?";
+        let query = sqlx::query_as::<_, TodoRow>(q)
+            .bind(if gap_index == 0 { 1 } else { 2 })
+            .bind(if gap_index == 0 { 0 } else { gap_index - 1 });
+        let rows = query.fetch_all(&self.pools.reader).await?;
+        let todos = rows
+            .into_iter()
+            .map(TodoRepositorySqlite::todo_from_row)
+            .collect::<Vec<_>>();
+
+        Ok(match (gap_index == 0, todos.as_slice()) {
+            (true, [next]) => (None, Some(next.clone())),
+            (false, [prev, next]) => (Some(prev.clone()), Some(next.clone())),
+            (false, [prev]) => (Some(prev.clone()), None),
+            (_, []) => (None, None),
+            _ => unreachable!(),
+        })
+    }
 }

@@ -1,6 +1,8 @@
 use crate::error::ValidationError;
+use crate::ordering::Orderable;
 use uuid::Uuid;
 
+#[derive(Clone)]
 pub struct Todo {
     pub id: String,
     pub text: String,
@@ -22,5 +24,15 @@ impl Todo {
             completed: false,
             order_key,
         })
+    }
+}
+
+impl Orderable for Todo {
+    fn id(&self) -> &str {
+        &self.id
+    }
+
+    fn order_key(&self) -> i32 {
+        self.order_key
     }
 }
