@@ -18,6 +18,13 @@ const todoService = {
   async setCompleted(args: { id: String; completed: boolean }): Promise<void> {
     return await tauriInvoke('set_completed', args)
   },
+
+  async moveTodo(args: {
+    initialIndex: number
+    newIndex: number
+  }): Promise<void> {
+    return await tauriInvoke('move_todo', args)
+  },
 }
 
 export default todoService
