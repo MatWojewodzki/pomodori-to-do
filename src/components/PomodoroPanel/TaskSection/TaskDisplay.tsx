@@ -16,6 +16,7 @@ type TaskDisplayProps = {
   isActive: boolean
   setAsActive: () => void
   preciseProgress: number
+  isDragging: boolean
 }
 
 function TaskDisplay(props: TaskDisplayProps) {
@@ -78,8 +79,9 @@ function TaskDisplay(props: TaskDisplayProps) {
         htmlFor={inputId}
         className={classNames(
           'px-14 py-4 flex justify-between gap-3 rounded-md cursor-pointer',
-          'peer-checked:outline-2 not-peer-checked:peer-focus-visible:outline-1',
-          'not-peer-checked:hover:outline-1 outline-neutral-400'
+          'peer-checked:outline-2 not-peer-checked:peer-focus-visible:outline',
+          'not-peer-checked:hover:outline outline-neutral-400',
+          { outline: props.isDragging }
         )}
       >
         <span
