@@ -15,7 +15,7 @@ type TaskListItemProps = {
 }
 
 function TaskListItem(props: TaskListItemProps) {
-  const { ref, isDragging } = useSortable({
+  const { ref } = useSortable({
     id: props.task.id,
     index: props.index,
   })
@@ -45,7 +45,6 @@ function TaskListItem(props: TaskListItemProps) {
           isActive={props.isActive}
           setAsActive={props.setAsActive}
           preciseProgress={preciseProgress}
-          isDragging={isDragging}
         />
       )}
     </li>
