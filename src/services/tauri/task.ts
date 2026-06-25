@@ -31,6 +31,13 @@ const taskService = {
   }): Promise<void> {
     return await tauriInvoke('set_task_completed', args)
   },
+
+  async moveTask(args: {
+    initialIndex: number
+    newIndex: number
+  }): Promise<void> {
+    return await tauriInvoke('move_task', args)
+  },
 }
 
 export default taskService

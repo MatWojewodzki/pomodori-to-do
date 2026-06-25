@@ -4,6 +4,9 @@ import { TaskDto } from '../../../types/generated/TaskDto.ts'
 import { useEffect, useRef, useState } from 'react'
 import { DragDropProvider } from '@dnd-kit/react'
 import { move } from '@dnd-kit/helpers'
+import taskService from '../../../services/tauri/task.ts'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { isSortable } from '@dnd-kit/react/sortable'
 
 export type TaskListProps = {
   tasks: TaskDto[]
@@ -15,6 +18,14 @@ export type TaskListProps = {
 function TaskList({ tasks, ...props }: TaskListProps) {
   const [localTasks, setLocalTasks] = useState<TaskDto[]>(tasks)
   const isDragging = useRef(false)
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation({
+    mutationFn: taskService.moveTask,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['tasks'] })
+    },
+  })
 
   useEffect(() => {
     if (isDragging.current) return
@@ -33,6 +44,14 @@ function TaskList({ tasks, ...props }: TaskListProps) {
         }
 
         setLocalTasks((tasks) => move(tasks, event))
+        const { source } = event.operation
+        if (isSortable(source)) {
+          const { initialIndex, index: newIndex } = source
+          mutation.mutate({
+            initialIndex,
+            newIndex,
+          })
+        }
       }}
     >
       <ul
