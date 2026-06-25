@@ -13,6 +13,9 @@ function PomodoroStateButton(props: PomodoroStateButtonProps) {
       role="radio"
       className={classNames(
         'px-2 py-1 rounded-lg cursor-pointer border-2 border-white',
+        'hover:bg-neutral-200 hover:border-neutral-200 hover:text-black',
+        'focus:outline-none focus-visible:bg-neutral-200',
+        'focus-visible:border-neutral-200 focus-visible:text-black',
         { 'bg-white text-black': props.active }
       )}
       onClick={props.onClick}

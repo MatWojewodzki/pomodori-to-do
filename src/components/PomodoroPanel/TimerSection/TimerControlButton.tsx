@@ -11,7 +11,8 @@ function TimerControlButton(props: TimerControlButtonProps) {
   return (
     <button
       className={classNames(
-        'w-64 py-6 font-bold text-4xl cursor-pointer rounded-lg bg-white text-black'
+        'w-64 py-6 font-bold text-4xl cursor-pointer rounded-lg bg-white text-black',
+        'hover:bg-neutral-200 focus:outline-none focus-visible:bg-neutral-200'
       )}
       onClick={props.onClick}
     >
