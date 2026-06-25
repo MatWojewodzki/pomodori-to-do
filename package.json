@@ -27,7 +27,7 @@
     "radix-ui": "^1.4.3",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "^4.3.1"
   },
   "devDependencies": {
     "@tanstack/react-query-devtools": "^5.96.1",
