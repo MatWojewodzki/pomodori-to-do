@@ -6,14 +6,15 @@ import DeleteIcon from '../../assets/icons/delete_22dp_000000_FILL0_wght400_GRAD
 import todoService from '../../services/tauri/todo.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Tooltip from '../common/Tooltip.tsx'
+import { useSortable } from '@dnd-kit/react/sortable'
 
 export type TodoListItemProps = {
   todo: TodoDto
+  index: number
 }
 
-function TodoListItem(props: TodoListItemProps) {
-  const todo = props.todo
-
+function TodoListItem({ todo, index }: TodoListItemProps) {
+  const { ref, isDragging } = useSortable({ id: todo.id, index })
   const queryClient = useQueryClient()
 
   const setCompletedMutation = useMutation({
@@ -35,10 +36,12 @@ function TodoListItem(props: TodoListItemProps) {
     : 'Mark as complete'
   return (
     <li
+      ref={ref}
       className={classNames(
-        'flex items-start gap-2 px-2 py-1 group',
-        'rounded-md hover:bg-neutral-600 focus-within:bg-neutral-600',
-        { 'line-through': todo.completed }
+        'flex items-start gap-2 px-2 py-1 group rounded-md cursor-grab',
+        'hover:bg-neutral-600 focus:outline-none focus-within:bg-neutral-600',
+        { 'line-through': todo.completed },
+        { 'bg-neutral-600': isDragging }
       )}
     >
       <Tooltip text={checkBoxTooltip}>

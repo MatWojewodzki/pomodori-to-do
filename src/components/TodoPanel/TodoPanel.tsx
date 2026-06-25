@@ -1,7 +1,7 @@
 import PanelHeader from '../Panel/PanelHeader.tsx'
 import Panel from '../Panel/Panel.tsx'
 import TodoCreationForm from './TodoCreationForm.tsx'
-import TodoList from './TodoList.tsx'
+import Todos from './Todos.tsx'
 
 type TodoPanelProps = {
   width: number
@@ -16,7 +16,7 @@ function TodoPanel(props: TodoPanelProps) {
     >
       <PanelHeader>{'Todo'} List</PanelHeader>
       <TodoCreationForm />
-      <TodoList />
+      <Todos />
     </Panel>
   )
 }

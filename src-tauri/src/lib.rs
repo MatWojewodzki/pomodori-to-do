@@ -1,5 +1,6 @@
 mod db;
 pub mod error;
+pub mod ordering;
 pub mod settings;
 pub mod task;
 pub mod todo;
@@ -56,12 +57,14 @@ pub fn run() {
             todo::command::create_todo,
             todo::command::delete_todo,
             todo::command::set_completed,
+            todo::command::move_todo,
             task::command::get_tasks,
             task::command::create_task,
             task::command::update_task,
             task::command::delete_task,
             task::command::increment_pomodoro_completed,
             task::command::set_task_completed,
+            task::command::move_task,
             settings::command::get_settings,
             settings::command::set_settings,
         ])

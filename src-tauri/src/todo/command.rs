@@ -34,3 +34,13 @@ pub async fn set_completed(
     service.set_completed(id, completed).await?;
     Ok(())
 }
+
+#[tauri::command]
+pub async fn move_todo(
+    service: State<'_, TodoService>,
+    initial_index: u32,
+    new_index: u32,
+) -> Result<(), AppError> {
+    service.move_todo(initial_index, new_index).await?;
+    Ok(())
+}

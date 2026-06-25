@@ -9,6 +9,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Tooltip from '../../common/Tooltip.tsx'
 import CheckBoxOutlineBlankIcon from '../../../assets/icons/check_box_outline_blank_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
 import CheckBoxIcon from '../../../assets/icons/check_box_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
+import DragIndicatorIcon from '../../../assets/icons/drag_indicator_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
+import { forwardRef } from 'react'
 
 type TaskDisplayProps = {
   task: TaskDto
@@ -18,130 +20,141 @@ type TaskDisplayProps = {
   preciseProgress: number
 }
 
-function TaskDisplay(props: TaskDisplayProps) {
-  const { task } = props
-  const inputId = `task-${task.id}`
+const TaskDisplay = forwardRef<HTMLDivElement, TaskDisplayProps>(
+  function TaskDisplay(props, ref) {
+    const { task } = props
+    const inputId = `task-${task.id}`
 
-  const queryClient = useQueryClient()
-  const deleteMutation = useMutation({
-    mutationFn: taskService.deleteTask,
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['tasks'] })
-    },
-  })
+    const queryClient = useQueryClient()
+    const deleteMutation = useMutation({
+      mutationFn: taskService.deleteTask,
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({ queryKey: ['tasks'] })
+      },
+    })
 
-  const setCompletedMutation = useMutation({
-    mutationFn: taskService.setTaskCompleted,
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['tasks'] })
-    },
-  })
+    const setCompletedMutation = useMutation({
+      mutationFn: taskService.setTaskCompleted,
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({ queryKey: ['tasks'] })
+      },
+    })
 
-  const checkBoxTooltip = task.completed
-    ? 'Mark as incomplete'
-    : 'Mark as complete'
-  return (
-    <div
-      className="group relative rounded-md"
-      style={{
-        background: `linear-gradient(to right, var(--color-neutral-600) ${props.preciseProgress}%, var(--color-neutral-700) ${props.preciseProgress}%)`,
-      }}
-    >
-      <input
-        type="radio"
-        name="active-task"
-        id={inputId}
-        className="sr-only peer"
-        checked={props.isActive}
-        onChange={() => props.setAsActive()}
-      />
-      <Tooltip text={checkBoxTooltip}>
-        <button
-          type="button"
-          aria-pressed={task.completed}
-          aria-label={checkBoxTooltip}
-          className={classNames(
-            'absolute left-3 top-3 shrink-0 p-1 rounded-md cursor-pointer',
-            'hover:bg-neutral-800 focus-visible:outline-none focus-visible:bg-neutral-800'
-          )}
-          onClick={() => {
-            setCompletedMutation.mutate({
-              id: task.id,
-              completed: !task.completed,
-            })
-          }}
-        >
-          {task.completed ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
-        </button>
-      </Tooltip>
-      <label
-        htmlFor={inputId}
-        className={classNames(
-          'px-14 py-4 flex justify-between gap-3 rounded-md cursor-pointer',
-          'peer-checked:outline-2 not-peer-checked:peer-focus-visible:outline-1',
-          'not-peer-checked:hover:outline-1 outline-neutral-400'
-        )}
+    const checkBoxTooltip = task.completed
+      ? 'Mark as incomplete'
+      : 'Mark as complete'
+    return (
+      <div
+        className="group relative rounded-md"
+        style={{
+          background: `linear-gradient(to right, var(--color-neutral-600) ${props.preciseProgress}%, var(--color-neutral-700) ${props.preciseProgress}%)`,
+        }}
       >
-        <span
-          className={classNames('flex-1', { 'line-through': task.completed })}
-        >
-          {task.text}
-        </span>
-        <span className="shrink-0 tabular-nums">
-          {task.pomodoro_completed}/{task.pomodoro_total}
-        </span>
-      </label>
-      <DropdownMenu.Root>
-        <Tooltip text="More options">
-          <DropdownMenu.Trigger
-            aria-label="Open menu"
+        <input
+          type="radio"
+          name="active-task"
+          id={inputId}
+          className="sr-only peer"
+          checked={props.isActive}
+          onChange={() => props.setAsActive()}
+        />
+        <Tooltip text={checkBoxTooltip}>
+          <button
+            type="button"
+            aria-pressed={task.completed}
+            aria-label={checkBoxTooltip}
             className={classNames(
-              'p-1 absolute z-10 right-3.5 top-3.5 rounded-md cursor-pointer',
-              'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800',
-              'invisible group-hover:visible group-focus-within:visible'
+              'absolute left-3 top-3 shrink-0 p-1 rounded-md cursor-pointer',
+              'hover:bg-neutral-800 focus-visible:outline-none focus-visible:bg-neutral-800'
             )}
+            onClick={() => {
+              setCompletedMutation.mutate({
+                id: task.id,
+                completed: !task.completed,
+              })
+            }}
           >
-            <MoreVertIcon className="size-5" />
-          </DropdownMenu.Trigger>
+            {task.completed ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+          </button>
         </Tooltip>
-        <DropdownMenu.Portal>
-          <DropdownMenu.Content
-            align="end"
-            sideOffset={4}
-            className={classNames(
-              'flex flex-col py-2 text-white text-sm rounded-md bg-neutral-900'
-            )}
+        <label
+          htmlFor={inputId}
+          className={classNames(
+            'ps-14 pe-21 py-4 flex justify-between gap-3 rounded-md cursor-pointer',
+            'peer-checked:outline-2 not-peer-checked:peer-focus-visible:outline',
+            'not-peer-checked:hover:outline outline-neutral-400'
+          )}
+        >
+          <span
+            className={classNames('flex-1', { 'line-through': task.completed })}
           >
-            <DropdownMenu.Item
+            {task.text}
+          </span>
+          <span className="shrink-0 tabular-nums">
+            {task.pomodoro_completed}/{task.pomodoro_total}
+          </span>
+        </label>
+        <div
+          ref={ref}
+          className={classNames(
+            'absolute p-1 top-3.5 right-11 cursor-grab rounded-md text-neutral-400',
+            'focus:outline-none focus-visible:text-white focus-visible:bg-neutral-800'
+          )}
+        >
+          <DragIndicatorIcon className="size-5" />
+        </div>
+        <DropdownMenu.Root>
+          <Tooltip text="More options">
+            <DropdownMenu.Trigger
+              aria-label="Open menu"
               className={classNames(
-                'flex justify-start items-center gap-4 px-4 py-2 cursor-pointer',
-                'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800'
-              )}
-              onSelect={() => props.openEditForm()}
-            >
-              <EditIcon className="size-5" />
-              <span>Edit</span>
-            </DropdownMenu.Item>
-            <DropdownMenu.Item
-              className={classNames(
-                'flex justify-start items-center gap-4 px-4 py-2 cursor-pointer',
+                'p-1 absolute z-10 right-3 top-3.5 rounded-md cursor-pointer',
                 'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800',
-                'text-red-300'
+                'invisible group-hover:visible group-focus-within:visible'
               )}
-              onSelect={() =>
-                deleteMutation.mutate({
-                  id: task.id,
-                })
-              }
             >
-              <DeleteIcon className="size-5" />
-              <span>Delete</span>
-            </DropdownMenu.Item>
-          </DropdownMenu.Content>
-        </DropdownMenu.Portal>
-      </DropdownMenu.Root>
-    </div>
-  )
-}
+              <MoreVertIcon className="size-5" />
+            </DropdownMenu.Trigger>
+          </Tooltip>
+          <DropdownMenu.Portal>
+            <DropdownMenu.Content
+              align="end"
+              sideOffset={4}
+              className={classNames(
+                'flex flex-col py-2 text-white text-sm rounded-md bg-neutral-900'
+              )}
+            >
+              <DropdownMenu.Item
+                className={classNames(
+                  'flex justify-start items-center gap-4 px-4 py-2 cursor-pointer',
+                  'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800'
+                )}
+                onSelect={() => props.openEditForm()}
+              >
+                <EditIcon className="size-5" />
+                <span>Edit</span>
+              </DropdownMenu.Item>
+              <DropdownMenu.Item
+                className={classNames(
+                  'flex justify-start items-center gap-4 px-4 py-2 cursor-pointer',
+                  'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800',
+                  'text-red-300'
+                )}
+                onSelect={() =>
+                  deleteMutation.mutate({
+                    id: task.id,
+                  })
+                }
+              >
+                <DeleteIcon className="size-5" />
+                <span>Delete</span>
+              </DropdownMenu.Item>
+            </DropdownMenu.Content>
+          </DropdownMenu.Portal>
+        </DropdownMenu.Root>
+      </div>
+    )
+  }
+)
 
 export default TaskDisplay

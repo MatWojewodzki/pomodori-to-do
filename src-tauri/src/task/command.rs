@@ -60,3 +60,13 @@ pub async fn set_task_completed(
     service.set_task_completed(id, completed).await?;
     Ok(())
 }
+
+#[tauri::command]
+pub async fn move_task(
+    service: State<'_, TaskService>,
+    initial_index: u32,
+    new_index: u32,
+) -> Result<(), AppError> {
+    service.move_task(initial_index, new_index).await?;
+    Ok(())
+}
