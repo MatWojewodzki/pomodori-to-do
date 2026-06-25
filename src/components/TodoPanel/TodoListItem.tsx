@@ -38,7 +38,7 @@ function TodoListItem({ todo, index }: TodoListItemProps) {
     <li
       ref={ref}
       className={classNames(
-        'flex items-start gap-2 px-2 py-1 group rounded-md',
+        'flex items-start gap-2 px-2 py-1 group rounded-md cursor-grab',
         'hover:bg-neutral-600 focus:outline-none focus-within:bg-neutral-600',
         { 'line-through': todo.completed },
         { 'bg-neutral-600': isDragging }
