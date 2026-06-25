@@ -20,7 +20,7 @@ function TaskListItem(props: TaskListItemProps) {
   const { ref, handleRef } = useSortable({
     id: props.task.id,
     index: props.index,
-    disabled: isEditing,
+    disabled: { draggable: isEditing },
   })
 
   const standardProgress =
