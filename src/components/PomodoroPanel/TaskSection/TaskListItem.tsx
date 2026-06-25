@@ -15,12 +15,13 @@ type TaskListItemProps = {
 }
 
 function TaskListItem(props: TaskListItemProps) {
-  const { ref } = useSortable({
-    id: props.task.id,
-    index: props.index,
-  })
   const { timer } = props
   const [isEditing, setIsEditing] = useState(false)
+  const { ref, handleRef } = useSortable({
+    id: props.task.id,
+    index: props.index,
+    disabled: isEditing,
+  })
 
   const standardProgress =
     (props.task.pomodoro_completed / props.task.pomodoro_total) * 100
@@ -45,6 +46,7 @@ function TaskListItem(props: TaskListItemProps) {
           isActive={props.isActive}
           setAsActive={props.setAsActive}
           preciseProgress={preciseProgress}
+          ref={handleRef}
         />
       )}
     </li>
