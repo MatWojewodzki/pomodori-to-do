@@ -19,7 +19,7 @@
     "@dnd-kit/helpers": "^0.5.0",
     "@dnd-kit/react": "^0.5.0",
     "@tailwindcss/vite": "^4.3.1",
-    "@tanstack/react-query": "^5.96.1",
+    "@tanstack/react-query": "^5.101.1",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-notification": "~2.3.3",
     "@tauri-apps/plugin-opener": "^2",
@@ -30,7 +30,7 @@
     "tailwindcss": "^4.3.1"
   },
   "devDependencies": {
-    "@tanstack/react-query-devtools": "^5.96.1",
+    "@tanstack/react-query-devtools": "^5.101.1",
     "@tauri-apps/cli": "^2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
