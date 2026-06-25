@@ -70,7 +70,7 @@ impl TaskRepository for TaskRepositorySqlite {
     async fn create_task(&self, task: Task) -> Result<(), RepositoryError> {
         let row = TaskRepositorySqlite::task_to_row(task);
         let q =
-            "INSERT INTO task (id, text, pomodoro_total, pomodoro_completed, completed) VALUES (?, ?, ?, ?, ?, ?)";
+            "INSERT INTO task (id, text, pomodoro_total, pomodoro_completed, completed, order_key) VALUES (?, ?, ?, ?, ?, ?)";
         let query = sqlx::query(q)
             .bind(row.id)
             .bind(row.text)
