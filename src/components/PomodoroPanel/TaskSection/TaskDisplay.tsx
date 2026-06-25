@@ -98,7 +98,7 @@ const TaskDisplay = forwardRef<HTMLDivElement, TaskDisplayProps>(
           ref={ref}
           className={classNames(
             'absolute p-1 top-3.5 right-11 cursor-grab rounded-md text-neutral-400',
-            'focus:outline-none focus-visible:text-white focus-visible:bg-neutral-900'
+            'focus:outline-none focus-visible:text-white focus-visible:bg-neutral-800'
           )}
         >
           <DragIndicatorIcon className="size-5" />
