@@ -58,22 +58,13 @@ const TaskDisplay = forwardRef<HTMLDivElement, TaskDisplayProps>(
           checked={props.isActive}
           onChange={() => props.setAsActive()}
         />
-        <div
-          ref={ref}
-          className={classNames(
-            'absolute p-1 top-3.5 left-4 cursor-grab rounded-md text-neutral-400',
-            'focus:outline-none focus-visible:text-white focus-visible:bg-neutral-900'
-          )}
-        >
-          <DragIndicatorIcon className="size-5" />
-        </div>
         <Tooltip text={checkBoxTooltip}>
           <button
             type="button"
             aria-pressed={task.completed}
             aria-label={checkBoxTooltip}
             className={classNames(
-              'absolute left-14 top-3 shrink-0 p-1 rounded-md cursor-pointer',
+              'absolute left-3 top-3 shrink-0 p-1 rounded-md cursor-pointer',
               'hover:bg-neutral-800 focus-visible:outline-none focus-visible:bg-neutral-800'
             )}
             onClick={() => {
@@ -89,7 +80,7 @@ const TaskDisplay = forwardRef<HTMLDivElement, TaskDisplayProps>(
         <label
           htmlFor={inputId}
           className={classNames(
-            'ps-25 pe-14 py-4 flex justify-between gap-3 rounded-md cursor-pointer',
+            'ps-14 pe-21 py-4 flex justify-between gap-3 rounded-md cursor-pointer',
             'peer-checked:outline-2 not-peer-checked:peer-focus-visible:outline',
             'not-peer-checked:hover:outline outline-neutral-400'
           )}
@@ -103,12 +94,21 @@ const TaskDisplay = forwardRef<HTMLDivElement, TaskDisplayProps>(
             {task.pomodoro_completed}/{task.pomodoro_total}
           </span>
         </label>
+        <div
+          ref={ref}
+          className={classNames(
+            'absolute p-1 top-3.5 right-11 cursor-grab rounded-md text-neutral-400',
+            'focus:outline-none focus-visible:text-white focus-visible:bg-neutral-900'
+          )}
+        >
+          <DragIndicatorIcon className="size-5" />
+        </div>
         <DropdownMenu.Root>
           <Tooltip text="More options">
             <DropdownMenu.Trigger
               aria-label="Open menu"
               className={classNames(
-                'p-1 absolute z-10 right-3.5 top-3.5 rounded-md cursor-pointer',
+                'p-1 absolute z-10 right-3 top-3.5 rounded-md cursor-pointer',
                 'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800',
                 'invisible group-hover:visible group-focus-within:visible'
               )}
