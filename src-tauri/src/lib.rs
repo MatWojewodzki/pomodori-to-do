@@ -64,6 +64,7 @@ pub fn run() {
             task::command::delete_task,
             task::command::increment_pomodoro_completed,
             task::command::set_task_completed,
+            task::command::move_task,
             settings::command::get_settings,
             settings::command::set_settings,
         ])
