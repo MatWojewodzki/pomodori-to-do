@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import Tooltip from '../../common/Tooltip.tsx'
+import NumberInput from '../../common/NumberInput.tsx'
 
 type TaskFormProps = {
   handleSubmit: () => void
@@ -22,6 +23,8 @@ function TaskForm(props: TaskFormProps) {
     taskDescriptionInputRef.current?.focus()
     taskDescriptionInputRef.current?.select()
   }, [])
+
+  const totalPomodoriCountInputId = 'total-pomodori-count-input'
 
   return (
     <form
@@ -54,23 +57,16 @@ function TaskForm(props: TaskFormProps) {
         autoComplete="off"
       />
       <label
-        htmlFor="total-pomodori-count-spinbutton"
+        htmlFor={totalPomodoriCountInputId}
         className="mt-6 ps-1 text-sm text-neutral-200"
       >
         Total pomodori to finish
       </label>
       <div className="mt-1 flex justify-start">
-        <div
-          id="total-pomodori-count-spinbutton"
-          role="spinbutton"
-          aria-valuenow={props.totalPomodoriCount}
-          aria-valuemin={1}
-          aria-live="polite"
-          className="flex rounded-md bg-neutral-700"
-        >
+        <div className="flex rounded-md bg-neutral-700">
           <Tooltip text="Decrease">
             <button
-              aria-label="decrease"
+              aria-label="Decrease total pomodori count"
               type="button"
               className={classNames(
                 'px-4 py-2 text-xl font-bold rounded-s-md cursor-pointer',
@@ -84,12 +80,19 @@ function TaskForm(props: TaskFormProps) {
               -
             </button>
           </Tooltip>
-          <span className="w-12 py-2 flex justify-center items-center ">
-            {props.totalPomodoriCount}
-          </span>
+          <NumberInput
+            id={totalPomodoriCountInputId}
+            value={props.totalPomodoriCount}
+            setValue={props.setTotalPomodoriCount}
+            minValue={1}
+            className={classNames(
+              'w-12 py-2 text-center rounded-md',
+              'focus-visible:outline-2 outline-white -outline-offset-2'
+            )}
+          />
           <Tooltip text="Increase">
             <button
-              aria-label="increase"
+              aria-label="Increase total pomodori count"
               type="button"
               className={classNames(
                 'px-4 py-2 text-xl font-bold rounded-e-md cursor-pointer',
