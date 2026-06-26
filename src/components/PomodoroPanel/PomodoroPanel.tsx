@@ -6,7 +6,7 @@ import TaskSection from './TaskSection/TaskSection.tsx'
 import useSessionStorage from '../../hooks/useSessionStorage.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import taskService from '../../services/tauri/task.ts'
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { TimerType } from '../../hooks/useTimerType.ts'
 import useTimer from '../../hooks/useTimer.ts'
 import notificationService from '../../services/notification.ts'
@@ -49,9 +49,12 @@ function PomodoroPanel(props: PomodoroPanelProps) {
     [activeTaskId, mutation, notificationsEnabled]
   )
 
-  const timer = useTimer({
-    timerFinishCallback: handleTimerFinish,
-  })
+  const timer = useTimer()
+  const { onTimerFinish } = timer
+
+  useEffect(() => {
+    return onTimerFinish(handleTimerFinish)
+  }, [onTimerFinish, handleTimerFinish])
 
   return (
     <Panel

@@ -2,6 +2,7 @@ import useTimerType, { TimerType } from './useTimerType.ts'
 import { useEffect, useRef, useState } from 'react'
 import useSessionStorage from './useSessionStorage.ts'
 import useSettings from './../contexts/settings.tsx'
+import useTimerFinish from './useTimerFinish.ts'
 
 function getDurationS(
   workDurationS: number,
@@ -39,15 +40,7 @@ function getSecondsLeft(
   return Math.ceil(msLeft / 1000)
 }
 
-export type UseTimerOptions = {
-  timerFinishCallback?: (
-    prevState: TimerType,
-    newState: TimerType,
-    pomodoroCount: number
-  ) => void
-}
-
-export default function useTimer({ timerFinishCallback }: UseTimerOptions) {
+export default function useTimer() {
   const {
     work_duration: workDurationS,
     short_break_duration: shortBreakDurationS,
@@ -89,6 +82,9 @@ export default function useTimer({ timerFinishCallback }: UseTimerOptions) {
       endTime
     )
   )
+
+  const { onTimerFinish, handleTimerFinish } = useTimerFinish()
+
   const intervalRef = useRef<number | null>(null)
 
   function start() {
@@ -161,7 +157,7 @@ export default function useTimer({ timerFinishCallback }: UseTimerOptions) {
       )
       setSecondsLeft(newDurationS)
 
-      timerFinishCallback?.(timerType, newState, pomodoroCount)
+      handleTimerFinish(timerType, newState, pomodoroCount)
     }
 
     function updateTimeLeft() {
@@ -197,7 +193,7 @@ export default function useTimer({ timerFinishCallback }: UseTimerOptions) {
     pausedMsLeft,
     timerType,
     pomodoroCount,
-    timerFinishCallback,
+    handleTimerFinish,
     setTimerTypeToNext,
   ])
 
@@ -217,6 +213,7 @@ export default function useTimer({ timerFinishCallback }: UseTimerOptions) {
     pause,
     resume,
     reset,
+    onTimerFinish,
   }
 }
 
