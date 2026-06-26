@@ -10,8 +10,8 @@ import { isSortable } from '@dnd-kit/react/sortable'
 
 export type TaskListProps = {
   tasks: TaskDto[]
-  activeTask: string | null
-  setActiveTask: (taskId: string) => void
+  activeTaskId: string | null
+  setActiveTaskId: (taskId: string) => void
   timer: Timer
 }
 
@@ -63,8 +63,8 @@ function TaskList({ tasks, ...props }: TaskListProps) {
           <TaskListItem
             key={task.id}
             task={task}
-            isActive={task.id === props.activeTask}
-            setAsActive={() => props.setActiveTask(task.id)}
+            isActive={task.id === props.activeTaskId}
+            setAsActive={() => props.setActiveTaskId(task.id)}
             timer={props.timer}
             index={index}
           />

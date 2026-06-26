@@ -18,8 +18,8 @@ type PomodoroPanelProps = {
 
 function PomodoroPanel(props: PomodoroPanelProps) {
   const { notifications_enabled: notificationsEnabled } = useSettings()
-  const [activeTask, setActiveTask] = useSessionStorage<string | null>(
-    'activeTask',
+  const [activeTaskId, setActiveTaskId] = useSessionStorage<string | null>(
+    'activeTaskId',
     null
   )
 
@@ -42,11 +42,11 @@ function PomodoroPanel(props: PomodoroPanelProps) {
           )
           .then()
       }
-      if (prevState === TimerType.WORK && activeTask) {
-        mutation.mutate({ id: activeTask })
+      if (prevState === TimerType.WORK && activeTaskId) {
+        mutation.mutate({ id: activeTaskId })
       }
     },
-    [activeTask, mutation, notificationsEnabled]
+    [activeTaskId, mutation, notificationsEnabled]
   )
 
   const timer = useTimer({
@@ -62,8 +62,8 @@ function PomodoroPanel(props: PomodoroPanelProps) {
       <PanelHeader>Pomodoro Timer</PanelHeader>
       <TimerSection timer={timer} />
       <TaskSection
-        activeTask={activeTask}
-        setActiveTask={setActiveTask}
+        activeTaskId={activeTaskId}
+        setActiveTaskId={setActiveTaskId}
         timer={timer}
       />
     </Panel>
