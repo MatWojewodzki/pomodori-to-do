@@ -29,6 +29,9 @@ function Settings(props: SettingsFormProps) {
   const [notificationsEnabled, setNotificationsEnabled] = useState(
     settings.notifications_enabled
   )
+  const [autoSwitchActiveTask, setAutoSwitchActiveTask] = useState(
+    settings.auto_switch_active_task
+  )
 
   const queryClient = useQueryClient()
   const mutation = useMutation({
@@ -48,7 +51,7 @@ function Settings(props: SettingsFormProps) {
         long_break_duration: longBreakDuration,
         pomodori_between_long_breaks: pomodoriBetweenLongBreaks,
         notifications_enabled: notificationsEnabled,
-        auto_switch_active_task: settings.auto_switch_active_task,
+        auto_switch_active_task: autoSwitchActiveTask,
       },
     })
   }
@@ -84,6 +87,13 @@ function Settings(props: SettingsFormProps) {
             value={pomodoriBetweenLongBreaks}
             setValue={setPomodoriBetweenLongBreaks}
             minValue={1}
+          />
+        </SettingsSection>
+        <SettingsSection title="Tasks">
+          <SwitchSetting
+            label="Automatically switch to the next unfinished task after completing a pomodoro"
+            value={autoSwitchActiveTask}
+            setValue={setAutoSwitchActiveTask}
           />
         </SettingsSection>
       </div>
