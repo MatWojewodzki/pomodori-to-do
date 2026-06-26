@@ -8,6 +8,7 @@ import taskService from '../../../services/tauri/task.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { isSortable } from '@dnd-kit/react/sortable'
 import { TimerType } from '../../../hooks/useTimerType.ts'
+import useSettings from '../../../contexts/settings.tsx'
 
 function uncompletedTaskPredicate(task: TaskDto) {
   return !task.completed && task.pomodoro_completed < task.pomodoro_total
@@ -47,6 +48,7 @@ function TaskList({
   setActiveTaskId,
   timer,
 }: TaskListProps) {
+  const { auto_switch_active_task: autoSwitchActiveTask } = useSettings()
   const [localTasks, setLocalTasks] = useState<TaskDto[]>(tasks)
   const isDragging = useRef(false)
   const queryClient = useQueryClient()
@@ -60,13 +62,13 @@ function TaskList({
 
   const updateActiveTask = useCallback(
     (prevState: TimerType) => {
-      if (prevState !== TimerType.WORK) return
+      if (!autoSwitchActiveTask || prevState !== TimerType.WORK) return
       const nextActiveTaskId = getNextActiveTaskId(tasks, activeTaskId)
       if (nextActiveTaskId) {
         setActiveTaskId(nextActiveTaskId)
       }
     },
-    [tasks, activeTaskId, setActiveTaskId]
+    [autoSwitchActiveTask, tasks, activeTaskId, setActiveTaskId]
   )
 
   useEffect(() => {
