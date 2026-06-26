@@ -48,6 +48,7 @@ function Settings(props: SettingsFormProps) {
         long_break_duration: longBreakDuration,
         pomodori_between_long_breaks: pomodoriBetweenLongBreaks,
         notifications_enabled: notificationsEnabled,
+        auto_switch_active_task: settings.auto_switch_active_task,
       },
     })
   }

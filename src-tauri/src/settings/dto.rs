@@ -8,6 +8,7 @@ pub struct SettingsDto {
     pub long_break_duration: u32,
     pub pomodori_between_long_breaks: u32,
     pub notifications_enabled: bool,
+    pub auto_switch_active_task: bool,
 }
 
 impl From<Settings> for SettingsDto {
@@ -18,6 +19,7 @@ impl From<Settings> for SettingsDto {
             long_break_duration: value.long_break_duration,
             pomodori_between_long_breaks: value.pomodori_between_long_breaks,
             notifications_enabled: value.notifications_enabled,
+            auto_switch_active_task: value.auto_switch_active_task,
         }
     }
 }

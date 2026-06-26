@@ -27,10 +27,12 @@ function TaskListItem(props: TaskListItemProps) {
     (props.task.pomodoro_completed / props.task.pomodoro_total) * 100
   const timerProgress =
     standardProgress + timer.percentageCompleted / props.task.pomodoro_total
+
   const preciseProgress =
     props.isActive && timer.isRunning && timer.timerType == TimerType.WORK
       ? timerProgress
       : standardProgress
+
   return (
     <li ref={ref}>
       {isEditing ? (

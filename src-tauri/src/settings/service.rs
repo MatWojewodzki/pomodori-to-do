@@ -23,6 +23,7 @@ impl SettingsService {
         long_break_duration: u32,
         pomodori_between_long_breaks: u32,
         notifications_enabled: bool,
+        auto_switch_active_task: bool,
     ) -> Result<(), ServiceError> {
         let settings = Settings {
             work_duration,
@@ -30,6 +31,7 @@ impl SettingsService {
             long_break_duration,
             pomodori_between_long_breaks,
             notifications_enabled,
+            auto_switch_active_task,
         };
         self.task_repository.set_settings(settings).await?;
         Ok(())
