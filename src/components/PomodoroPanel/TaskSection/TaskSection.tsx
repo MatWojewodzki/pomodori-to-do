@@ -9,8 +9,8 @@ import taskService from '../../../services/tauri/task.ts'
 import ErrorMessage from '../../common/ErrorMessage.tsx'
 
 export type TaskSectionProps = {
-  activeTask: string | null
-  setActiveTask: (taskId: string) => void
+  activeTaskId: string | null
+  setActiveTaskId: (taskId: string) => void
   timer: Timer
 }
 
@@ -28,8 +28,8 @@ function TaskSection(props: TaskSectionProps) {
         {taskResult.isSuccess && (
           <TaskList
             tasks={taskResult.data}
-            activeTask={props.activeTask}
-            setActiveTask={props.setActiveTask}
+            activeTaskId={props.activeTaskId}
+            setActiveTaskId={props.setActiveTaskId}
             timer={props.timer}
           />
         )}

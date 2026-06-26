@@ -21,6 +21,7 @@ pub async fn set_settings(
             settings.long_break_duration,
             settings.pomodori_between_long_breaks,
             settings.notifications_enabled,
+            settings.auto_switch_active_task,
         )
         .await?;
     Ok(())
