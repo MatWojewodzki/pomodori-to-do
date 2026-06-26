@@ -11,7 +11,11 @@ function SwitchSetting(props: SwitchSettingProps) {
   const inputId = `${props.label}-switchSetting`
   return (
     <Setting label={props.label} inputId={inputId}>
-      <Switch checked={props.value} onCheckedChange={props.setValue} />
+      <Switch
+        id={inputId}
+        checked={props.value}
+        onCheckedChange={props.setValue}
+      />
     </Setting>
   )
 }

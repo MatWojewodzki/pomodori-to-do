@@ -2,6 +2,7 @@ import { Switch as RadixSwitch } from 'radix-ui'
 import classNames from 'classnames'
 
 type SwitchProps = {
+  id?: string
   checked: boolean
   onCheckedChange: (checked: boolean) => void
 }
@@ -9,6 +10,7 @@ type SwitchProps = {
 function Switch(props: SwitchProps) {
   return (
     <RadixSwitch.Root
+      id={props.id}
       checked={props.checked}
       onCheckedChange={props.onCheckedChange}
       className={classNames(
