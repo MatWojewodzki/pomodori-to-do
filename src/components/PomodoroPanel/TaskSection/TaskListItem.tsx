@@ -1,8 +1,7 @@
 import { TaskDto } from '../../../types/generated/TaskDto.ts'
 import { useState } from 'react'
-import TaskDisplay from './TaskDisplay.tsx'
+import TaskDisplay from './TaskDisplay/TaskDisplay.tsx'
 import TaskEditForm from './TaskEditForm.tsx'
-import { TimerType } from '../../../hooks/useTimerType.ts'
 import { Timer } from '../../../hooks/useTimer.ts'
 import { useSortable } from '@dnd-kit/react/sortable'
 
@@ -23,16 +22,6 @@ function TaskListItem(props: TaskListItemProps) {
     disabled: { draggable: isEditing },
   })
 
-  const standardProgress =
-    (props.task.pomodoro_completed / props.task.pomodoro_total) * 100
-  const timerProgress =
-    standardProgress + timer.percentageCompleted / props.task.pomodoro_total
-
-  const preciseProgress =
-    props.isActive && timer.isRunning && timer.timerType == TimerType.WORK
-      ? timerProgress
-      : standardProgress
-
   return (
     <li ref={ref}>
       {isEditing ? (
@@ -44,10 +33,10 @@ function TaskListItem(props: TaskListItemProps) {
       ) : (
         <TaskDisplay
           task={props.task}
+          timer={timer}
           openEditForm={() => setIsEditing(true)}
           isActive={props.isActive}
           setAsActive={props.setAsActive}
-          preciseProgress={preciseProgress}
           ref={handleRef}
         />
       )}
