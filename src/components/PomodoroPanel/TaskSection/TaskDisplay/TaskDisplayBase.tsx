@@ -1,8 +1,8 @@
 import React from 'react'
 import TaskDisplayCheckbox from './TaskDisplayCheckbox.tsx'
-import { TaskDto } from '../../../types/generated/TaskDto.ts'
-import useTaskProgress from '../../../hooks/useTaskProgress.ts'
-import { Timer } from '../../../hooks/useTimer.ts'
+import { TaskDto } from '../../../../types/generated/TaskDto.ts'
+import useTaskProgress from '../../../../hooks/useTaskProgress.ts'
+import { Timer } from '../../../../hooks/useTimer.ts'
 
 type TaskDisplayBaseProps = {
   task: TaskDto

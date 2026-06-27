@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import React from 'react'
-import { TaskDto } from '../../../types/generated/TaskDto.ts'
+import { TaskDto } from '../../../../types/generated/TaskDto.ts'
 
 type TaskDisplayTextContentProps = {
   task: TaskDto

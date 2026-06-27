@@ -1,10 +1,10 @@
-import { TaskDto } from '../../../types/generated/TaskDto.ts'
+import { TaskDto } from '../../../../types/generated/TaskDto.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import taskService from '../../../services/tauri/task.ts'
-import Tooltip from '../../common/Tooltip.tsx'
+import taskService from '../../../../services/tauri/task.ts'
+import Tooltip from '../../../common/Tooltip.tsx'
 import classNames from 'classnames'
-import CheckBoxOutlineBlankIcon from '../../../assets/icons/check_box_outline_blank_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
-import CheckBoxIcon from '../../../assets/icons/check_box_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
+import CheckBoxOutlineBlankIcon from '../../../../assets/icons/check_box_outline_blank_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
+import CheckBoxIcon from '../../../../assets/icons/check_box_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
 
 type TaskDisplayCheckboxProps = {
   task: TaskDto

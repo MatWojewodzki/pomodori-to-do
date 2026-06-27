@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query'
 import taskService from '../../../services/tauri/task.ts'
 import ErrorMessage from '../../common/ErrorMessage.tsx'
 import { Collapsible } from 'radix-ui'
-import ActiveTaskDisplay from './ActiveTaskDisplay.tsx'
+import ActiveTaskDisplay from './TaskDisplay/ActiveTaskDisplay.tsx'
 
 export type TaskSectionProps = {
   activeTaskId: string | null

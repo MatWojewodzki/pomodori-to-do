@@ -1,6 +1,6 @@
-import { TaskDto } from '../../../types/generated/TaskDto.ts'
+import { TaskDto } from '../../../../types/generated/TaskDto.ts'
 import TaskDisplayBase from './TaskDisplayBase.tsx'
-import { Timer } from '../../../hooks/useTimer.ts'
+import { Timer } from '../../../../hooks/useTimer.ts'
 import TaskDisplayTextContent from './TaskDisplayTextContent.tsx'
 
 type ActiveTaskDisplayProps = {
