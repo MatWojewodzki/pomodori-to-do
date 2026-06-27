@@ -12,7 +12,8 @@ function Panel({ className, ...props }: PanelProps) {
       {...props}
       className={classNames(
         className,
-        'w-md px-1 pt-6 flex flex-col bg-neutral-800 overflow-x-hidden'
+        'w-md px-1 pt-6 flex flex-col bg-neutral-800 ',
+        'overflow-x-hidden scrollbar-gutter-stable'
       )}
     >
       {props.children}
