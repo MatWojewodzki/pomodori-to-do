@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query'
 import taskService from '../../../services/tauri/task.ts'
 import ErrorMessage from '../../common/ErrorMessage.tsx'
 import { Collapsible } from 'radix-ui'
+import ActiveTaskDisplay from './ActiveTaskDisplay.tsx'
 
 export type TaskSectionProps = {
   activeTaskId: string | null
@@ -30,6 +31,13 @@ function TaskSection(props: TaskSectionProps) {
         <div className="flex-1 max-w-121 flex flex-col">
           <TaskHeader taskSectionExpanded={isExpanded} />
           {taskResult.isError && <ErrorMessage text="Failed to load tasks." />}
+          {taskResult.isSuccess && !isExpanded && props.activeTaskId && (
+            <ActiveTaskDisplay
+              tasks={taskResult.data}
+              timer={props.timer}
+              activeTaskId={props.activeTaskId}
+            />
+          )}
           <Collapsible.Content className="grow flex flex-col">
             {taskResult.isSuccess && (
               <TaskList

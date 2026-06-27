@@ -7,17 +7,18 @@ import DeleteIcon from '../../../assets/icons/delete_20dp_000000_FILL0_wght400_G
 import taskService from '../../../services/tauri/task.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Tooltip from '../../common/Tooltip.tsx'
-import CheckBoxOutlineBlankIcon from '../../../assets/icons/check_box_outline_blank_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
-import CheckBoxIcon from '../../../assets/icons/check_box_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
 import DragIndicatorIcon from '../../../assets/icons/drag_indicator_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
 import { forwardRef } from 'react'
+import TaskDisplayBase from './TaskDisplayBase.tsx'
+import { Timer } from '../../../hooks/useTimer.ts'
+import TaskDisplayTextContent from './TaskDisplayTextContent.tsx'
 
 type TaskDisplayProps = {
   task: TaskDto
+  timer: Timer
   openEditForm: () => void
   isActive: boolean
   setAsActive: () => void
-  preciseProgress: number
 }
 
 const TaskDisplay = forwardRef<HTMLDivElement, TaskDisplayProps>(
@@ -33,22 +34,11 @@ const TaskDisplay = forwardRef<HTMLDivElement, TaskDisplayProps>(
       },
     })
 
-    const setCompletedMutation = useMutation({
-      mutationFn: taskService.setTaskCompleted,
-      onSuccess: async () => {
-        await queryClient.invalidateQueries({ queryKey: ['tasks'] })
-      },
-    })
-
-    const checkBoxTooltip = task.completed
-      ? 'Mark as incomplete'
-      : 'Mark as complete'
     return (
-      <div
-        className="group relative rounded-md"
-        style={{
-          background: `linear-gradient(to right, var(--color-neutral-600) ${props.preciseProgress}%, var(--color-neutral-700) ${props.preciseProgress}%)`,
-        }}
+      <TaskDisplayBase
+        task={task}
+        timer={props.timer}
+        isActive={props.isActive}
       >
         <input
           type="radio"
@@ -58,41 +48,15 @@ const TaskDisplay = forwardRef<HTMLDivElement, TaskDisplayProps>(
           checked={props.isActive}
           onChange={() => props.setAsActive()}
         />
-        <Tooltip text={checkBoxTooltip}>
-          <button
-            type="button"
-            aria-pressed={task.completed}
-            aria-label={checkBoxTooltip}
-            className={classNames(
-              'absolute left-3 top-3 shrink-0 p-1 rounded-md cursor-pointer',
-              'hover:bg-neutral-800 focus-visible:outline-none focus-visible:bg-neutral-800'
-            )}
-            onClick={() => {
-              setCompletedMutation.mutate({
-                id: task.id,
-                completed: !task.completed,
-              })
-            }}
-          >
-            {task.completed ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
-          </button>
-        </Tooltip>
         <label
           htmlFor={inputId}
           className={classNames(
-            'ps-14 pe-21 py-4 flex justify-between gap-3 rounded-md cursor-pointer',
+            'block pe-17 cursor-pointer rounded-md',
             'peer-checked:outline-2 not-peer-checked:peer-focus-visible:outline',
             'not-peer-checked:hover:outline outline-neutral-400'
           )}
         >
-          <span
-            className={classNames('flex-1', { 'line-through': task.completed })}
-          >
-            {task.text}
-          </span>
-          <span className="shrink-0 tabular-nums">
-            {task.pomodoro_completed}/{task.pomodoro_total}
-          </span>
+          <TaskDisplayTextContent task={task} />
         </label>
         <div
           ref={ref}
@@ -152,7 +116,7 @@ const TaskDisplay = forwardRef<HTMLDivElement, TaskDisplayProps>(
             </DropdownMenu.Content>
           </DropdownMenu.Portal>
         </DropdownMenu.Root>
-      </div>
+      </TaskDisplayBase>
     )
   }
 )
