@@ -11,6 +11,7 @@ import { TimerType } from '../../hooks/useTimerType.ts'
 import useTimer from '../../hooks/useTimer.ts'
 import notificationService from '../../services/notification.ts'
 import useSettings from '../../contexts/settings.tsx'
+import { TaskDto } from '../../types/generated/TaskDto.ts'
 
 type PomodoroPanelProps = {
   isTodoPanelOpen: boolean
@@ -26,7 +27,25 @@ function PomodoroPanel(props: PomodoroPanelProps) {
   const queryClient = useQueryClient()
   const mutation = useMutation({
     mutationFn: taskService.incrementPomodoroCompleted,
-    onSuccess: async () => {
+    onMutate: async ({ id }) => {
+      await queryClient.cancelQueries({ queryKey: ['tasks'] })
+
+      const previousTasks = queryClient.getQueryData<TaskDto[]>(['tasks']) ?? []
+
+      queryClient.setQueryData(['tasks'], (old: TaskDto[]) =>
+        old.map((task) =>
+          task.id === id
+            ? { ...task, pomodoro_completed: task.pomodoro_completed + 1 }
+            : task
+        )
+      )
+
+      return { previousTasks }
+    },
+    onError: (_err, _data, context) => {
+      queryClient.setQueryData(['tasks'], context?.previousTasks ?? [])
+    },
+    onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: ['tasks'] })
     },
   })
