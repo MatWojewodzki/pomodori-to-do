@@ -1,5 +1,5 @@
 import TaskList from './TaskList.tsx'
-import TaskHeader from './TaskHeader.tsx'
+import TaskSectionHeader from './TaskSectionHeader.tsx'
 import AddTaskButton from './AddTaskButton.tsx'
 import { useState } from 'react'
 import TaskCreationForm from './TaskCreationForm.tsx'
@@ -29,7 +29,7 @@ function TaskSection(props: TaskSectionProps) {
     <section className="my-16 flex justify-center">
       <Collapsible.Root open={isExpanded} onOpenChange={setIsExpanded} asChild>
         <div className="flex-1 max-w-121 flex flex-col">
-          <TaskHeader taskSectionExpanded={isExpanded} />
+          <TaskSectionHeader taskSectionExpanded={isExpanded} />
           {taskResult.isError && <ErrorMessage text="Failed to load tasks." />}
           {taskResult.isSuccess && !isExpanded && props.activeTaskId && (
             <ActiveTaskDisplay

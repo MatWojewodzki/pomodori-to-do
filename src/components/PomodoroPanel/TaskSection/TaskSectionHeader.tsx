@@ -3,11 +3,11 @@ import classNames from 'classnames'
 import KeyboardArrowDownIcon from '../../../assets/icons/keyboard_arrow_down_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
 import Tooltip from '../../common/Tooltip.tsx'
 
-type TaskHeaderProps = {
+type TaskSectionHeaderProps = {
   taskSectionExpanded: boolean
 }
 
-function TaskHeader(props: TaskHeaderProps) {
+function TaskSectionHeader(props: TaskSectionHeaderProps) {
   const buttonLabel = props.taskSectionExpanded
     ? 'Collapse task section'
     : 'Expand task section'
@@ -38,4 +38,4 @@ function TaskHeader(props: TaskHeaderProps) {
   )
 }
 
-export default TaskHeader
+export default TaskSectionHeader
