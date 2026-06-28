@@ -1,7 +1,7 @@
 import { Collapsible } from 'radix-ui'
-import Tooltip from '../../common/Tooltip.tsx'
+import Tooltip from '../../../common/Tooltip.tsx'
 import classNames from 'classnames'
-import KeyboardArrowDownIcon from '../../../assets/icons/keyboard_arrow_down_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
+import KeyboardArrowDownIcon from '../../../../assets/icons/keyboard_arrow_down_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
 
 type TaskSectionDropdownButtonProps = {
   taskSectionExpanded: boolean

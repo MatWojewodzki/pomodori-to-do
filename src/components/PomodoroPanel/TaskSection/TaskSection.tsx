@@ -1,5 +1,5 @@
 import TaskList from './TaskList.tsx'
-import TaskSectionHeader from './TaskSectionHeader.tsx'
+import TaskSectionHeader from './TaskSectionHeader/TaskSectionHeader.tsx'
 import AddTaskButton from './AddTaskButton.tsx'
 import { useState } from 'react'
 import TaskCreationForm from './TaskCreationForm.tsx'
