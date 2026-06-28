@@ -208,6 +208,7 @@ export default function useTimer() {
     isPaused,
     percentageCompleted,
     timerType,
+    pomodoroCount,
     setTimerType,
     start,
     pause,

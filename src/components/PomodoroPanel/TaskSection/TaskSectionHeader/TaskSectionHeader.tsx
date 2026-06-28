@@ -1,13 +1,17 @@
 import TaskSectionDropdownButton from './TaskSectionDropdownButton.tsx'
+import SessionInfoDisplay from './SessionInfoDisplay.tsx'
+import { Timer } from '../../../../hooks/useTimer.ts'
 
 type TaskSectionHeaderProps = {
   taskSectionExpanded: boolean
+  timer: Timer
 }
 
 function TaskSectionHeader(props: TaskSectionHeaderProps) {
   return (
-    <div className="mb-4 ps-1 flex justify-between items-center">
+    <div className="mb-4 ps-1 flex items-center">
       <h2 className="font-bold text-lg">Tasks</h2>
+      <SessionInfoDisplay timer={props.timer} />
       <TaskSectionDropdownButton
         taskSectionExpanded={props.taskSectionExpanded}
       />

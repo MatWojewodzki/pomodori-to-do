@@ -29,7 +29,10 @@ function TaskSection(props: TaskSectionProps) {
     <section className="my-16 flex justify-center">
       <Collapsible.Root open={isExpanded} onOpenChange={setIsExpanded} asChild>
         <div className="flex-1 max-w-121 flex flex-col">
-          <TaskSectionHeader taskSectionExpanded={isExpanded} />
+          <TaskSectionHeader
+            taskSectionExpanded={isExpanded}
+            timer={props.timer}
+          />
           {taskResult.isError && <ErrorMessage text="Failed to load tasks." />}
           {taskResult.isSuccess && !isExpanded && props.activeTaskId && (
             <ActiveTaskDisplay
