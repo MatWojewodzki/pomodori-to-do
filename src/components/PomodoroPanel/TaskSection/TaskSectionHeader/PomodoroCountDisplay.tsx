@@ -2,11 +2,11 @@ import { Timer } from '../../../../hooks/useTimer.ts'
 import { TimerType } from '../../../../hooks/useTimerType.ts'
 import getOrdinal from '../../../../utils/ordinal.ts'
 
-type SessionInfoDisplayProps = {
+type PomodoroCountDisplayProps = {
   timer: Timer
 }
 
-function SessionInfoDisplay({ timer }: SessionInfoDisplayProps) {
+function PomodoroCountDisplay({ timer }: PomodoroCountDisplayProps) {
   const isDuringWorkSession =
     timer.timerType === TimerType.WORK && timer.isRunning
   const pomodoroCount = isDuringWorkSession
@@ -32,4 +32,4 @@ function SessionInfoDisplay({ timer }: SessionInfoDisplayProps) {
   )
 }
 
-export default SessionInfoDisplay
+export default PomodoroCountDisplay

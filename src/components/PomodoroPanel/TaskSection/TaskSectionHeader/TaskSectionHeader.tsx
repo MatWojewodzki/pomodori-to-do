@@ -1,5 +1,5 @@
 import TaskSectionDropdownButton from './TaskSectionDropdownButton.tsx'
-import SessionInfoDisplay from './SessionInfoDisplay.tsx'
+import PomodoroCountDisplay from './PomodoroCountDisplay.tsx'
 import { Timer } from '../../../../hooks/useTimer.ts'
 
 type TaskSectionHeaderProps = {
@@ -11,7 +11,7 @@ function TaskSectionHeader(props: TaskSectionHeaderProps) {
   return (
     <div className="mb-4 ps-1 flex items-center">
       <h2 className="font-bold text-lg">Tasks</h2>
-      <SessionInfoDisplay timer={props.timer} />
+      <PomodoroCountDisplay timer={props.timer} />
       <TaskSectionDropdownButton
         taskSectionExpanded={props.taskSectionExpanded}
       />
