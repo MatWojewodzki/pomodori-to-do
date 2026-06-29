@@ -9,6 +9,7 @@ import taskService from '../../../services/tauri/task.ts'
 import ErrorMessage from '../../common/ErrorMessage.tsx'
 import { Collapsible } from 'radix-ui'
 import ActiveTaskDisplay from './TaskDisplay/ActiveTaskDisplay.tsx'
+import SessionTimeLeftDisplay from './SessionTimeLeftDisplay.tsx'
 
 export type TaskSectionProps = {
   activeTaskId: string | null
@@ -60,6 +61,12 @@ function TaskSection(props: TaskSectionProps) {
               />
             )}
           </Collapsible.Content>
+          {taskResult.isSuccess && taskResult.data.length > 0 && (
+            <SessionTimeLeftDisplay
+              tasks={taskResult.data}
+              timer={props.timer}
+            />
+          )}
         </div>
       </Collapsible.Root>
     </section>

@@ -7,7 +7,7 @@ export enum TimerType {
   LONG_BREAK,
 }
 
-function getNextState(
+export function getNextState(
   pomodoriBetweenLongBreaks: number,
   prevState: TimerType,
   completedPomodoroCount: number,
@@ -56,6 +56,7 @@ export default function useTimerType(
 
   return {
     timerType,
+    lastPomodoroCountWithLongBreak,
     setTimerType,
     setTimerTypeToNext,
   }
