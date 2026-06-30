@@ -60,7 +60,7 @@ function TaskSection({
   })
 
   const { data: tasks } = taskResult
-  const updateActiveTask = useCallback(
+  const switchActiveTask = useCallback(
     (prevState: TimerType) => {
       if (!tasks) return
       if (!autoSwitchActiveTask || prevState !== TimerType.WORK) return
@@ -74,8 +74,8 @@ function TaskSection({
 
   const { onTimerFinish } = timer
   useEffect(() => {
-    return onTimerFinish(updateActiveTask)
-  }, [onTimerFinish, updateActiveTask])
+    return onTimerFinish(switchActiveTask)
+  }, [onTimerFinish, switchActiveTask])
 
   return (
     <section className="my-16 flex justify-center">
