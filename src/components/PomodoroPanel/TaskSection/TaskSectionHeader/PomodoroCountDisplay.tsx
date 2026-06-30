@@ -21,15 +21,20 @@ function PomodoroCountDisplay({ timer }: PomodoroCountDisplayProps) {
     ? ordinal
     : pomodoroCount.toString()
   const descriptionEnd = isDuringWorkSession ? ' pomodoro' : ' pomodori'
+
   return (
     <div className="grow flex justify-around text-neutral-300">
-      <span>
-        {descriptionBeginning}
-        <span className="text-lg font-semibold text-white">
-          {descriptionMiddle}
-        </span>
-        {descriptionEnd}
-      </span>
+      {pomodoroCount > 0 && (
+        <>
+          <span>
+            {descriptionBeginning}
+            <span className="text-lg font-semibold text-white">
+              {descriptionMiddle}
+            </span>
+            {descriptionEnd}
+          </span>
+        </>
+      )}
     </div>
   )
 }
