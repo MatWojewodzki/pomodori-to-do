@@ -14,7 +14,7 @@ function PomodoroCountDisplay({ timer }: PomodoroCountDisplayProps) {
     : timer.pomodoroCount - 1
 
   const descriptionBeginning = isDuringWorkSession
-    ? "You're at your "
+    ? "You're on your "
     : "You've completed "
   const descriptionMiddle = isDuringWorkSession
     ? getOrdinal(pomodoroCount)
