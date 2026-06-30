@@ -14,13 +14,13 @@ function PomodoroCountDisplay({ timer }: PomodoroCountDisplayProps) {
     : timer.pomodoroCount - 1
 
   const descriptionBeginning = isDuringWorkSession
-    ? "You're on your "
-    : "You've completed "
+    ? "You're on your"
+    : "You've completed"
   const descriptionMiddle = isDuringWorkSession
     ? getOrdinal(pomodoroCount)
     : pomodoroCount.toString()
   const descriptionEnd =
-    isDuringWorkSession || pomodoroCount === 1 ? ' pomodoro' : ' pomodori'
+    isDuringWorkSession || pomodoroCount === 1 ? 'pomodoro' : 'pomodori'
 
   return (
     <div className="grow flex justify-center items-baseline gap-2 text-neutral-300">
