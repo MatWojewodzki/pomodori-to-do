@@ -40,6 +40,7 @@ function SessionTimeLeftDisplay({ tasks, timer }: SessionTimeLeftDisplayProps) {
 
   const hoursLeft = (timeLeft / 1000 / 60 / 60).toFixed(1)
 
+  if (timer.pomodoroCount < 2 && pomodoriLeft === 0) return null
   return (
     <div
       className={classNames(
