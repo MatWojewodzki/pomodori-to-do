@@ -23,7 +23,7 @@ function SessionTimeLeftDisplay({ tasks, timer }: SessionTimeLeftDisplayProps) {
 
   useEffect(() => {
     handleTick()
-    intervalId.current = window.setInterval(handleTick, 1000)
+    intervalId.current = window.setInterval(handleTick, 30 * 1000)
     return () => {
       if (intervalId.current) window.clearInterval(intervalId.current)
     }
