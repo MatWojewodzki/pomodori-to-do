@@ -1,7 +1,7 @@
 import TaskList from './TaskList.tsx'
 import TaskSectionHeader from './TaskSectionHeader/TaskSectionHeader.tsx'
 import AddTaskButton from './AddTaskButton.tsx'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import TaskCreationForm from './TaskCreationForm.tsx'
 import { Timer } from '../../../hooks/useTimer.ts'
 import { useQuery } from '@tanstack/react-query'
@@ -10,6 +10,34 @@ import ErrorMessage from '../../common/ErrorMessage.tsx'
 import { Collapsible } from 'radix-ui'
 import ActiveTaskDisplay from './TaskDisplay/ActiveTaskDisplay.tsx'
 import SessionTimeLeftDisplay from './SessionTimeLeftDisplay.tsx'
+import { TaskDto } from '../../../types/generated/TaskDto.ts'
+import useSettings from '../../../contexts/settings.tsx'
+import { TimerType } from '../../../hooks/useTimerType.ts'
+
+function uncompletedTaskPredicate(task: TaskDto) {
+  return !task.completed && task.pomodoro_completed < task.pomodoro_total
+}
+
+function getNextActiveTaskId(tasks: TaskDto[], activeTaskId: string | null) {
+  if (activeTaskId === null) return null
+  const activeTaskIndex = tasks.findIndex((task) => task.id === activeTaskId)
+  const activeTask = tasks[activeTaskIndex]
+  if (
+    !activeTask.completed &&
+    activeTask.pomodoro_total - activeTask.pomodoro_completed > 1
+  )
+    return null
+
+  const prevTasks = tasks.slice(0, activeTaskIndex)
+  const nextTasks = tasks.slice(activeTaskIndex + 1)
+
+  const nextActiveTask =
+    nextTasks.find(uncompletedTaskPredicate) ||
+    prevTasks.find(uncompletedTaskPredicate)
+  if (nextActiveTask) return nextActiveTask.id
+
+  return null
+}
 
 export type TaskSectionProps = {
   activeTaskId: string | null
@@ -17,7 +45,12 @@ export type TaskSectionProps = {
   timer: Timer
 }
 
-function TaskSection(props: TaskSectionProps) {
+function TaskSection({
+  activeTaskId,
+  setActiveTaskId,
+  timer,
+}: TaskSectionProps) {
+  const { auto_switch_active_task: autoSwitchActiveTask } = useSettings()
   const [isAddingTask, setIsAddingTask] = useState(false)
   const [isExpanded, setIsExpanded] = useState(true)
 
@@ -26,29 +59,44 @@ function TaskSection(props: TaskSectionProps) {
     queryFn: taskService.getTasks,
   })
 
+  const { data: tasks } = taskResult
+  const updateActiveTask = useCallback(
+    (prevState: TimerType) => {
+      if (!tasks) return
+      if (!autoSwitchActiveTask || prevState !== TimerType.WORK) return
+      const nextActiveTaskId = getNextActiveTaskId(tasks, activeTaskId)
+      if (nextActiveTaskId) {
+        setActiveTaskId(nextActiveTaskId)
+      }
+    },
+    [autoSwitchActiveTask, tasks, activeTaskId, setActiveTaskId]
+  )
+
+  const { onTimerFinish } = timer
+  useEffect(() => {
+    return onTimerFinish(updateActiveTask)
+  }, [onTimerFinish, updateActiveTask])
+
   return (
     <section className="my-16 flex justify-center">
       <Collapsible.Root open={isExpanded} onOpenChange={setIsExpanded} asChild>
         <div className="flex-1 max-w-121 flex flex-col">
-          <TaskSectionHeader
-            taskSectionExpanded={isExpanded}
-            timer={props.timer}
-          />
+          <TaskSectionHeader taskSectionExpanded={isExpanded} timer={timer} />
           {taskResult.isError && <ErrorMessage text="Failed to load tasks." />}
-          {taskResult.isSuccess && !isExpanded && props.activeTaskId && (
+          {taskResult.isSuccess && !isExpanded && activeTaskId && (
             <ActiveTaskDisplay
               tasks={taskResult.data}
-              timer={props.timer}
-              activeTaskId={props.activeTaskId}
+              timer={timer}
+              activeTaskId={activeTaskId}
             />
           )}
           <Collapsible.Content className="grow flex flex-col">
             {taskResult.isSuccess && (
               <TaskList
                 tasks={taskResult.data}
-                activeTaskId={props.activeTaskId}
-                setActiveTaskId={props.setActiveTaskId}
-                timer={props.timer}
+                activeTaskId={activeTaskId}
+                setActiveTaskId={setActiveTaskId}
+                timer={timer}
               />
             )}
             {!isAddingTask && (
@@ -62,10 +110,7 @@ function TaskSection(props: TaskSectionProps) {
             )}
           </Collapsible.Content>
           {taskResult.isSuccess && taskResult.data.length > 0 && (
-            <SessionTimeLeftDisplay
-              tasks={taskResult.data}
-              timer={props.timer}
-            />
+            <SessionTimeLeftDisplay tasks={taskResult.data} timer={timer} />
           )}
         </div>
       </Collapsible.Root>
