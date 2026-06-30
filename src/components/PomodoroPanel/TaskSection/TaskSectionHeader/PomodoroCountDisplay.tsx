@@ -25,7 +25,9 @@ function PomodoroCountDisplay({ timer }: PomodoroCountDisplayProps) {
     <div className="grow flex justify-around text-neutral-300">
       <span>
         {descriptionBeginning}
-        <span className="text-white">{descriptionMiddle}</span>
+        <span className="text-lg font-semibold text-white">
+          {descriptionMiddle}
+        </span>
         {descriptionEnd}
       </span>
     </div>
