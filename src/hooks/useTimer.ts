@@ -4,7 +4,7 @@ import useSessionStorage from './useSessionStorage.ts'
 import useSettings from './../contexts/settings.tsx'
 import useTimerFinish from './useTimerFinish.ts'
 
-function getDurationS(
+export function getDurationS(
   workDurationS: number,
   shortBreakDurationS: number,
   longBreakDurationS: number,
@@ -48,10 +48,12 @@ export default function useTimer() {
     pomodori_between_long_breaks: pomodoriBetweenLongBreaks,
   } = useSettings()
 
-  const { timerType, setTimerType, setTimerTypeToNext } = useTimerType(
-    TimerType.WORK,
-    pomodoriBetweenLongBreaks
-  )
+  const {
+    timerType,
+    lastPomodoroCountWithLongBreak,
+    setTimerType,
+    setTimerTypeToNext,
+  } = useTimerType(TimerType.WORK, pomodoriBetweenLongBreaks)
   const [pausedMsLeft, setPausedMsLeft] = useSessionStorage<number | null>(
     'pausedMsLeft',
     null
@@ -208,6 +210,9 @@ export default function useTimer() {
     isPaused,
     percentageCompleted,
     timerType,
+    pomodoroCount,
+    endTime,
+    lastPomodoroCountWithLongBreak,
     setTimerType,
     start,
     pause,

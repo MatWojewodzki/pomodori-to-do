@@ -1,5 +1,5 @@
 import TaskList from './TaskList.tsx'
-import TaskHeader from './TaskHeader.tsx'
+import TaskSectionHeader from './TaskSectionHeader/TaskSectionHeader.tsx'
 import AddTaskButton from './AddTaskButton.tsx'
 import { useState } from 'react'
 import TaskCreationForm from './TaskCreationForm.tsx'
@@ -9,6 +9,7 @@ import taskService from '../../../services/tauri/task.ts'
 import ErrorMessage from '../../common/ErrorMessage.tsx'
 import { Collapsible } from 'radix-ui'
 import ActiveTaskDisplay from './TaskDisplay/ActiveTaskDisplay.tsx'
+import SessionTimeLeftDisplay from './SessionTimeLeftDisplay.tsx'
 
 export type TaskSectionProps = {
   activeTaskId: string | null
@@ -29,7 +30,10 @@ function TaskSection(props: TaskSectionProps) {
     <section className="my-16 flex justify-center">
       <Collapsible.Root open={isExpanded} onOpenChange={setIsExpanded} asChild>
         <div className="flex-1 max-w-121 flex flex-col">
-          <TaskHeader taskSectionExpanded={isExpanded} />
+          <TaskSectionHeader
+            taskSectionExpanded={isExpanded}
+            timer={props.timer}
+          />
           {taskResult.isError && <ErrorMessage text="Failed to load tasks." />}
           {taskResult.isSuccess && !isExpanded && props.activeTaskId && (
             <ActiveTaskDisplay
@@ -57,6 +61,12 @@ function TaskSection(props: TaskSectionProps) {
               />
             )}
           </Collapsible.Content>
+          {taskResult.isSuccess && taskResult.data.length > 0 && (
+            <SessionTimeLeftDisplay
+              tasks={taskResult.data}
+              timer={props.timer}
+            />
+          )}
         </div>
       </Collapsible.Root>
     </section>
