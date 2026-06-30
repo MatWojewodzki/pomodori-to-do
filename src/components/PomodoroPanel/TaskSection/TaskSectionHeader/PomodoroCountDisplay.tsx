@@ -23,16 +23,14 @@ function PomodoroCountDisplay({ timer }: PomodoroCountDisplayProps) {
     isDuringWorkSession || pomodoroCount === 1 ? ' pomodoro' : ' pomodori'
 
   return (
-    <div className="grow flex justify-around text-neutral-300">
+    <div className="grow flex justify-center items-baseline gap-2 text-neutral-300">
       {pomodoroCount > 0 && (
         <>
-          <span>
-            {descriptionBeginning}
-            <span className="text-lg font-semibold text-white">
-              {descriptionMiddle}
-            </span>
-            {descriptionEnd}
+          <span>{descriptionBeginning}</span>
+          <span className="text-lg font-semibold text-white">
+            {descriptionMiddle}
           </span>
+          <span>{descriptionEnd}</span>
         </>
       )}
     </div>
