@@ -59,7 +59,7 @@ function SessionTimeLeftDisplay({ tasks, timer }: SessionTimeLeftDisplayProps) {
           </div>
         </>
       ) : (
-        <span className="text-neutral-300">You've completed you session!</span>
+        <span>You've completed you session!</span>
       )}
     </div>
   )
