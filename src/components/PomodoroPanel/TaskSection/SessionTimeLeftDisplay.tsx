@@ -46,14 +46,20 @@ function SessionTimeLeftDisplay({ tasks, timer }: SessionTimeLeftDisplayProps) {
         'mt-3 p-4 flex justify-around items-baseline rounded-md bg-neutral-700'
       )}
     >
-      <div className="flex items-baseline gap-2">
-        <span className="text-lg font-semibold">{pomodoriLeft}</span>
-        <span className="text-neutral-300">{`${pomodoriLeft === 1 ? 'pomodoro' : 'pomodori'} left`}</span>
-      </div>
-      <div className="flex items-baseline gap-2">
-        <span className="text-neutral-300">Finish time:</span>
-        <span className="text-lg font-semibold">{`${formatTime(finishTime)} (${hoursLeft}h)`}</span>
-      </div>
+      {pomodoriLeft > 0 ? (
+        <>
+          <div className="flex items-baseline gap-2">
+            <span className="text-lg font-semibold">{pomodoriLeft}</span>
+            <span className="text-neutral-300">{`${pomodoriLeft === 1 ? 'pomodoro' : 'pomodori'} left`}</span>
+          </div>
+          <div className="flex items-baseline gap-2">
+            <span className="text-neutral-300">Finish time:</span>
+            <span className="text-lg font-semibold">{`${formatTime(finishTime)} (${hoursLeft}h)`}</span>
+          </div>
+        </>
+      ) : (
+        <span className="text-neutral-300">You've completed you session!</span>
+      )}
     </div>
   )
 }
