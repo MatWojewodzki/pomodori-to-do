@@ -29,7 +29,7 @@ function SessionTimeLeftDisplay({ tasks, timer }: SessionTimeLeftDisplayProps) {
     }
   }, [handleTick])
 
-  const { timeLeft, finishTime } = sessionTimeLeftData
+  const { timeLeft, finishTime, pomodoriLeft } = sessionTimeLeftData
 
   const formatTime = (timestamp: number): string => {
     const date = new Date(timestamp)
@@ -43,11 +43,17 @@ function SessionTimeLeftDisplay({ tasks, timer }: SessionTimeLeftDisplayProps) {
   return (
     <div
       className={classNames(
-        'mt-3 p-4 flex justify-around rounded-md bg-neutral-600'
+        'mt-3 p-4 flex justify-around items-baseline rounded-md bg-neutral-700'
       )}
     >
-      <span>{formatTime(finishTime)}</span>
-      <span>{`(${hoursLeft}h)`}</span>
+      <div className="flex items-baseline gap-2">
+        <span className="text-lg font-semibold">{pomodoriLeft}</span>
+        <span className="text-neutral-300">{`${pomodoriLeft === 1 ? 'pomodoro' : 'pomodori'} left`}</span>
+      </div>
+      <div className="flex items-baseline gap-2">
+        <span className="text-neutral-300">Finish time:</span>
+        <span className="text-lg font-semibold">{`${formatTime(finishTime)} (${hoursLeft}h)`}</span>
+      </div>
     </div>
   )
 }

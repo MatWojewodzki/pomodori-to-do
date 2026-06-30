@@ -19,6 +19,7 @@ function getSessionTimeLeft(
     return {
       finishTime: Date.now(),
       timeLeft: 0,
+      pomodoriLeft: 0,
     }
   }
 
@@ -81,6 +82,7 @@ function getSessionTimeLeft(
   return {
     finishTime,
     timeLeft: finishTime - Date.now(),
+    pomodoriLeft: workSessionsRequired,
   }
 }
 
