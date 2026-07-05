@@ -4,6 +4,7 @@ pub mod ordering;
 pub mod settings;
 pub mod task;
 pub mod todo;
+pub mod todo_list;
 
 use crate::settings::repository::sqlite::SettingsRepositorySqlite;
 use crate::settings::service::SettingsService;
@@ -11,6 +12,8 @@ use crate::task::repository::sqlite::TaskRepositorySqlite;
 use crate::task::service::TaskService;
 use crate::todo::repository::sqlite::TodoRepositorySqlite;
 use crate::todo::service::TodoService;
+use crate::todo_list::repository::sqlite::TodoListRepositorySqlite;
+use crate::todo_list::service::TodoListService;
 use std::path::PathBuf;
 use std::sync::Arc;
 use tauri::Manager;
@@ -35,6 +38,7 @@ pub fn run() {
             let pools = tauri::async_runtime::block_on(db::create_pool(&db_uri));
 
             // setup repositories
+            let todo_list_repository = Arc::new(TodoListRepositorySqlite::new(pools.clone()));
             let todo_repository = Arc::new(TodoRepositorySqlite::new(pools.clone()));
             let task_repository = Arc::new(TaskRepositorySqlite::new(pools.clone()));
             let settings_repository = Arc::new(SettingsRepositorySqlite::new(pools));
@@ -42,10 +46,12 @@ pub fn run() {
                 .expect("Failed to initialize settings repository.");
 
             // setup services
+            let todo_list_service = TodoListService::new(todo_list_repository);
             let todo_service = TodoService::new(todo_repository);
             let task_service = TaskService::new(task_repository);
             let settings_service = SettingsService::new(settings_repository);
 
+            app.manage(todo_list_service);
             app.manage(todo_service);
             app.manage(task_service);
             app.manage(settings_service);
@@ -53,6 +59,9 @@ pub fn run() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
+            todo_list::command::get_todo_lists,
+            todo_list::command::create_todo_list,
+            todo_list::command::move_todo_list,
             todo::command::get_todos,
             todo::command::create_todo,
             todo::command::delete_todo,

@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS todo_list (
+    id TEXT PRIMARY KEY,
+    title TEXT NOT NULL,
+    order_key INTEGER NOT NULL
+)
