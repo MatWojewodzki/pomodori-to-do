@@ -5,11 +5,23 @@ import PomodoroPanel from './components/PomodoroPanel/PomodoroPanel.tsx'
 import PanelGap from './components/layout/PanelGap.tsx'
 import { useState } from 'react'
 import classNames from 'classnames'
+import todoListService from './services/tauri/todoList.ts'
+import { useQuery } from '@tanstack/react-query'
+import { TodoListDto } from './types/generated/TodoListDto.ts'
+import ErrorMessage from './components/common/ErrorMessage.tsx'
 
 function App() {
   const [todoPanelWidth, setTodoPanelWidth] = useState(400)
-  const [openTodoListId, setOpenTodoListId] = useState<string | null>(null)
-  const isTodoPanelOpen = openTodoListId !== null
+  const [openTodoList, setOpenTodoList] = useState<TodoListDto | null>(null)
+  const isTodoPanelOpen = openTodoList !== null
+
+  const result = useQuery({
+    queryKey: ['todo-lists'],
+    queryFn: todoListService.getTodoLists,
+  })
+
+  if (result.isError) return <ErrorMessage text="Failed to load todo lists." />
+  if (!result.isSuccess) return
   return (
     <div
       className={classNames(
@@ -17,12 +29,13 @@ function App() {
       )}
     >
       <LeftMenu
-        openTodoListId={openTodoListId}
-        setOpenTodoListId={setOpenTodoListId}
+        todoLists={result.data}
+        openTodoList={openTodoList}
+        setOpenTodoList={setOpenTodoList}
       />
       <div className="grow flex items-stretch overflow-hidden">
         {isTodoPanelOpen && (
-          <TodoPanel width={todoPanelWidth} todoListId={openTodoListId} />
+          <TodoPanel width={todoPanelWidth} todoList={openTodoList} />
         )}
         {isTodoPanelOpen && <PanelGap setTodoPanelWidth={setTodoPanelWidth} />}
         <PomodoroPanel isTodoPanelOpen={isTodoPanelOpen} />

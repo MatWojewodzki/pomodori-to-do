@@ -6,12 +6,12 @@ import ChecklistIcon from '../../assets/icons/checklist_20dp_000000_FILL0_wght40
 
 type TodoListMenuButtonProps = {
   todoList: TodoListDto
-  openTodoListId: string | null
-  setOpenTodoListId: React.Dispatch<React.SetStateAction<string | null>>
+  openTodoList: TodoListDto | null
+  setOpenTodoList: React.Dispatch<React.SetStateAction<TodoListDto | null>>
 }
 
 function TodoListMenuButton(props: TodoListMenuButtonProps) {
-  const isOpen = props.openTodoListId === props.todoList.id
+  const isOpen = props.openTodoList?.id === props.todoList.id
 
   const tooltipText = isOpen
     ? `Hide '${props.todoList.title}' todo list`
@@ -26,9 +26,9 @@ function TodoListMenuButton(props: TodoListMenuButtonProps) {
           { 'bg-neutral-600': isOpen }
         )}
         onClick={() =>
-          props.setOpenTodoListId((old) => {
-            if (old === props.todoList.id) return null
-            return props.todoList.id
+          props.setOpenTodoList((old) => {
+            if (old?.id === props.todoList.id) return null
+            return props.todoList
           })
         }
         aria-label={tooltipText}
