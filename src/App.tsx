@@ -8,7 +8,8 @@ import classNames from 'classnames'
 
 function App() {
   const [todoPanelWidth, setTodoPanelWidth] = useState(400)
-  const [isTodoPanelOpen, setIsTodoPanelOpen] = useState(true)
+  const [openTodoListId, setOpenTodoListId] = useState<string | null>(null)
+  const isTodoPanelOpen = openTodoListId !== null
   return (
     <div
       className={classNames(
@@ -16,11 +17,13 @@ function App() {
       )}
     >
       <LeftMenu
-        isTodoPanelOpen={isTodoPanelOpen}
-        setIsTodoPanelOpen={setIsTodoPanelOpen}
+        openTodoListId={openTodoListId}
+        setOpenTodoListId={setOpenTodoListId}
       />
       <div className="grow flex items-stretch overflow-hidden">
-        {isTodoPanelOpen && <TodoPanel width={todoPanelWidth} />}
+        {isTodoPanelOpen && (
+          <TodoPanel width={todoPanelWidth} todoListId={openTodoListId} />
+        )}
         {isTodoPanelOpen && <PanelGap setTodoPanelWidth={setTodoPanelWidth} />}
         <PomodoroPanel isTodoPanelOpen={isTodoPanelOpen} />
       </div>

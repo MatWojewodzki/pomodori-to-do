@@ -8,6 +8,7 @@ use sqlx::FromRow;
 #[derive(FromRow)]
 pub struct TodoRow {
     pub id: String,
+    pub todo_list_id: String,
     pub text: String,
     pub completed: i8,
     pub order_key: i32,
@@ -27,6 +28,7 @@ impl TodoRepositorySqlite {
     fn todo_to_row(todo: Todo) -> TodoRow {
         TodoRow {
             id: todo.id,
+            todo_list_id: todo.todo_list_id,
             text: todo.text,
             completed: if todo.completed { 1 } else { 0 },
             order_key: todo.order_key,
@@ -35,6 +37,7 @@ impl TodoRepositorySqlite {
     fn todo_from_row(row: TodoRow) -> Todo {
         Todo {
             id: row.id,
+            todo_list_id: row.todo_list_id,
             text: row.text,
             completed: row.completed != 0,
             order_key: row.order_key,
@@ -44,9 +47,9 @@ impl TodoRepositorySqlite {
 
 #[async_trait]
 impl TodoRepository for TodoRepositorySqlite {
-    async fn get_todos(&self) -> Result<Vec<Todo>, RepositoryError> {
-        let q = "SELECT * FROM todo ORDER BY order_key";
-        let query = sqlx::query_as::<_, TodoRow>(q);
+    async fn get_todos(&self, todo_list_id: String) -> Result<Vec<Todo>, RepositoryError> {
+        let q = "SELECT * FROM todo WHERE todo_list_id = ? ORDER BY order_key";
+        let query = sqlx::query_as::<_, TodoRow>(q).bind(todo_list_id);
         let rows = query.fetch_all(&self.pools.reader).await?;
         Ok(rows
             .into_iter()
@@ -59,15 +62,16 @@ impl TodoRepository for TodoRepositorySqlite {
 
         let mut tx = self.pools.writer.begin().await?;
 
-        let q = "INSERT INTO todo (id, text, completed, order_key) VALUES (?, ?, ?, ?)";
+        let q = "INSERT INTO todo (id, todo_list_id, text, completed, order_key) VALUES (?, ?, ?, ?, ?)";
         let query = sqlx::query(q)
             .bind(row.id.clone())
+            .bind(row.todo_list_id)
             .bind(row.text)
             .bind(row.completed)
             .bind(row.order_key);
         query.execute(&mut *tx).await?;
 
-        let q = "SELECT id, text, completed, order_key FROM todo WHERE id = ?";
+        let q = "SELECT id, todo_list_id, text, completed, order_key FROM todo WHERE id = ?";
         let created = sqlx::query_as::<_, TodoRow>(q)
             .bind(row.id)
             .fetch_one(&mut *tx)

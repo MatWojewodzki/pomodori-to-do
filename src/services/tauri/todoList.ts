@@ -3,7 +3,7 @@ import { TodoListDto } from '../../types/generated/TodoListDto.ts'
 
 const todoListService = {
   async getTodoLists(): Promise<TodoListDto[]> {
-    return await tauriInvoke('get_todos')
+    return await tauriInvoke('get_todo_lists')
   },
 
   async createTodoList(args: { title: string }): Promise<TodoListDto> {

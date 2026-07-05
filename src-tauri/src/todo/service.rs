@@ -14,15 +14,19 @@ impl TodoService {
         Self { todo_repository }
     }
 
-    pub async fn get_todos(&self) -> Result<Vec<Todo>, ServiceError> {
-        let todos = self.todo_repository.get_todos().await?;
+    pub async fn get_todos(&self, todo_list_id: String) -> Result<Vec<Todo>, ServiceError> {
+        let todos = self.todo_repository.get_todos(todo_list_id).await?;
         Ok(todos)
     }
 
-    pub async fn create_todo(&self, text: String) -> Result<Todo, ServiceError> {
+    pub async fn create_todo(
+        &self,
+        todo_list_id: String,
+        text: String,
+    ) -> Result<Todo, ServiceError> {
         let order_key =
             ordering::new_order_key(self.todo_repository.get_greatest_order_key().await?);
-        let todo = Todo::new(text, order_key)?;
+        let todo = Todo::new(todo_list_id, text, order_key)?;
         let created = self.todo_repository.create_todo(todo).await?;
         Ok(created)
     }

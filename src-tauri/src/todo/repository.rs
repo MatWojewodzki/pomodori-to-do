@@ -7,7 +7,7 @@ use crate::todo::domain::Todo;
 
 #[async_trait]
 pub trait TodoRepository: Send + Sync {
-    async fn get_todos(&self) -> Result<Vec<Todo>, RepositoryError>;
+    async fn get_todos(&self, todo_list_id: String) -> Result<Vec<Todo>, RepositoryError>;
     async fn create_todo(&self, todo: Todo) -> Result<Todo, RepositoryError>;
     async fn delete_todo(&self, id: String) -> Result<(), RepositoryError>;
     async fn set_completed(&self, id: String, completed: bool) -> Result<(), RepositoryError>;

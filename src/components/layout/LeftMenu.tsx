@@ -1,36 +1,34 @@
-import ChecklistIcon from '../../assets/icons/checklist_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
-import classNames from 'classnames'
 import React from 'react'
-import Tooltip from '../common/Tooltip.tsx'
 import SettingsButton from '../Settings/SettingsButton.tsx'
+import { useQuery } from '@tanstack/react-query'
+import todoListService from '../../services/tauri/todoList.ts'
+import ErrorMessage from '../common/ErrorMessage.tsx'
+import TodoListMenuButton from './TodoListMenuButton.tsx'
 
 type LeftMenuProps = {
-  isTodoPanelOpen: boolean
-  setIsTodoPanelOpen: React.Dispatch<React.SetStateAction<boolean>>
+  openTodoListId: string | null
+  setOpenTodoListId: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 function LeftMenu(props: LeftMenuProps) {
-  const tooltipText = props.isTodoPanelOpen
-    ? 'Hide Todo List'
-    : 'Show Todo List'
+  const result = useQuery({
+    queryKey: ['todo-lists'],
+    queryFn: todoListService.getTodoLists,
+  })
+
+  if (result.isError) return <ErrorMessage text="Failed to load todo lists." />
+  if (!result.isSuccess) return
   return (
     <div className="flex flex-col px-1 py-2">
       <div className="grow">
-        <Tooltip text={tooltipText} side="right">
-          <button
-            className={classNames(
-              'p-1 rounded-sm cursor-pointer',
-              'hover:bg-neutral-500 focus:outline-none focus-visible:bg-neutral-500',
-              { 'bg-neutral-600': props.isTodoPanelOpen }
-            )}
-            onClick={() => props.setIsTodoPanelOpen((value) => !value)}
-            aria-label={tooltipText}
-            aria-expanded={props.isTodoPanelOpen}
-            aria-controls="todo-panel"
-          >
-            <ChecklistIcon className="size-5" />
-          </button>
-        </Tooltip>
+        {result.data.map((todoList) => (
+          <TodoListMenuButton
+            key={todoList.id}
+            todoList={todoList}
+            openTodoListId={props.openTodoListId}
+            setOpenTodoListId={props.setOpenTodoListId}
+          />
+        ))}
       </div>
       <div>
         <SettingsButton />

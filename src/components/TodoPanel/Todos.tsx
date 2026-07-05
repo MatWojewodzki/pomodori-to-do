@@ -3,10 +3,14 @@ import todoService from '../../services/tauri/todo.ts'
 import ErrorMessage from '../common/ErrorMessage.tsx'
 import TodoList from './TodoList.tsx'
 
-function Todos() {
+type TodoProps = {
+  todoListId: string
+}
+
+function Todos(props: TodoProps) {
   const result = useQuery({
-    queryKey: ['todos'],
-    queryFn: todoService.getTodos,
+    queryKey: ['todos', { todoListId: props.todoListId }],
+    queryFn: async () => todoService.getTodos({ todoListId: props.todoListId }),
   })
   if (result.isError) return <ErrorMessage text="Failed to load todos." />
   if (!result.isSuccess) return

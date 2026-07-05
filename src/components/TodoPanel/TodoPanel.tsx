@@ -5,6 +5,7 @@ import Todos from './Todos.tsx'
 
 type TodoPanelProps = {
   width: number
+  todoListId: string
 }
 
 function TodoPanel(props: TodoPanelProps) {
@@ -15,8 +16,8 @@ function TodoPanel(props: TodoPanelProps) {
       className="rounded-e-lg"
     >
       <PanelHeader>{'Todo'} List</PanelHeader>
-      <TodoCreationForm />
-      <Todos />
+      <TodoCreationForm todoListId={props.todoListId} />
+      <Todos todoListId={props.todoListId} />
     </Panel>
   )
 }
