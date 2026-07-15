@@ -2,7 +2,7 @@ import SettingsIcon from '../../assets/icons/settings_20dp_000000_FILL0_wght400_
 import Tooltip from '../common/Tooltip.tsx'
 import { useState } from 'react'
 import MenuButton from '../common/MenuButton.tsx'
-import DialogButton from '../common/DialogButton.tsx'
+import DialogButton from '../common/dialog/DialogButton.tsx'
 import SettingsDialog from './SettingsDialog.tsx'
 
 function SettingsButton() {

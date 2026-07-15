@@ -1,5 +1,5 @@
 import React from 'react'
-import CloseIcon from '../../assets/icons/close_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
+import CloseIcon from '../../../assets/icons/close_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
 import { Dialog } from 'radix-ui'
 import classNames from 'classnames'
 
