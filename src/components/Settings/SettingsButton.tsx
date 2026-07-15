@@ -5,20 +5,17 @@ import CloseIcon from '../../assets/icons/close_20dp_000000_FILL0_wght400_GRAD0_
 import Tooltip from '../common/Tooltip.tsx'
 import Settings from './Settings.tsx'
 import { useState } from 'react'
+import MenuButton from '../common/MenuButton.tsx'
 
 function SettingsButton() {
   const [open, setOpen] = useState(false)
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Tooltip text="Settings" side="right">
-        <Dialog.Trigger
-          aria-label="Open settings"
-          className={classNames(
-            'p-1 rounded-sm cursor-pointer',
-            'hover:bg-neutral-500 focus:outline-none focus-visible:bg-neutral-500'
-          )}
-        >
-          <SettingsIcon className="size-5" />
+        <Dialog.Trigger asChild>
+          <MenuButton aria-label="Open settings">
+            <SettingsIcon className="size-5" />
+          </MenuButton>
         </Dialog.Trigger>
       </Tooltip>
       <Dialog.Portal>

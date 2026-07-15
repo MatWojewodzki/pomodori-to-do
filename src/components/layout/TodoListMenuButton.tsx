@@ -3,6 +3,7 @@ import Tooltip from '../common/Tooltip.tsx'
 import React from 'react'
 import classNames from 'classnames'
 import ChecklistIcon from '../../assets/icons/checklist_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
+import MenuButton from '../common/MenuButton.tsx'
 
 type TodoListMenuButtonProps = {
   todoList: TodoListDto
@@ -19,12 +20,8 @@ function TodoListMenuButton(props: TodoListMenuButtonProps) {
 
   return (
     <Tooltip text={tooltipText} side="right">
-      <button
-        className={classNames(
-          'p-1 rounded-sm cursor-pointer',
-          'hover:bg-neutral-500 focus:outline-none focus-visible:bg-neutral-500',
-          { 'bg-neutral-600': isOpen }
-        )}
+      <MenuButton
+        className={classNames({ 'bg-neutral-600': isOpen })}
         onClick={() =>
           props.setOpenTodoList((old) => {
             if (old?.id === props.todoList.id) return null
@@ -36,7 +33,7 @@ function TodoListMenuButton(props: TodoListMenuButtonProps) {
         aria-controls="todo-panel"
       >
         <ChecklistIcon className="size-5" />
-      </button>
+      </MenuButton>
     </Tooltip>
   )
 }
