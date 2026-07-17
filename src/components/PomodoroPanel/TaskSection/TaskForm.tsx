@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import Tooltip from '../../common/Tooltip.tsx'
-import NumberInput from '../../common/NumberInput.tsx'
+import NumberInput from '../../common/form/NumberInput.tsx'
 import TextInput from '../../common/form/TextInput.tsx'
 
 type TaskFormProps = {
