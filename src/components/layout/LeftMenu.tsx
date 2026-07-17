@@ -23,7 +23,8 @@ function LeftMenu(props: LeftMenuProps) {
           />
         ))}
       </div>
-      <div className="grow mt-4">
+      <div className="h-0.5 my-2 mx-1 bg-neutral-500" />
+      <div className="grow">
         <AddTodoListButton />
       </div>
       <div>
