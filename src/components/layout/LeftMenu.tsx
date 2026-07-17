@@ -13,7 +13,7 @@ type LeftMenuProps = {
 function LeftMenu(props: LeftMenuProps) {
   return (
     <div className="flex flex-col px-1 py-2">
-      <div>
+      <div className="flex flex-col gap-1">
         {props.todoLists.map((todoList) => (
           <TodoListMenuButton
             key={todoList.id}
@@ -23,7 +23,7 @@ function LeftMenu(props: LeftMenuProps) {
           />
         ))}
       </div>
-      <div className="grow mt-2">
+      <div className="grow mt-4">
         <AddTodoListButton />
       </div>
       <div>
