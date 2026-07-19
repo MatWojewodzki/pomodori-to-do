@@ -66,7 +66,15 @@ const TaskDisplay = forwardRef<HTMLDivElement, TaskDisplayProps>(
         >
           <DragIndicatorIcon className="size-5" />
         </div>
-        <DropdownMenu tooltipText="More options" triggerLabel="Open menu">
+        <DropdownMenu
+          tooltipText="More options"
+          triggerLabel="Open menu"
+          triggerClassName={classNames(
+            'absolute z-10 right-3 top-3.5',
+            'invisible group-hover:visible group-focus-within:visible',
+            'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800'
+          )}
+        >
           <DropdownMenuItem onSelect={() => props.openEditForm()}>
             <EditIcon className="size-5" />
             <span>Edit</span>

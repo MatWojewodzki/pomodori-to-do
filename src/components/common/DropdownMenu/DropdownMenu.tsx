@@ -8,6 +8,7 @@ type DropdownMenuProps = {
   tooltipText: string
   triggerLabel: string
   children?: React.ReactNode
+  triggerClassName?: string
 }
 
 function DropdownMenu(props: DropdownMenuProps) {
@@ -17,9 +18,8 @@ function DropdownMenu(props: DropdownMenuProps) {
         <RadixDropdownMenu.Trigger
           aria-label={props.triggerLabel}
           className={classNames(
-            'p-1 absolute z-10 right-3 top-3.5 rounded-md cursor-pointer',
-            'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800',
-            'invisible group-hover:visible group-focus-within:visible'
+            'p-1 rounded-md cursor-pointer',
+            props.triggerClassName
           )}
         >
           <MoreVertIcon className="size-5" />
