@@ -2,10 +2,13 @@ import React from 'react'
 import CloseIcon from '../../../assets/icons/close_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
 import { Dialog } from 'radix-ui'
 import classNames from 'classnames'
+import Tooltip from '../Tooltip.tsx'
 
 type DialogButtonProps = {
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  tooltipText: string
+  tooltipSide?: 'top' | 'right' | 'bottom' | 'left'
   dialog?: React.ReactNode
   children?: React.ReactNode
 }
@@ -13,7 +16,9 @@ type DialogButtonProps = {
 function DialogButton(props: DialogButtonProps) {
   return (
     <Dialog.Root open={props.open} onOpenChange={props.setOpen}>
-      <Dialog.Trigger>{props.children}</Dialog.Trigger>
+      <Tooltip text={props.tooltipText} side={props.tooltipSide}>
+        <Dialog.Trigger asChild>{props.children}</Dialog.Trigger>
+      </Tooltip>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-neutral-500/30" />
         <Dialog.Content

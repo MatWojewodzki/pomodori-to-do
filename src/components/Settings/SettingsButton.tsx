@@ -1,5 +1,4 @@
 import SettingsIcon from '../../assets/icons/settings_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
-import Tooltip from '../common/Tooltip.tsx'
 import { useState } from 'react'
 import MenuButton from '../common/MenuButton.tsx'
 import DialogButton from '../common/dialog/DialogButton.tsx'
@@ -11,13 +10,13 @@ function SettingsButton() {
     <DialogButton
       open={open}
       setOpen={setOpen}
+      tooltipText="Settings"
+      tooltipSide="right"
       dialog={<SettingsDialog setOpen={setOpen} />}
     >
-      <Tooltip text="Settings" side="right">
-        <MenuButton aria-label="Open settings">
-          <SettingsIcon className="size-5" />
-        </MenuButton>
-      </Tooltip>
+      <MenuButton aria-label="Open settings">
+        <SettingsIcon className="size-5" />
+      </MenuButton>
     </DialogButton>
   )
 }

@@ -3,18 +3,21 @@ import classNames from 'classnames'
 
 type MenuButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>
 
-function MenuButton(props: MenuButtonProps) {
-  const { className, ...rest } = props
-  return (
-    <button
-      className={classNames(
-        'p-1 rounded-sm cursor-pointer',
-        'hover:bg-neutral-500 focus:outline-none focus-visible:bg-neutral-500',
-        className
-      )}
-      {...rest}
-    />
-  )
-}
+const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
+  function MenuButton(props, ref) {
+    const { className, ...rest } = props
+    return (
+      <button
+        className={classNames(
+          'p-1 rounded-sm cursor-pointer',
+          'hover:bg-neutral-500 focus:outline-none focus-visible:bg-neutral-500',
+          className
+        )}
+        {...rest}
+        ref={ref}
+      />
+    )
+  }
+)
 
 export default MenuButton
