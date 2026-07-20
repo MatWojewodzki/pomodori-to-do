@@ -62,6 +62,7 @@ pub fn run() {
             todo_list::command::get_todo_lists,
             todo_list::command::create_todo_list,
             todo_list::command::move_todo_list,
+            todo_list::command::delete_todo_list,
             todo::command::get_todos,
             todo::command::create_todo,
             todo::command::delete_todo,

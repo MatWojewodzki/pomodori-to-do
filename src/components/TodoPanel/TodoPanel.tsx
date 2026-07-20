@@ -5,10 +5,12 @@ import Todos from './Todos.tsx'
 import { TodoListDto } from '../../types/generated/TodoListDto.ts'
 import PanelTitle from '../Panel/PanelTitle.tsx'
 import TodoListDropdownMenu from './TodoListDropdownMenu.tsx'
+import React from 'react'
 
 type TodoPanelProps = {
   width: number
   todoList: TodoListDto
+  setOpenTodoList: React.Dispatch<React.SetStateAction<TodoListDto | null>>
 }
 
 function TodoPanel(props: TodoPanelProps) {
@@ -20,7 +22,10 @@ function TodoPanel(props: TodoPanelProps) {
     >
       <PanelHeader>
         <PanelTitle>{props.todoList.title}</PanelTitle>
-        <TodoListDropdownMenu />
+        <TodoListDropdownMenu
+          todoList={props.todoList}
+          setOpenTodoList={props.setOpenTodoList}
+        />
       </PanelHeader>
       <TodoCreationForm todoListId={props.todoList.id} />
       <Todos todoListId={props.todoList.id} />

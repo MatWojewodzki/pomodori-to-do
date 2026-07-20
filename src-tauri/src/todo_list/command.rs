@@ -29,3 +29,12 @@ pub async fn move_todo_list(
     service.move_todo_list(initial_index, new_index).await?;
     Ok(())
 }
+
+#[tauri::command]
+pub async fn delete_todo_list(
+    service: State<'_, TodoListService>,
+    id: String,
+) -> Result<(), AppError> {
+    service.delete_todo_list(id).await?;
+    Ok(())
+}

@@ -117,4 +117,11 @@ impl TodoListRepository for TodoListRepositorySqlite {
             _ => unreachable!(),
         })
     }
+
+    async fn delete_todo_list(&self, id: String) -> Result<(), RepositoryError> {
+        let q = "DELETE FROM todo_list WHERE id = ?";
+        let query = sqlx::query(q).bind(id);
+        query.execute(&self.pools.writer).await?;
+        Ok(())
+    }
 }

@@ -3,8 +3,27 @@ import classNames from 'classnames'
 import DropdownMenuItem from '../common/DropdownMenu/DropdownMenuItem.tsx'
 import EditIcon from '../../assets/icons/edit_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
 import DeleteIcon from '../../assets/icons/delete_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
+import todoListService from '../../services/tauri/todoList.ts'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { TodoListDto } from '../../types/generated/TodoListDto.ts'
+import React from 'react'
 
-function TodoListDropdownMenu() {
+type TodoListDropdownMenuProps = {
+  todoList: TodoListDto
+  setOpenTodoList: React.Dispatch<React.SetStateAction<TodoListDto | null>>
+}
+
+function TodoListDropdownMenu(props: TodoListDropdownMenuProps) {
+  const queryClient = useQueryClient()
+  const deleteMutation = useMutation({
+    mutationFn: todoListService.deleteTodoList,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['todo-lists'] })
+      props.setOpenTodoList((prev) =>
+        prev?.id === props.todoList.id ? null : prev
+      )
+    },
+  })
   return (
     <DropdownMenu
       tooltipText="More options"
@@ -17,7 +36,10 @@ function TodoListDropdownMenu() {
         <EditIcon className="size-5" />
         <span>Edit title</span>
       </DropdownMenuItem>
-      <DropdownMenuItem className="text-red-300">
+      <DropdownMenuItem
+        className="text-red-300"
+        onSelect={() => deleteMutation.mutate({ id: props.todoList.id })}
+      >
         <DeleteIcon className="size-5" />
         <span>Delete list</span>
       </DropdownMenuItem>

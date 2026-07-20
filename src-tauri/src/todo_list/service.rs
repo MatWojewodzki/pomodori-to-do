@@ -76,4 +76,9 @@ impl TodoListService {
         }
         Ok(())
     }
+
+    pub async fn delete_todo_list(&self, id: String) -> Result<(), ServiceError> {
+        self.todo_list_repository.delete_todo_list(id).await?;
+        Ok(())
+    }
 }

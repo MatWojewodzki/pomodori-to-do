@@ -16,6 +16,10 @@ const todoListService = {
   }): Promise<void> {
     return await tauriInvoke('move_todo_list', args)
   },
+
+  async deleteTodoList(args: { id: string }): Promise<void> {
+    return await tauriInvoke('delete_todo_list', args)
+  },
 }
 
 export default todoListService

@@ -35,7 +35,11 @@ function App() {
       />
       <div className="grow flex items-stretch overflow-hidden">
         {isTodoPanelOpen && (
-          <TodoPanel width={todoPanelWidth} todoList={openTodoList} />
+          <TodoPanel
+            width={todoPanelWidth}
+            todoList={openTodoList}
+            setOpenTodoList={setOpenTodoList}
+          />
         )}
         {isTodoPanelOpen && <PanelGap setTodoPanelWidth={setTodoPanelWidth} />}
         <PomodoroPanel isTodoPanelOpen={isTodoPanelOpen} />
