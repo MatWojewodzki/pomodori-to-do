@@ -10,6 +10,7 @@ import todoListService from '../../services/tauri/todoList.ts'
 
 type TodoListCreationDialogProps = {
   closeDialog: () => void
+  setOpenTodoListId: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 function TodoListCreationDialog(props: TodoListCreationDialogProps) {
@@ -19,8 +20,10 @@ function TodoListCreationDialog(props: TodoListCreationDialogProps) {
   const queryClient = useQueryClient()
   const mutation = useMutation({
     mutationFn: todoListService.createTodoList,
-    onSuccess: async () => {
+    onSuccess: async (data) => {
       await queryClient.invalidateQueries({ queryKey: ['todo-lists'] })
+      console.log(data)
+      props.setOpenTodoListId(data)
     },
   })
 

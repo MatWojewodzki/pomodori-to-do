@@ -15,9 +15,8 @@ pub async fn get_todo_lists(
 pub async fn create_todo_list(
     service: State<'_, TodoListService>,
     title: String,
-) -> Result<(), AppError> {
-    service.create_todo_list(title).await?;
-    Ok(())
+) -> Result<String, AppError> {
+    Ok(service.create_todo_list(title).await?)
 }
 
 #[tauri::command]

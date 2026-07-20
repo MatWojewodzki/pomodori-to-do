@@ -20,14 +20,14 @@ impl TodoListService {
         let todo_lists = self.todo_list_repository.get_todo_lists().await?;
         Ok(todo_lists)
     }
-    pub async fn create_todo_list(&self, title: String) -> Result<(), ServiceError> {
+    pub async fn create_todo_list(&self, title: String) -> Result<String, ServiceError> {
         let order_key =
             ordering::new_order_key(self.todo_list_repository.get_greatest_order_key().await?);
         let todo_list = TodoList::new(title, order_key)?;
-        Ok(self
-            .todo_list_repository
-            .create_todo_list(todo_list)
-            .await?)
+        self.todo_list_repository
+            .create_todo_list(todo_list.clone())
+            .await?;
+        Ok(todo_list.id)
     }
 
     pub async fn move_todo_list(

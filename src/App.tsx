@@ -12,6 +12,7 @@ import ErrorMessage from './components/common/ErrorMessage.tsx'
 function App() {
   const [todoPanelWidth, setTodoPanelWidth] = useState(400)
   const [openTodoListId, setOpenTodoListId] = useState<string | null>(null)
+  console.log('openTodoListId', openTodoListId)
 
   const result = useQuery({
     queryKey: ['todo-lists'],

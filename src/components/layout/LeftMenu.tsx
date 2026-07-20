@@ -25,7 +25,7 @@ function LeftMenu(props: LeftMenuProps) {
       </div>
       <div className="h-0.5 my-2 mx-1 bg-neutral-500" />
       <div className="grow">
-        <AddTodoListButton />
+        <AddTodoListButton setOpenTodoListId={props.setOpenTodoListId} />
       </div>
       <div>
         <SettingsButton />

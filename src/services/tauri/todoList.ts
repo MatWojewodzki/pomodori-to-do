@@ -6,7 +6,7 @@ const todoListService = {
     return await tauriInvoke('get_todo_lists')
   },
 
-  async createTodoList(args: { title: string }): Promise<TodoListDto> {
+  async createTodoList(args: { title: string }): Promise<string> {
     return await tauriInvoke('create_todo_list', args)
   },
 
