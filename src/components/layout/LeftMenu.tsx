@@ -6,8 +6,8 @@ import AddTodoListButton from './AddTodoListButton.tsx'
 
 type LeftMenuProps = {
   todoLists: TodoListDto[]
-  openTodoList: TodoListDto | null
-  setOpenTodoList: React.Dispatch<React.SetStateAction<TodoListDto | null>>
+  openTodoListId: string | null
+  setOpenTodoListId: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 function LeftMenu(props: LeftMenuProps) {
@@ -18,8 +18,8 @@ function LeftMenu(props: LeftMenuProps) {
           <TodoListMenuButton
             key={todoList.id}
             todoList={todoList}
-            openTodoList={props.openTodoList}
-            setOpenTodoList={props.setOpenTodoList}
+            openTodoListId={props.openTodoListId}
+            setOpenTodoListId={props.setOpenTodoListId}
           />
         ))}
       </div>

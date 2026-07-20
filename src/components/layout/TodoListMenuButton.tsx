@@ -7,12 +7,12 @@ import MenuButton from '../common/MenuButton.tsx'
 
 type TodoListMenuButtonProps = {
   todoList: TodoListDto
-  openTodoList: TodoListDto | null
-  setOpenTodoList: React.Dispatch<React.SetStateAction<TodoListDto | null>>
+  openTodoListId: string | null
+  setOpenTodoListId: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 function TodoListMenuButton(props: TodoListMenuButtonProps) {
-  const isOpen = props.openTodoList?.id === props.todoList.id
+  const isOpen = props.openTodoListId === props.todoList.id
 
   const tooltipText = isOpen
     ? `Hide '${props.todoList.title}' todo list`
@@ -23,9 +23,9 @@ function TodoListMenuButton(props: TodoListMenuButtonProps) {
       <MenuButton
         className={classNames({ 'bg-neutral-600': isOpen })}
         onClick={() =>
-          props.setOpenTodoList((old) => {
-            if (old?.id === props.todoList.id) return null
-            return props.todoList
+          props.setOpenTodoListId((old) => {
+            if (old === props.todoList.id) return null
+            return props.todoList.id
           })
         }
         aria-label={tooltipText}

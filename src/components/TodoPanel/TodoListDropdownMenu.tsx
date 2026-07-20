@@ -10,7 +10,7 @@ import React from 'react'
 
 type TodoListDropdownMenuProps = {
   todoList: TodoListDto
-  setOpenTodoList: React.Dispatch<React.SetStateAction<TodoListDto | null>>
+  setOpenTodoListId: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 function TodoListDropdownMenu(props: TodoListDropdownMenuProps) {
@@ -19,8 +19,8 @@ function TodoListDropdownMenu(props: TodoListDropdownMenuProps) {
     mutationFn: todoListService.deleteTodoList,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['todo-lists'] })
-      props.setOpenTodoList((prev) =>
-        prev?.id === props.todoList.id ? null : prev
+      props.setOpenTodoListId((prev) =>
+        prev === props.todoList.id ? null : prev
       )
     },
   })

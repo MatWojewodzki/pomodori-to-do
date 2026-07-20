@@ -7,13 +7,11 @@ import { useState } from 'react'
 import classNames from 'classnames'
 import todoListService from './services/tauri/todoList.ts'
 import { useQuery } from '@tanstack/react-query'
-import { TodoListDto } from './types/generated/TodoListDto.ts'
 import ErrorMessage from './components/common/ErrorMessage.tsx'
 
 function App() {
   const [todoPanelWidth, setTodoPanelWidth] = useState(400)
-  const [openTodoList, setOpenTodoList] = useState<TodoListDto | null>(null)
-  const isTodoPanelOpen = openTodoList !== null
+  const [openTodoListId, setOpenTodoListId] = useState<string | null>(null)
 
   const result = useQuery({
     queryKey: ['todo-lists'],
@@ -22,6 +20,9 @@ function App() {
 
   if (result.isError) return <ErrorMessage text="Failed to load todo lists." />
   if (!result.isSuccess) return
+
+  const openTodoList =
+    result.data.find((todoList) => todoList.id === openTodoListId) ?? null
   return (
     <div
       className={classNames(
@@ -30,19 +31,19 @@ function App() {
     >
       <LeftMenu
         todoLists={result.data}
-        openTodoList={openTodoList}
-        setOpenTodoList={setOpenTodoList}
+        openTodoListId={openTodoListId}
+        setOpenTodoListId={setOpenTodoListId}
       />
       <div className="grow flex items-stretch overflow-hidden">
-        {isTodoPanelOpen && (
+        {openTodoList && (
           <TodoPanel
             width={todoPanelWidth}
             todoList={openTodoList}
-            setOpenTodoList={setOpenTodoList}
+            setOpenTodoListId={setOpenTodoListId}
           />
         )}
-        {isTodoPanelOpen && <PanelGap setTodoPanelWidth={setTodoPanelWidth} />}
-        <PomodoroPanel isTodoPanelOpen={isTodoPanelOpen} />
+        {openTodoList && <PanelGap setTodoPanelWidth={setTodoPanelWidth} />}
+        <PomodoroPanel isTodoPanelOpen={openTodoList !== null} />
       </div>
     </div>
   )
