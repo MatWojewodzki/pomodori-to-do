@@ -7,7 +7,7 @@ import todoListService from '../../services/tauri/todoList.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { TodoListDto } from '../../types/generated/TodoListDto.ts'
 import React, { useState } from 'react'
-import TodoListEditDialog from '../layout/TodoListEditDIalog.tsx'
+import TodoListEditDialog from './TodoListEditDIalog.tsx'
 import DialogButton from '../common/dialog/DialogButton.tsx'
 
 type TodoListDropdownMenuProps = {
