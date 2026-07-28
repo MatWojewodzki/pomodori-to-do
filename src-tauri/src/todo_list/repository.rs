@@ -21,4 +21,5 @@ pub trait TodoListRepository: Send + Sync {
         gap_index: u32,
     ) -> Result<(Option<TodoList>, Option<TodoList>), RepositoryError>;
     async fn delete_todo_list(&self, id: String) -> Result<(), RepositoryError>;
+    async fn update_todo_list(&self, id: String, title: String) -> Result<(), RepositoryError>;
 }

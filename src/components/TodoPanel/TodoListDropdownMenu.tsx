@@ -1,4 +1,4 @@
-import DropdownMenu from '../common/DropdownMenu/DropdownMenu.tsx'
+import MyDropdownMenu from '../common/DropdownMenu/DropdownMenu.tsx'
 import classNames from 'classnames'
 import DropdownMenuItem from '../common/DropdownMenu/DropdownMenuItem.tsx'
 import EditIcon from '../../assets/icons/edit_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
@@ -6,7 +6,9 @@ import DeleteIcon from '../../assets/icons/delete_20dp_000000_FILL0_wght400_GRAD
 import todoListService from '../../services/tauri/todoList.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { TodoListDto } from '../../types/generated/TodoListDto.ts'
-import React from 'react'
+import React, { useState } from 'react'
+import TodoListEditDialog from '../layout/TodoListEditDIalog.tsx'
+import DialogButton from '../common/dialog/DialogButton.tsx'
 
 type TodoListDropdownMenuProps = {
   todoList: TodoListDto
@@ -14,6 +16,7 @@ type TodoListDropdownMenuProps = {
 }
 
 function TodoListDropdownMenu(props: TodoListDropdownMenuProps) {
+  const [editDialogOpen, setEditDialogOpen] = useState(false)
   const queryClient = useQueryClient()
   const deleteMutation = useMutation({
     mutationFn: todoListService.deleteTodoList,
@@ -25,17 +28,28 @@ function TodoListDropdownMenu(props: TodoListDropdownMenuProps) {
     },
   })
   return (
-    <DropdownMenu
+    <MyDropdownMenu
       tooltipText="More options"
       triggerLabel="Open menu"
       triggerClassName={classNames(
         'hover:bg-neutral-600 focus:outline-none focus-visible:bg-neutral-600'
       )}
     >
-      <DropdownMenuItem>
-        <EditIcon className="size-5" />
-        <span>Edit title</span>
-      </DropdownMenuItem>
+      <DialogButton
+        open={editDialogOpen}
+        setOpen={setEditDialogOpen}
+        dialog={
+          <TodoListEditDialog
+            todoList={props.todoList}
+            closeDialog={() => setEditDialogOpen(false)}
+          />
+        }
+      >
+        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+          <EditIcon className="size-5" />
+          <span>Edit title</span>
+        </DropdownMenuItem>
+      </DialogButton>
       <DropdownMenuItem
         className="text-red-300"
         onSelect={() => deleteMutation.mutate({ id: props.todoList.id })}
@@ -43,7 +57,7 @@ function TodoListDropdownMenu(props: TodoListDropdownMenuProps) {
         <DeleteIcon className="size-5" />
         <span>Delete list</span>
       </DropdownMenuItem>
-    </DropdownMenu>
+    </MyDropdownMenu>
   )
 }
 

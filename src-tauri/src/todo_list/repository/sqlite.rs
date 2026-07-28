@@ -124,4 +124,11 @@ impl TodoListRepository for TodoListRepositorySqlite {
         query.execute(&self.pools.writer).await?;
         Ok(())
     }
+
+    async fn update_todo_list(&self, id: String, title: String) -> Result<(), RepositoryError> {
+        let q = "UPDATE todo_list SET title = ? WHERE id = ?";
+        let query = sqlx::query(q).bind(title).bind(id);
+        query.execute(&self.pools.writer).await?;
+        Ok(())
+    }
 }

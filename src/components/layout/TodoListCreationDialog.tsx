@@ -1,12 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Dialog } from 'radix-ui'
-import DialogTitle from '../common/dialog/DialogTitle.tsx'
-import DialogFooter from '../common/dialog/DialogFooter.tsx'
-import SecondaryDialogButton from '../common/dialog/SecondaryDialogButton.tsx'
-import PrimaryDialogButton from '../common/dialog/PrimaryDialogButton.tsx'
-import TextInput from '../common/form/TextInput.tsx'
+import React, { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import todoListService from '../../services/tauri/todoList.ts'
+import TodoListDialog from './TodoListDialog.tsx'
 
 type TodoListCreationDialogProps = {
   closeDialog: () => void
@@ -15,7 +10,6 @@ type TodoListCreationDialogProps = {
 
 function TodoListCreationDialog(props: TodoListCreationDialogProps) {
   const [title, setTitle] = useState('')
-  const titleInputRef = useRef<HTMLInputElement | null>(null)
 
   const queryClient = useQueryClient()
   const mutation = useMutation({
@@ -34,28 +28,14 @@ function TodoListCreationDialog(props: TodoListCreationDialogProps) {
     props.closeDialog()
   }
 
-  useEffect(() => {
-    titleInputRef.current?.focus()
-  }, [])
-
   return (
-    <form onSubmit={handleSubmit}>
-      <DialogTitle>{'Create a new todo list'}</DialogTitle>
-      <div className="mt-6">
-        <TextInput
-          label={'List title'}
-          value={title}
-          setValue={setTitle}
-          ref={titleInputRef}
-        />
-      </div>
-      <DialogFooter>
-        <Dialog.Close asChild>
-          <SecondaryDialogButton type="button">Cancel</SecondaryDialogButton>
-        </Dialog.Close>
-        <PrimaryDialogButton type="submit">Create</PrimaryDialogButton>
-      </DialogFooter>
-    </form>
+    <TodoListDialog
+      dialogTitle="Create a new todo list"
+      submitButtonText="Create"
+      title={title}
+      setTitle={setTitle}
+      handleSubmit={handleSubmit}
+    />
   )
 }
 

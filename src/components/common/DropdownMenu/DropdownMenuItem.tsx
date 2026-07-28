@@ -4,11 +4,15 @@ import React from 'react'
 
 type DropdownMenuItemProps = {
   className?: string
-  onSelect?: () => void
+  onSelect?: (e: Event) => void
   children?: React.ReactNode
 }
 
-function DropdownMenuItem(props: DropdownMenuItemProps) {
+const DropdownMenuItem = React.forwardRef<
+  HTMLDivElement,
+  DropdownMenuItemProps
+>(function DropdownMenuItem(props, ref) {
+  const { className, ...rest } = props
   return (
     <DropdownMenu.Item
       className={classNames(
@@ -16,11 +20,12 @@ function DropdownMenuItem(props: DropdownMenuItemProps) {
         'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800',
         props.className
       )}
-      onSelect={props.onSelect}
+      ref={ref}
+      {...rest}
     >
       {props.children}
     </DropdownMenu.Item>
   )
-}
+})
 
 export default DropdownMenuItem

@@ -1,5 +1,6 @@
 import { tauriInvoke } from './core.ts'
 import { TodoListDto } from '../../types/generated/TodoListDto.ts'
+import { TodoListUpdateDto } from '../../types/generated/TodoListUpdateDto.ts'
 
 const todoListService = {
   async getTodoLists(): Promise<TodoListDto[]> {
@@ -19,6 +20,13 @@ const todoListService = {
 
   async deleteTodoList(args: { id: string }): Promise<void> {
     return await tauriInvoke('delete_todo_list', args)
+  },
+
+  async updateTodoList(args: {
+    id: string
+    update: TodoListUpdateDto
+  }): Promise<void> {
+    return await tauriInvoke('update_todo_list', args)
   },
 }
 

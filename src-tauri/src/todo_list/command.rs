@@ -1,4 +1,5 @@
 use crate::error::AppError;
+use crate::todo_list::dto::update::TodoListUpdateDto;
 use crate::todo_list::dto::TodoListDto;
 use crate::todo_list::service::TodoListService;
 use tauri::State;
@@ -35,5 +36,15 @@ pub async fn delete_todo_list(
     id: String,
 ) -> Result<(), AppError> {
     service.delete_todo_list(id).await?;
+    Ok(())
+}
+
+#[tauri::command]
+pub async fn update_todo_list(
+    service: State<'_, TodoListService>,
+    id: String,
+    update: TodoListUpdateDto,
+) -> Result<(), AppError> {
+    service.update_todo_list(id, update.title).await?;
     Ok(())
 }
