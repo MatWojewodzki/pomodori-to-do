@@ -3,7 +3,7 @@ import Tooltip from '../common/Tooltip.tsx'
 import React from 'react'
 import classNames from 'classnames'
 import ChecklistIcon from '../../assets/icons/checklist_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
-import MenuButton from '../common/MenuButton.tsx'
+import MenuButton from './MenuButton.tsx'
 
 type TodoListMenuButtonProps = {
   todoList: TodoListDto
