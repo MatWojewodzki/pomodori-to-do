@@ -6,16 +6,18 @@ import DialogButton from '../common/dialog/DialogButton.tsx'
 
 function SettingsButton() {
   const [open, setOpen] = useState(false)
+  const label = 'Settings'
   return (
     <DialogButton
       open={open}
       setOpen={setOpen}
-      tooltipText="Settings"
+      tooltipText={label}
       tooltipSide="right"
       dialog={<SettingsDialog setOpen={setOpen} />}
     >
-      <MenuButton aria-label="Open settings">
-        <SettingsIcon className="size-5" />
+      <MenuButton>
+        <SettingsIcon className="size-5 shrink-0" />
+        <span className="pe-1">{label}</span>
       </MenuButton>
     </DialogButton>
   )

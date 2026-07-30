@@ -32,7 +32,8 @@ function TodoListMenuButton(props: TodoListMenuButtonProps) {
         aria-expanded={isOpen}
         aria-controls="todo-panel"
       >
-        <ChecklistIcon className="size-5" />
+        <ChecklistIcon className="size-5 shrink-0" />
+        <span className="pe-1">{props.todoList.title}</span>
       </MenuButton>
     </Tooltip>
   )

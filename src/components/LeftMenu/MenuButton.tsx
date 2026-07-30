@@ -9,7 +9,8 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
     return (
       <button
         className={classNames(
-          'p-1 rounded-sm cursor-pointer',
+          'p-1 flex items-center gap-2 rounded-sm cursor-pointer ',
+          'text-sm text-nowrap overflow-x-hidden',
           'hover:bg-neutral-500 focus:outline-none focus-visible:bg-neutral-500',
           className
         )}

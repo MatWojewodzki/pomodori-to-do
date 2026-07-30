@@ -10,12 +10,12 @@ type AddTodoListButtonProps = {
 
 function AddTodoListButton(props: AddTodoListButtonProps) {
   const [open, setOpen] = useState(false)
-  const tooltipText = 'Create a new todo list'
+  const label = 'Create a new todo list'
   return (
     <DialogButton
       open={open}
       setOpen={setOpen}
-      tooltipText={tooltipText}
+      tooltipText={label}
       tooltipSide="right"
       dialog={
         <TodoListCreationDialog
@@ -24,8 +24,9 @@ function AddTodoListButton(props: AddTodoListButtonProps) {
         />
       }
     >
-      <MenuButton aria-label={tooltipText}>
-        <AddIcon className="size-5" />
+      <MenuButton>
+        <AddIcon className="size-5 shrink-0" />
+        <span className="pe-1">{label}</span>
       </MenuButton>
     </DialogButton>
   )
