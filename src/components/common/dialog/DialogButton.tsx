@@ -7,6 +7,7 @@ import Tooltip from '../Tooltip.tsx'
 type DialogButtonProps = {
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  tooltipEnabled?: boolean
   tooltipText?: string
   tooltipSide?: 'top' | 'right' | 'bottom' | 'left'
   dialog?: React.ReactNode
@@ -17,7 +18,11 @@ function DialogButton(props: DialogButtonProps) {
   return (
     <Dialog.Root open={props.open} onOpenChange={props.setOpen}>
       {props.tooltipText ? (
-        <Tooltip text={props.tooltipText} side={props.tooltipSide}>
+        <Tooltip
+          enabled={props.tooltipEnabled}
+          text={props.tooltipText}
+          side={props.tooltipSide}
+        >
           <Dialog.Trigger asChild>{props.children}</Dialog.Trigger>
         </Tooltip>
       ) : (

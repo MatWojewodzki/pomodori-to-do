@@ -4,13 +4,18 @@ import MenuButton from '../LeftMenu/MenuButton.tsx'
 import SettingsDialog from './SettingsDialog.tsx'
 import DialogButton from '../common/dialog/DialogButton.tsx'
 
-function SettingsButton() {
+type SettingsButtonProps = {
+  expanded: boolean
+}
+
+function SettingsButton(props: SettingsButtonProps) {
   const [open, setOpen] = useState(false)
   const label = 'Settings'
   return (
     <DialogButton
       open={open}
       setOpen={setOpen}
+      tooltipEnabled={!props.expanded}
       tooltipText={label}
       tooltipSide="right"
       dialog={<SettingsDialog setOpen={setOpen} />}

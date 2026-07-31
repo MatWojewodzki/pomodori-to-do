@@ -5,6 +5,7 @@ import TodoListCreationDialog from '../TodoPanel/TodoListCreationDialog.tsx'
 import DialogButton from '../common/dialog/DialogButton.tsx'
 
 type AddTodoListButtonProps = {
+  expanded: boolean
   setOpenTodoListId: React.Dispatch<React.SetStateAction<string | null>>
 }
 
@@ -15,6 +16,7 @@ function AddTodoListButton(props: AddTodoListButtonProps) {
     <DialogButton
       open={open}
       setOpen={setOpen}
+      tooltipEnabled={!props.expanded}
       tooltipText={label}
       tooltipSide="right"
       dialog={

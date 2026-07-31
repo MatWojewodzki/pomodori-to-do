@@ -35,10 +35,13 @@ function LeftMenu(props: LeftMenuProps) {
       </div>
       <div className="h-0.5 my-2 mx-1 bg-neutral-500" />
       <div className="grow flex flex-col">
-        <AddTodoListButton setOpenTodoListId={props.setOpenTodoListId} />
+        <AddTodoListButton
+          expanded={expanded}
+          setOpenTodoListId={props.setOpenTodoListId}
+        />
       </div>
       <div className="flex flex-col">
-        <SettingsButton />
+        <SettingsButton expanded={expanded} />
       </div>
     </div>
   )
