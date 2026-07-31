@@ -16,7 +16,6 @@ function TodoListCreationDialog(props: TodoListCreationDialogProps) {
     mutationFn: todoListService.createTodoList,
     onSuccess: async (data) => {
       await queryClient.invalidateQueries({ queryKey: ['todo-lists'] })
-      console.log(data)
       props.setOpenTodoListId(data)
     },
   })
