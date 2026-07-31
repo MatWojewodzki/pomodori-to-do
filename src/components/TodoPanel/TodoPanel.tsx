@@ -9,6 +9,7 @@ import React from 'react'
 
 type TodoPanelProps = {
   width: number
+  todoLists: TodoListDto[]
   todoList: TodoListDto
   setOpenTodoListId: React.Dispatch<React.SetStateAction<string | null>>
 }
@@ -23,6 +24,7 @@ function TodoPanel(props: TodoPanelProps) {
       <PanelHeader>
         <PanelTitle>{props.todoList.title}</PanelTitle>
         <TodoListDropdownMenu
+          todoLists={props.todoLists}
           todoList={props.todoList}
           setOpenTodoListId={props.setOpenTodoListId}
         />

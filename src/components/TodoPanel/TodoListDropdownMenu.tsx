@@ -10,7 +10,21 @@ import React, { useState } from 'react'
 import TodoListEditDialog from './TodoListEditDIalog.tsx'
 import DialogButton from '../common/dialog/DialogButton.tsx'
 
+function pickPreviousTodoListId(
+  todoLists: TodoListDto[],
+  deletedTodoListId: string
+): string | null {
+  if (todoLists.length === 1) return null
+  const index = todoLists.findIndex(
+    (todoList) => todoList.id === deletedTodoListId
+  )
+  if (index === -1) return null
+  const newActiveIndex = index === 0 ? 1 : index - 1
+  return todoLists[newActiveIndex].id
+}
+
 type TodoListDropdownMenuProps = {
+  todoLists: TodoListDto[]
   todoList: TodoListDto
   setOpenTodoListId: React.Dispatch<React.SetStateAction<string | null>>
 }
@@ -23,7 +37,9 @@ function TodoListDropdownMenu(props: TodoListDropdownMenuProps) {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['todo-lists'] })
       props.setOpenTodoListId((prev) =>
-        prev === props.todoList.id ? null : prev
+        prev === props.todoList.id
+          ? pickPreviousTodoListId(props.todoLists, props.todoList.id)
+          : prev
       )
     },
   })

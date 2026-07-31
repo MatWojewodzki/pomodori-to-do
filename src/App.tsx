@@ -38,6 +38,7 @@ function App() {
         {openTodoList && (
           <TodoPanel
             width={todoPanelWidth}
+            todoLists={result.data}
             todoList={openTodoList}
             setOpenTodoListId={setOpenTodoListId}
           />
