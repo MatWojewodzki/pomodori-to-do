@@ -4,11 +4,15 @@ import type { ComponentPropsWithoutRef } from 'react'
 
 export type TooltipProps = {
   text: string
+  enabled?: boolean
   children: React.ReactNode
 } & Omit<ComponentPropsWithoutRef<typeof RadixTooltip.Content>, 'children'>
 
 function Tooltip(props: TooltipProps) {
-  const { text, children, ...contentProps } = props
+  const { text, enabled = true, children, ...contentProps } = props
+  if (!enabled) {
+    return children
+  }
   return (
     <RadixTooltip.Root>
       <RadixTooltip.Trigger asChild>{children}</RadixTooltip.Trigger>

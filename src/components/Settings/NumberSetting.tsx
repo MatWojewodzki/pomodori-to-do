@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import React from 'react'
 import Setting from './Setting.tsx'
-import NumberInput from '../common/NumberInput.tsx'
+import NumberInput from '../common/form/NumberInput.tsx'
 
 type NumberSettingProps = {
   label: string

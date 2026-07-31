@@ -1,13 +1,13 @@
 import { Switch as RadixSwitch } from 'radix-ui'
 import classNames from 'classnames'
 
-type SwitchProps = {
+type SwitchInputProps = {
   id?: string
   checked: boolean
   onCheckedChange: (checked: boolean) => void
 }
 
-function Switch(props: SwitchProps) {
+function SwitchInput(props: SwitchInputProps) {
   return (
     <RadixSwitch.Root
       id={props.id}
@@ -30,4 +30,4 @@ function Switch(props: SwitchProps) {
   )
 }
 
-export default Switch
+export default SwitchInput

@@ -5,7 +5,11 @@ import classNames from 'classnames'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import todoService from '../../services/tauri/todo.ts'
 
-function TodoCreationForm() {
+type TodoCreationFormProps = {
+  todoListId: string
+}
+
+function TodoCreationForm(props: TodoCreationFormProps) {
   const [text, setText] = useState('')
 
   const queryClient = useQueryClient()
@@ -22,7 +26,9 @@ function TodoCreationForm() {
     e.preventDefault()
     const todo = text.trim()
     if (todo === '') return
-    mutation.mutate({ createTodo: { text: todo } })
+    mutation.mutate({
+      createTodo: { todo_list_id: props.todoListId, text: todo },
+    })
   }
 
   return (

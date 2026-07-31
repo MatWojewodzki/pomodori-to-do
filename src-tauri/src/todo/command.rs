@@ -5,8 +5,11 @@ use crate::todo::service::TodoService;
 use tauri::State;
 
 #[tauri::command]
-pub async fn get_todos(service: State<'_, TodoService>) -> Result<Vec<TodoDto>, AppError> {
-    let todos = service.get_todos().await?;
+pub async fn get_todos(
+    service: State<'_, TodoService>,
+    todo_list_id: String,
+) -> Result<Vec<TodoDto>, AppError> {
+    let todos = service.get_todos(todo_list_id).await?;
     Ok(todos.into_iter().map(TodoDto::from).collect())
 }
 
@@ -15,7 +18,9 @@ pub async fn create_todo(
     service: State<'_, TodoService>,
     create_todo: CreateTodoDto,
 ) -> Result<TodoDto, AppError> {
-    let created = service.create_todo(create_todo.text).await?;
+    let created = service
+        .create_todo(create_todo.todo_list_id, create_todo.text)
+        .await?;
     Ok(created.into())
 }
 

@@ -3,8 +3,8 @@ import type { TodoDto } from '../../types/generated/TodoDto.ts'
 import type { CreateTodoDto } from '../../types/generated/CreateTodoDto.ts'
 
 const todoService = {
-  async getTodos(): Promise<TodoDto[]> {
-    return await tauriInvoke('get_todos')
+  async getTodos(args: { todoListId: string }): Promise<TodoDto[]> {
+    return await tauriInvoke('get_todos', args)
   },
 
   async createTodo(args: { createTodo: CreateTodoDto }): Promise<TodoDto> {

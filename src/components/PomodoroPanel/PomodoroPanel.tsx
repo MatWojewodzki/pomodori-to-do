@@ -12,6 +12,7 @@ import useTimer from '../../hooks/useTimer.ts'
 import notificationService from '../../services/notification.ts'
 import useSettings from '../../contexts/settings.tsx'
 import { TaskDto } from '../../types/generated/TaskDto.ts'
+import PanelTitle from '../Panel/PanelTitle.tsx'
 
 type PomodoroPanelProps = {
   isTodoPanelOpen: boolean
@@ -81,7 +82,9 @@ function PomodoroPanel(props: PomodoroPanelProps) {
         'rounded-s-lg': props.isTodoPanelOpen,
       })}
     >
-      <PanelHeader>Pomodoro Timer</PanelHeader>
+      <PanelHeader>
+        <PanelTitle>Pomodoro Timer</PanelTitle>
+      </PanelHeader>
       <TimerSection timer={timer} />
       <TaskSection
         activeTaskId={activeTaskId}

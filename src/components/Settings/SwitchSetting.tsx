@@ -1,5 +1,5 @@
 import Setting from './Setting.tsx'
-import Switch from '../common/Switch.tsx'
+import SwitchInput from '../common/form/SwitchInput.tsx'
 
 type SwitchSettingProps = {
   label: string
@@ -11,7 +11,7 @@ function SwitchSetting(props: SwitchSettingProps) {
   const inputId = `${props.label}-switchSetting`
   return (
     <Setting label={props.label} inputId={inputId}>
-      <Switch
+      <SwitchInput
         id={inputId}
         checked={props.value}
         onCheckedChange={props.setValue}

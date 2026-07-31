@@ -1,13 +1,14 @@
-import { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import Tooltip from '../../common/Tooltip.tsx'
-import NumberInput from '../../common/NumberInput.tsx'
+import NumberInput from '../../common/form/NumberInput.tsx'
+import TextInput from '../../common/form/TextInput.tsx'
 
 type TaskFormProps = {
   handleSubmit: () => void
   handleCancel: () => void
   taskDescription: string
-  setTaskDescription: (value: string) => void
+  setTaskDescription: React.Dispatch<React.SetStateAction<string>>
   totalPomodoriCount: number
   setTotalPomodoriCount: (value: number) => void
   submitButtonText: string
@@ -38,23 +39,11 @@ function TaskForm(props: TaskFormProps) {
       }}
       ref={formRef}
     >
-      <label
-        htmlFor="task-description-input"
-        className="text-sm text-neutral-200"
-      >
-        Task description
-      </label>
-      <input
-        id="task-description-input"
-        type="text"
-        className={classNames(
-          'mt-1 px-2 py-2 rounded-md bg-neutral-700 ',
-          'focus-visible:outline-2 outline-white'
-        )}
+      <TextInput
+        label="Task description"
         value={props.taskDescription}
-        onChange={(e) => props.setTaskDescription(e.target.value)}
+        setValue={props.setTaskDescription}
         ref={taskDescriptionInputRef}
-        autoComplete="off"
       />
       <label
         htmlFor={totalPomodoriCountInputId}

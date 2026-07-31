@@ -1,13 +1,11 @@
 import React from 'react'
 
 type PanelHeaderProps = {
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 function PanelHeader(props: PanelHeaderProps) {
-  return (
-    <h2 className="mb-8 font-bold text-xl text-center">{props.children}</h2>
-  )
+  return <div className="mb-8 flex">{props.children}</div>
 }
 
 export default PanelHeader

@@ -1,0 +1,1 @@
+INSERT INTO todo_list (id, title, order_key) VALUES ('6f97a63d-d6a1-4a8c-9b45-f541eaeb00a2', 'My todo list', 0);

@@ -2,12 +2,14 @@ import DurationSetting from './DurationSetting'
 import NumberSetting from './NumberSetting'
 import React, { useState } from 'react'
 import { Dialog } from 'radix-ui'
-import classNames from 'classnames'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import settingsService from '../../services/tauri/settings.ts'
 import SettingsSection from './SettingsSection.tsx'
 import SwitchSetting from './SwitchSetting.tsx'
 import useSettings from '../../contexts/settings.tsx'
+import PrimaryDialogButton from '../common/dialog/PrimaryDialogButton.tsx'
+import SecondaryDialogButton from '../common/dialog/SecondaryDialogButton.tsx'
+import DialogFooter from '../common/dialog/DialogFooter.tsx'
 
 type SettingsFormProps = {
   closeDialog: () => void
@@ -97,27 +99,12 @@ function Settings(props: SettingsFormProps) {
           />
         </SettingsSection>
       </div>
-      <div className="mt-16 flex justify-end gap-4">
-        <Dialog.Close
-          type="button"
-          className={classNames(
-            'px-4 py-1 text-sm rounded-sm border-2 border-white cursor-pointer',
-            'hover:bg-neutral-200 focus:outline-none focus-visible:bg-neutral-200',
-            'hover:border-neutral-200 focus-visible:border-neutral-200 hover:text-black focus-visible:text-black'
-          )}
-        >
-          Cancel
+      <DialogFooter>
+        <Dialog.Close asChild>
+          <SecondaryDialogButton type="button">Cancel</SecondaryDialogButton>
         </Dialog.Close>
-        <button
-          type="submit"
-          className={classNames(
-            'px-4 py-1 text-sm rounded-sm bg-white text-black cursor-pointer',
-            'hover:bg-neutral-200 focus:outline-none focus-visible:bg-neutral-200'
-          )}
-        >
-          Save
-        </button>
-      </div>
+        <PrimaryDialogButton type="submit">Save</PrimaryDialogButton>
+      </DialogFooter>
     </form>
   )
 }
