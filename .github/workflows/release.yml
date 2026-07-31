@@ -96,7 +96,11 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: bundle-${{ matrix.rust_target }}-${{ matrix.platform }}
-          path: 'src-tauri/target/**/release/bundle/**/*'
+          path: |
+            src-tauri/target/**/release/bundle/**/*.AppImage
+            src-tauri/target/**/release/bundle/**/*.deb
+            src-tauri/target/**/release/bundle/**/*.dmg
+            src-tauri/target/**/release/bundle/**/*.exe
           if-no-files-found: error
 
   publish-github:
