@@ -14,7 +14,7 @@ function SwitchInput(props: SwitchInputProps) {
       checked={props.checked}
       onCheckedChange={props.onCheckedChange}
       className={classNames(
-        'relative w-12 h-7 rounded-full',
+        'relative w-12 h-7 rounded-full cursor-pointer',
         'bg-neutral-600 data-[state=checked]:bg-neutral-500 focus:outline-none',
         'focus-visible:bg-neutral-500 focus-visible:data-[state=checked]:bg-neutral-400'
       )}
