@@ -61,13 +61,6 @@ function Settings(props: SettingsFormProps) {
   return (
     <form className="grow flex flex-col" onSubmit={handleSubmit}>
       <div className="grow">
-        <SettingsSection title="Notifications">
-          <SwitchSetting
-            label="Enable notifications"
-            value={notificationsEnabled}
-            setValue={setNotificationsEnabled}
-          />
-        </SettingsSection>
         <SettingsSection title="Timer">
           <DurationSetting
             label="Pomodoro duration"
@@ -96,6 +89,13 @@ function Settings(props: SettingsFormProps) {
             label="Automatically switch to the next unfinished task after completing a pomodoro"
             value={autoSwitchActiveTask}
             setValue={setAutoSwitchActiveTask}
+          />
+        </SettingsSection>
+        <SettingsSection title="Notifications">
+          <SwitchSetting
+            label="Enable notifications"
+            value={notificationsEnabled}
+            setValue={setNotificationsEnabled}
           />
         </SettingsSection>
       </div>
