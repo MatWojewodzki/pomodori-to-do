@@ -70,7 +70,7 @@ function Settings(props: SettingsFormProps) {
         </SettingsSection>
         <SettingsSection title="Timer">
           <DurationSetting
-            label="Work duration"
+            label="Pomodoro duration"
             value={workDuration}
             setValue={setWorkDuration}
           />
