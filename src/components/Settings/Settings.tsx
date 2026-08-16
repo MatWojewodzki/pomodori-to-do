@@ -34,6 +34,7 @@ function Settings(props: SettingsFormProps) {
   const [autoSwitchActiveTask, setAutoSwitchActiveTask] = useState(
     settings.auto_switch_active_task
   )
+  const [soundsEnabled, setSoundsEnabled] = useState(settings.sounds_enabled)
 
   const queryClient = useQueryClient()
   const mutation = useMutation({
@@ -54,6 +55,7 @@ function Settings(props: SettingsFormProps) {
         pomodori_between_long_breaks: pomodoriBetweenLongBreaks,
         notifications_enabled: notificationsEnabled,
         auto_switch_active_task: autoSwitchActiveTask,
+        sounds_enabled: soundsEnabled,
       },
     })
   }
@@ -96,6 +98,13 @@ function Settings(props: SettingsFormProps) {
             label="Automatically switch to the next unfinished task after completing a pomodoro"
             value={autoSwitchActiveTask}
             setValue={setAutoSwitchActiveTask}
+          />
+        </SettingsSection>
+        <SettingsSection title="Sounds">
+          <SwitchSetting
+            label="Enable sounds"
+            value={soundsEnabled}
+            setValue={setSoundsEnabled}
           />
         </SettingsSection>
       </div>

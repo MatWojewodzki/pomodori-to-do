@@ -5,6 +5,7 @@ pub struct Settings {
     pub pomodori_between_long_breaks: u32,
     pub notifications_enabled: bool,
     pub auto_switch_active_task: bool,
+    pub sounds_enabled: bool,
 }
 
 impl Default for Settings {
@@ -16,6 +17,7 @@ impl Default for Settings {
             pomodori_between_long_breaks: 4,
             notifications_enabled: true,
             auto_switch_active_task: true,
+            sounds_enabled: true,
         }
     }
 }

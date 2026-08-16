@@ -13,6 +13,7 @@ struct SettingsRow {
     pomodori_between_long_breaks: u32,
     notifications_enabled: i32,
     auto_switch_active_task: i32,
+    sounds_enabled: i32,
 }
 
 pub struct SettingsRepositorySqlite {
@@ -36,6 +37,7 @@ impl SettingsRepositorySqlite {
             } else {
                 0
             },
+            sounds_enabled: if settings.sounds_enabled { 1 } else { 0 },
         }
     }
 
@@ -47,6 +49,7 @@ impl SettingsRepositorySqlite {
             pomodori_between_long_breaks: row.pomodori_between_long_breaks,
             notifications_enabled: row.notifications_enabled != 0,
             auto_switch_active_task: row.auto_switch_active_task != 0,
+            sounds_enabled: row.sounds_enabled != 0,
         }
     }
 
@@ -66,8 +69,9 @@ impl SettingsRepositorySqlite {
                 long_break_duration,
                 pomodori_between_long_breaks,
                 notifications_enabled,
-                auto_switch_active_task)
-            VALUES (1, ?, ?, ?, ?, ?, ?)
+                auto_switch_active_task,
+                sounds_enabled)
+            VALUES (1, ?, ?, ?, ?, ?, ?, ?)
             ";
             let query = sqlx::query(q)
                 .bind(row.work_duration)
@@ -75,7 +79,8 @@ impl SettingsRepositorySqlite {
                 .bind(row.long_break_duration)
                 .bind(row.pomodori_between_long_breaks)
                 .bind(row.notifications_enabled)
-                .bind(row.auto_switch_active_task);
+                .bind(row.auto_switch_active_task)
+                .bind(row.sounds_enabled);
             query.execute(&self.pools.writer).await?;
         }
         Ok(())
@@ -100,7 +105,8 @@ impl SettingsRepository for SettingsRepositorySqlite {
                 long_break_duration = ?,
                 pomodori_between_long_breaks = ?,
                 notifications_enabled = ?,
-                auto_switch_active_task = ?
+                auto_switch_active_task = ?,
+                sounds_enabled = ?
             WHERE id = 1
         ";
         let query = sqlx::query(q)
@@ -109,7 +115,8 @@ impl SettingsRepository for SettingsRepositorySqlite {
             .bind(row.long_break_duration)
             .bind(row.pomodori_between_long_breaks)
             .bind(row.notifications_enabled)
-            .bind(row.auto_switch_active_task);
+            .bind(row.auto_switch_active_task)
+            .bind(row.sounds_enabled);
         query.execute(&self.pools.writer).await?;
         Ok(())
     }
