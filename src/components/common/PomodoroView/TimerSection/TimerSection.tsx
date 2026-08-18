@@ -17,41 +17,43 @@ function TimerSection(props: TimerSectionProps) {
   return (
     <section className="flex justify-center">
       {' '}
-      <div className="max-w-121 grow px-18 pt-12 pb-8 flex flex-col items-center gap-16 rounded-lg bg-neutral-600">
+      <div className="max-w-121 flex-1 pt-12 pb-8 flex flex-col items-center gap-16 rounded-lg bg-neutral-600">
         <div
           role="radiogroup"
           aria-label="Pomodoro timer state"
-          className="flex w-full justify-between"
+          className="px-2 flex w-full justify-center gap-4"
         >
           <TimerStateButton
+            text="pomodoro"
+            shortText="pomodoro"
             active={timer.timerType == TimerType.WORK}
             onClick={() => {
               timer.reset(TimerType.WORK)
               timer.setTimerType(TimerType.WORK)
             }}
-          >
-            pomodoro
-          </TimerStateButton>
+          />
           <TimerStateButton
+            text="short break"
+            shortText="short"
             active={timer.timerType == TimerType.SHORT_BREAK}
             onClick={() => {
               timer.reset(TimerType.SHORT_BREAK)
               timer.setTimerType(TimerType.SHORT_BREAK)
             }}
-          >
-            short break
-          </TimerStateButton>
+          />
           <TimerStateButton
+            text="long break"
+            shortText="long"
             active={timer.timerType == TimerType.LONG_BREAK}
             onClick={() => {
               timer.reset(TimerType.LONG_BREAK)
               timer.setTimerType(TimerType.LONG_BREAK)
             }}
-          >
-            long break
-          </TimerStateButton>
+          />
         </div>
-        <p className="text-9xl font-bold text-center">{formattedTime}</p>
+        <p className="text-8xl sm:text-9xl font-bold text-center">
+          {formattedTime}
+        </p>
         <TimerControlButton
           running={timer.isRunning}
           paused={timer.isPaused}

@@ -1,10 +1,10 @@
-import React from 'react'
 import classNames from 'classnames'
 
 type PomodoroStateButtonProps = {
+  text: string
+  shortText: string
   active: boolean
   onClick: () => void
-  children?: React.ReactNode
 }
 
 function PomodoroStateButton(props: PomodoroStateButtonProps) {
@@ -21,7 +21,8 @@ function PomodoroStateButton(props: PomodoroStateButtonProps) {
       onClick={props.onClick}
       aria-checked={props.active}
     >
-      {props.children}
+      <span className="xs:hidden">{props.shortText}</span>
+      <span className="hidden xs:inline">{props.text}</span>
     </button>
   )
 }
