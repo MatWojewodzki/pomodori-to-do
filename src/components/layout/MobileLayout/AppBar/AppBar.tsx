@@ -13,7 +13,7 @@ type AppBarProps = {
 function AppBar(props: AppBarProps) {
   return (
     <div className="pt-[env(safe-area-inset-top)]">
-      <div className="px-6 py-3 flex items-center justify-between bg-neutral-800">
+      <div className="px-6 py-3 flex items-center justify-between bg-neutral-700">
         <AppTitle />
         <DropdownMenu
           tooltipText="More options"

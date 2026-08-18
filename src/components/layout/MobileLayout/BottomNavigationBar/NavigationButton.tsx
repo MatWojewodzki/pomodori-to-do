@@ -35,7 +35,7 @@ const NavigationButton = React.forwardRef<
           'px-2 py-1 flex justify-center rounded-md',
           'group-hover:bg-neutral-600',
           'group-focus-visible:bg-neutral-600',
-          { 'bg-neutral-700': props.isSelected }
+          { 'bg-neutral-500': props.isSelected }
         )}
       >
         {isSelected ? selectedIcon : icon}

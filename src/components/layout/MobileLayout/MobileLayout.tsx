@@ -10,7 +10,7 @@ function MobileLayout() {
   return (
     <div
       className={classNames(
-        'w-screen h-screen flex flex-col bg-neutral-700 text-white'
+        'w-screen h-screen flex flex-col bg-neutral-800 text-white'
       )}
     >
       <AppBar
