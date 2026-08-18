@@ -39,8 +39,9 @@ function BottomNavigationBar(props: BottomNavigationBarProps) {
           'px-4 py-1 flex items-center justify-around bg-neutral-700'
         )}
       >
-        {navigationButtons.map((screen) => (
+        {navigationButtons.map((screen, idx) => (
           <NavigationButton
+            key={idx}
             text={screen.text}
             icon={screen.icon}
             selectedIcon={screen.fillIcon}
