@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import { TodoListDto } from '../../types/generated/TodoListDto.ts'
 import TodoListsScreen from './TodoListsScreen.tsx'
 import RootScaffold from './RootScaffold.tsx'
+import PomodoroScreen from './PomodoroScreen.tsx'
 
 export type AppScreen = 'todos' | 'timer'
 
@@ -11,7 +12,7 @@ type MobileLayoutProps = {
 }
 
 function MobileLayout(props: MobileLayoutProps) {
-  const [screenSelected, setScreenSelected] = useState<AppScreen>('todos')
+  const [screenSelected, setScreenSelected] = useState<AppScreen>('timer')
   return (
     <div
       className={classNames(
@@ -29,6 +30,7 @@ function MobileLayout(props: MobileLayoutProps) {
             todoLists={props.todoLists}
           />
         )}
+        {screenSelected === 'timer' && <PomodoroScreen />}
       </RootScaffold>
     </div>
   )

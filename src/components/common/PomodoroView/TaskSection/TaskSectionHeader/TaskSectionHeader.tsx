@@ -1,6 +1,6 @@
 import TaskSectionDropdownButton from './TaskSectionDropdownButton.tsx'
 import PomodoroCountDisplay from './PomodoroCountDisplay.tsx'
-import { Timer } from '../../../../hooks/useTimer.ts'
+import { Timer } from '../../../../../hooks/useTimer.ts'
 
 type TaskSectionHeaderProps = {
   taskSectionExpanded: boolean

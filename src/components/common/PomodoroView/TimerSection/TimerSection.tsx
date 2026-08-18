@@ -1,7 +1,7 @@
-import { TimerType } from '../../../hooks/useTimerType.ts'
+import { TimerType } from '../../../../hooks/useTimerType.ts'
 import TimerStateButton from './PomodoroStateButton.tsx'
 import TimerControlButton from './TimerControlButton.tsx'
-import { Timer } from '../../../hooks/useTimer.ts'
+import { Timer } from '../../../../hooks/useTimer.ts'
 
 export type TimerSectionProps = {
   timer: Timer

@@ -1,9 +1,9 @@
-import { Timer } from '../../../hooks/useTimer.ts'
+import { Timer } from '../../../../hooks/useTimer.ts'
 import classNames from 'classnames'
-import { TaskDto } from '../../../types/generated/TaskDto.ts'
-import getTimeLeft from '../../../utils/getSessionTimeLeft.ts'
+import { TaskDto } from '../../../../types/generated/TaskDto.ts'
+import getTimeLeft from '../../../../utils/getSessionTimeLeft.ts'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import useSettings from '../../../contexts/settings.tsx'
+import useSettings from '../../../../contexts/settings.tsx'
 
 type SessionTimeLeftDisplayProps = {
   tasks: TaskDto[]

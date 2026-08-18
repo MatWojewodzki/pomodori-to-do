@@ -13,7 +13,7 @@ function RootScaffold(props: RootScaffoldProps) {
   return (
     <>
       <RootAppBar />
-      <div className="grow">{props.children}</div>
+      <div className="min-h-0 flex-1 flex flex-col">{props.children}</div>
       <BottomNavigationBar
         screenSelected={props.screenSelected}
         setScreenSelected={props.setScreenSelected}

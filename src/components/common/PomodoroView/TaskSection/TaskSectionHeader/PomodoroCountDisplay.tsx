@@ -1,6 +1,6 @@
-import { Timer } from '../../../../hooks/useTimer.ts'
-import { TimerType } from '../../../../hooks/useTimerType.ts'
-import getOrdinal from '../../../../utils/ordinal.ts'
+import { Timer } from '../../../../../hooks/useTimer.ts'
+import { TimerType } from '../../../../../hooks/useTimerType.ts'
+import getOrdinal from '../../../../../utils/ordinal.ts'
 
 type PomodoroCountDisplayProps = {
   timer: Timer

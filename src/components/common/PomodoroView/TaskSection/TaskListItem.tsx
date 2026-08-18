@@ -1,8 +1,8 @@
-import { TaskDto } from '../../../types/generated/TaskDto.ts'
+import { TaskDto } from '../../../../types/generated/TaskDto.ts'
 import { useState } from 'react'
 import TaskDisplay from './TaskDisplay/TaskDisplay.tsx'
 import TaskEditForm from './TaskEditForm.tsx'
-import { Timer } from '../../../hooks/useTimer.ts'
+import { Timer } from '../../../../hooks/useTimer.ts'
 import { useSortable } from '@dnd-kit/react/sortable'
 
 type TaskListItemProps = {

@@ -1,39 +1,31 @@
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import taskService from '../../../services/tauri/task.ts'
+import taskService from '../../../../services/tauri/task.ts'
 import TaskForm from './TaskForm.tsx'
-import { TaskDto } from '../../../types/generated/TaskDto.ts'
 
-type TaskEditFormProps = {
-  task: TaskDto
+type TaskCreationFormProps = {
   closeForm: () => void
-  isActive: boolean
 }
 
-function TaskEditForm(props: TaskEditFormProps) {
-  const task = props.task
-  const [taskDescription, setTaskDescription] = useState(task.text)
-  const [totalPomodoriCount, setTotalPomodoriCount] = useState(
-    task.pomodoro_total
-  )
+function TaskCreationForm(props: TaskCreationFormProps) {
+  const [taskDescription, setTaskDescription] = useState('')
+  const [totalPomodoriCount, setTotalPomodoriCount] = useState(1)
 
   const queryClient = useQueryClient()
   const mutation = useMutation({
-    mutationFn: taskService.updateTask,
+    mutationFn: taskService.createTask,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['tasks'] })
-      props.closeForm()
+      setTaskDescription('')
+      setTotalPomodoriCount(1)
     },
   })
 
   function handleSubmit() {
     if (taskDescription.trim() === '') return
     mutation.mutate({
-      updatedTask: {
-        ...task,
-        text: taskDescription,
-        pomodoro_total: totalPomodoriCount,
-      },
+      text: taskDescription.trim(),
+      pomodoroTotal: totalPomodoriCount,
     })
   }
   return (
@@ -44,10 +36,9 @@ function TaskEditForm(props: TaskEditFormProps) {
       setTotalPomodoriCount={setTotalPomodoriCount}
       handleSubmit={handleSubmit}
       handleCancel={props.closeForm}
-      submitButtonText={'Save'}
-      isActive={props.isActive}
+      submitButtonText={'Add'}
     />
   )
 }
 
-export default TaskEditForm
+export default TaskCreationForm
