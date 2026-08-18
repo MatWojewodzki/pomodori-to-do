@@ -22,7 +22,7 @@ const NavigationButton = React.forwardRef<
     <button
       ref={ref}
       className={classNames(
-        'flex flex-col gap-1 p-1 cursor-pointer',
+        'flex flex-col items-center gap-1 p-1 cursor-pointer',
         'focus:outline-none group',
         { 'text-neutral-300': !isSelected },
         className
@@ -32,7 +32,7 @@ const NavigationButton = React.forwardRef<
     >
       <span
         className={classNames(
-          'px-2 py-1 flex justify-center rounded-md',
+          'px-3 py-1 flex justify-center rounded-md',
           'group-hover:bg-neutral-600',
           'group-focus-visible:bg-neutral-600',
           { 'bg-neutral-500': props.isSelected }

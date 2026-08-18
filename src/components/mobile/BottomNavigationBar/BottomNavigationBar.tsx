@@ -7,10 +7,6 @@ import TimerFillIcon from '../../../assets/icons/timer_24dp_000000_FILL1_wght400
 import ListFillIcon from '../../../assets/icons/list_24dp_000000_FILL1_wght400_GRAD0_opsz24.svg?react'
 import { AppScreen } from '../MobileLayout.tsx'
 
-function capitalizeFirstLetter(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1)
-}
-
 type BottomNavigationBarProps = {
   screenSelected: AppScreen
   setScreenSelected: React.Dispatch<React.SetStateAction<AppScreen>>
@@ -18,17 +14,20 @@ type BottomNavigationBarProps = {
 
 function BottomNavigationBar(props: BottomNavigationBarProps) {
   const navigationButtons: {
-    screenName: AppScreen
+    screen: AppScreen
+    text: string
     icon: React.ReactElement
     fillIcon: React.ReactElement
   }[] = [
     {
-      screenName: 'todos',
+      screen: 'todos',
+      text: 'Todo lists',
       icon: <ListIcon className="size-6" />,
       fillIcon: <ListFillIcon className="size-6" />,
     },
     {
-      screenName: 'timer',
+      screen: 'timer',
+      text: 'Timer & Tasks',
       icon: <TimerIcon className="size-6" />,
       fillIcon: <TimerFillIcon className="size-6" />,
     },
@@ -42,11 +41,11 @@ function BottomNavigationBar(props: BottomNavigationBarProps) {
       >
         {navigationButtons.map((screen) => (
           <NavigationButton
-            text={capitalizeFirstLetter(screen.screenName)}
+            text={screen.text}
             icon={screen.icon}
             selectedIcon={screen.fillIcon}
-            isSelected={props.screenSelected === screen.screenName}
-            select={() => props.setScreenSelected(screen.screenName)}
+            isSelected={props.screenSelected === screen.screen}
+            select={() => props.setScreenSelected(screen.screen)}
           />
         ))}
       </div>
