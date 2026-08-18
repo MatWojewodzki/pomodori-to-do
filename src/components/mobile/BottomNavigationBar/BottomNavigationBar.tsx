@@ -5,20 +5,20 @@ import TimerIcon from '../../../assets/icons/timer_24dp_000000_FILL0_wght400_GRA
 import ListIcon from '../../../assets/icons/list_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
 import TimerFillIcon from '../../../assets/icons/timer_24dp_000000_FILL1_wght400_GRAD0_opsz24.svg?react'
 import ListFillIcon from '../../../assets/icons/list_24dp_000000_FILL1_wght400_GRAD0_opsz24.svg?react'
-import { Screen } from '../MobileLayout.tsx'
+import { AppScreen } from '../MobileLayout.tsx'
 
 function capitalizeFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
 type BottomNavigationBarProps = {
-  screenSelected: Screen
-  setScreenSelected: React.Dispatch<React.SetStateAction<Screen>>
+  screenSelected: AppScreen
+  setScreenSelected: React.Dispatch<React.SetStateAction<AppScreen>>
 }
 
 function BottomNavigationBar(props: BottomNavigationBarProps) {
   const navigationButtons: {
-    screenName: Screen
+    screenName: AppScreen
     icon: React.ReactElement
     fillIcon: React.ReactElement
   }[] = [
