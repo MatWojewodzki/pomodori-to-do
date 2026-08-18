@@ -14,7 +14,11 @@ function AppBar(props: AppBarProps) {
           {props.leading}
           {props.title}
         </div>
-        <div className="flex gap-4">{props.actions}</div>
+        <ul className="flex gap-4">
+          {props.actions?.map((action, index) => (
+            <li key={index}>{action}</li>
+          ))}
+        </ul>
       </div>
     </div>
   )
