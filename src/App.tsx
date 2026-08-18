@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import ErrorMessage from './components/common/ErrorMessage.tsx'
 import { useMediaQuery } from 'usehooks-ts'
 import DesktopLayout from './components/layout/DesktopLayout/DesktopLayout.tsx'
+import MobileLayout from './components/layout/MobileLayout/MobileLayout.tsx'
 
 function App() {
   const [openTodoListId, setOpenTodoListId] = useState<string | null>(null)
@@ -20,7 +21,7 @@ function App() {
   if (!result.isSuccess) return
 
   if (isMobile) {
-    return <p>Not implemented</p> // TODO
+    return <MobileLayout />
   } else {
     return (
       <DesktopLayout
