@@ -1,9 +1,9 @@
 import React from 'react'
 import classNames from 'classnames'
 
-type MenuButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>
+type SidebarButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>
 
-const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
+const SidebarButton = React.forwardRef<HTMLButtonElement, SidebarButtonProps>(
   function MenuButton(props, ref) {
     const { className, ...rest } = props
     return (
@@ -21,4 +21,4 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
   }
 )
 
-export default MenuButton
+export default SidebarButton

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import LeftMenu from './LeftMenu/LeftMenu.tsx'
+import Sidebar from './Sidebar/Sidebar.tsx'
 import TodoPanel from '../TodoPanel/TodoPanel.tsx'
 import PanelGap from './PanelGap.tsx'
 import PomodoroPanel from '../PomodoroPanel/PomodoroPanel.tsx'
@@ -23,7 +23,7 @@ function DesktopLayout(props: DesktopLayoutProps) {
         'w-screen h-screen flex items-stretch bg-neutral-700 text-white'
       )}
     >
-      <LeftMenu
+      <Sidebar
         todoLists={props.todoLists}
         openTodoListId={props.openTodoListId}
         setOpenTodoListId={props.setOpenTodoListId}

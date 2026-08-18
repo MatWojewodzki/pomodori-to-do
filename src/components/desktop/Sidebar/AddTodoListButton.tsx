@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import AddIcon from '../../../assets/icons/add_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
-import MenuButton from './MenuButton.tsx'
+import SidebarButton from './SidebarButton.tsx'
 import TodoListCreationDialog from '../../TodoPanel/TodoListCreationDialog.tsx'
 import DialogButton from '../../common/dialog/DialogButton.tsx'
 
@@ -26,10 +26,10 @@ function AddTodoListButton(props: AddTodoListButtonProps) {
         />
       }
     >
-      <MenuButton>
+      <SidebarButton>
         <AddIcon className="size-5 shrink-0" />
         <span className="pe-1">{label}</span>
-      </MenuButton>
+      </SidebarButton>
     </DialogButton>
   )
 }

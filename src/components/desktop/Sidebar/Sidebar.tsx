@@ -1,18 +1,18 @@
 import React, { useState } from 'react'
 import SettingsButton from '../../Settings/SettingsButton.tsx'
-import TodoListMenuButton from './TodoListMenuButton.tsx'
+import TodoListSidebarButton from './TodoListSidebarButton.tsx'
 import { TodoListDto } from '../../../types/generated/TodoListDto.ts'
 import AddTodoListButton from './AddTodoListButton.tsx'
-import LeftMenuExpandButton from './LeftMenuExpandButton.tsx'
+import SidebarExpandButton from './SidebarExpandButton.tsx'
 import classNames from 'classnames'
 
-type LeftMenuProps = {
+type SidebarProps = {
   todoLists: TodoListDto[]
   openTodoListId: string | null
   setOpenTodoListId: React.Dispatch<React.SetStateAction<string | null>>
 }
 
-function LeftMenu(props: LeftMenuProps) {
+function Sidebar(props: SidebarProps) {
   const [expanded, setExpanded] = useState(false)
   return (
     <div
@@ -21,11 +21,11 @@ function LeftMenu(props: LeftMenuProps) {
       })}
     >
       <div className="mb-2 flex justify-end">
-        <LeftMenuExpandButton expanded={expanded} setExpanded={setExpanded} />
+        <SidebarExpandButton expanded={expanded} setExpanded={setExpanded} />
       </div>
       <div className="flex flex-col gap-1">
         {props.todoLists.map((todoList) => (
-          <TodoListMenuButton
+          <TodoListSidebarButton
             key={todoList.id}
             todoList={todoList}
             openTodoListId={props.openTodoListId}
@@ -47,4 +47,4 @@ function LeftMenu(props: LeftMenuProps) {
   )
 }
 
-export default LeftMenu
+export default Sidebar

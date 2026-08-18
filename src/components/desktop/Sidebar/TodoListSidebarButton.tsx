@@ -3,15 +3,15 @@ import Tooltip from '../../common/Tooltip.tsx'
 import React from 'react'
 import classNames from 'classnames'
 import ChecklistIcon from '../../../assets/icons/checklist_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
-import MenuButton from './MenuButton.tsx'
+import SidebarButton from './SidebarButton.tsx'
 
-type TodoListMenuButtonProps = {
+type TodoListSidebarButtonProps = {
   todoList: TodoListDto
   openTodoListId: string | null
   setOpenTodoListId: React.Dispatch<React.SetStateAction<string | null>>
 }
 
-function TodoListMenuButton(props: TodoListMenuButtonProps) {
+function TodoListSidebarButton(props: TodoListSidebarButtonProps) {
   const isOpen = props.openTodoListId === props.todoList.id
 
   const tooltipText = isOpen
@@ -20,7 +20,7 @@ function TodoListMenuButton(props: TodoListMenuButtonProps) {
 
   return (
     <Tooltip text={tooltipText} side="right">
-      <MenuButton
+      <SidebarButton
         className={classNames({ 'bg-neutral-600': isOpen })}
         onClick={() =>
           props.setOpenTodoListId((old) => {
@@ -34,9 +34,9 @@ function TodoListMenuButton(props: TodoListMenuButtonProps) {
       >
         <ChecklistIcon className="size-5 shrink-0" />
         <span className="pe-1">{props.todoList.title}</span>
-      </MenuButton>
+      </SidebarButton>
     </Tooltip>
   )
 }
 
-export default TodoListMenuButton
+export default TodoListSidebarButton
