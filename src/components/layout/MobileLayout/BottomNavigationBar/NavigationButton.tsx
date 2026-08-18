@@ -22,6 +22,7 @@ const NavigationButton = React.forwardRef<
       className={classNames(
         'flex flex-col gap-1 p-1 cursor-pointer',
         'focus:outline-none group',
+        { 'text-neutral-300': !isSelected },
         className
       )}
       onClick={select}
