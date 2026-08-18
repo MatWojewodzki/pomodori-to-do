@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import Sidebar from './Sidebar/Sidebar.tsx'
-import TodoPanel from '../TodoPanel/TodoPanel.tsx'
+import TodoPanel from './TodoPanel.tsx'
 import PanelGap from './PanelGap.tsx'
-import PomodoroPanel from '../PomodoroPanel/PomodoroPanel.tsx'
+import PomodoroPanel from './PomodoroPanel.tsx'
 import { TodoListDto } from '../../types/generated/TodoListDto.ts'
 import classNames from 'classnames'
 

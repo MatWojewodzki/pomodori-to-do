@@ -1,7 +1,7 @@
 import Settings from './Settings.tsx'
 import { Dialog } from 'radix-ui'
 import React from 'react'
-import DialogTitle from '../common/dialog/DialogTitle.tsx'
+import DialogTitle from '../dialog/DialogTitle.tsx'
 
 type SettingsDialogProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>

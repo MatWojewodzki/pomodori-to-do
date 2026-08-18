@@ -1,7 +1,7 @@
-import Panel from '../Panel/Panel.tsx'
+import Panel from './Panel/Panel.tsx'
 import classNames from 'classnames'
-import PanelHeader from '../Panel/PanelHeader.tsx'
-import PanelTitle from '../Panel/PanelTitle.tsx'
+import PanelHeader from './Panel/PanelHeader.tsx'
+import PanelTitle from './Panel/PanelTitle.tsx'
 import PomodoroView from '../common/PomodoroView/PomodoroView.tsx'
 
 type PomodoroPanelProps = {

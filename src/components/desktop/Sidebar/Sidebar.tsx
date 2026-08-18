@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import SettingsButton from '../../Settings/SettingsButton.tsx'
+import SettingsSidebarButton from './SettingsSidebarButton.tsx'
 import TodoListSidebarButton from './TodoListSidebarButton.tsx'
 import { TodoListDto } from '../../../types/generated/TodoListDto.ts'
 import AddTodoListButton from './AddTodoListButton.tsx'
@@ -41,7 +41,7 @@ function Sidebar(props: SidebarProps) {
         />
       </div>
       <div className="flex flex-col">
-        <SettingsButton expanded={expanded} />
+        <SettingsSidebarButton expanded={expanded} />
       </div>
     </div>
   )

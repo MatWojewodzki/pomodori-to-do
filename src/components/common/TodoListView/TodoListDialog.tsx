@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
-import PanelHeader from '../../Panel/PanelHeader.tsx'
-import PanelTitle from '../../Panel/PanelTitle.tsx'
+import PanelHeader from '../../desktop/Panel/PanelHeader.tsx'
+import PanelTitle from '../../desktop/Panel/PanelTitle.tsx'
 import TextInput from '../form/TextInput.tsx'
 import DialogFooter from '../dialog/DialogFooter.tsx'
 import SecondaryDialogButton from '../dialog/SecondaryDialogButton.tsx'

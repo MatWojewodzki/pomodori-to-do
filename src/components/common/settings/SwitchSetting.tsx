@@ -1,5 +1,5 @@
 import Setting from './Setting.tsx'
-import SwitchInput from '../common/form/SwitchInput.tsx'
+import SwitchInput from '../form/SwitchInput.tsx'
 
 type SwitchSettingProps = {
   label: string

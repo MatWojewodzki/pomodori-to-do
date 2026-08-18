@@ -1,15 +1,15 @@
-import DurationSetting from './DurationSetting'
-import NumberSetting from './NumberSetting'
+import DurationSetting from './DurationSetting.tsx'
+import NumberSetting from './NumberSetting.tsx'
 import React, { useState } from 'react'
 import { Dialog } from 'radix-ui'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import settingsService from '../../services/tauri/settings.ts'
+import settingsService from '../../../services/tauri/settings.ts'
 import SettingsSection from './SettingsSection.tsx'
 import SwitchSetting from './SwitchSetting.tsx'
-import useSettings from '../../contexts/settings.tsx'
-import PrimaryDialogButton from '../common/dialog/PrimaryDialogButton.tsx'
-import SecondaryDialogButton from '../common/dialog/SecondaryDialogButton.tsx'
-import DialogFooter from '../common/dialog/DialogFooter.tsx'
+import useSettings from '../../../contexts/settings.tsx'
+import PrimaryDialogButton from '../dialog/PrimaryDialogButton.tsx'
+import SecondaryDialogButton from '../dialog/SecondaryDialogButton.tsx'
+import DialogFooter from '../dialog/DialogFooter.tsx'
 
 type SettingsFormProps = {
   closeDialog: () => void
