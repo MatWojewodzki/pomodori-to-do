@@ -5,8 +5,9 @@ type NavigationButtonProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   'children'
 > & {
-  icon: React.ReactElement
   text: string
+  icon: React.ReactElement
+  selectedIcon: React.ReactElement
   isSelected: boolean
   select: () => void
 }
@@ -15,7 +16,8 @@ const NavigationButton = React.forwardRef<
   HTMLButtonElement,
   NavigationButtonProps
 >(function NavigationButton(props, ref) {
-  const { icon, text, className, isSelected, select, ...rest } = props
+  const { text, icon, selectedIcon, className, isSelected, select, ...rest } =
+    props
   return (
     <button
       ref={ref}
@@ -36,7 +38,7 @@ const NavigationButton = React.forwardRef<
           { 'bg-neutral-700': props.isSelected }
         )}
       >
-        {icon}
+        {isSelected ? selectedIcon : icon}
       </span>
       <span className="font-semibold text-sm">{text}</span>
     </button>
