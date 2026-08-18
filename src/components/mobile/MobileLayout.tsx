@@ -1,24 +1,35 @@
 import { useState } from 'react'
-import BottomNavigationBar from './BottomNavigationBar/BottomNavigationBar.tsx'
 import classNames from 'classnames'
-import RootAppBar from './RootAppBar.tsx'
+import { TodoListDto } from '../../types/generated/TodoListDto.ts'
+import TodoListsScreen from './TodoListsScreen.tsx'
+import RootScaffold from './RootScaffold.tsx'
 
-export type AppScreen = 'todos' | 'timer' | 'settings'
+export type AppScreen = 'todos' | 'timer'
 
-function MobileLayout() {
-  const [screenSelected, setScreenSelected] = useState<AppScreen>('timer')
+type MobileLayoutProps = {
+  todoLists: TodoListDto[]
+}
+
+function MobileLayout(props: MobileLayoutProps) {
+  const [screenSelected, setScreenSelected] = useState<AppScreen>('todos')
   return (
     <div
       className={classNames(
         'w-screen h-screen flex flex-col bg-neutral-800 text-white'
       )}
     >
-      <RootAppBar setScreenSelected={setScreenSelected} />
-      <div className="grow">{screenSelected}</div>
-      <BottomNavigationBar
+      <RootScaffold
         screenSelected={screenSelected}
         setScreenSelected={setScreenSelected}
-      />
+      >
+        {screenSelected === 'todos' && (
+          <TodoListsScreen
+            screenSelected={screenSelected}
+            setScreenSelected={setScreenSelected}
+            todoLists={props.todoLists}
+          />
+        )}
+      </RootScaffold>
     </div>
   )
 }

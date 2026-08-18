@@ -21,7 +21,7 @@ function App() {
   if (!result.isSuccess) return
 
   if (isMobile) {
-    return <MobileLayout />
+    return <MobileLayout todoLists={result.data} />
   } else {
     return (
       <DesktopLayout
