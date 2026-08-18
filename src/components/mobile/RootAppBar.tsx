@@ -6,7 +6,11 @@ import classNames from 'classnames'
 function RootAppBar() {
   return (
     <AppBar
-      title={<h2 className="text-xl font-medium">Pomodori To Do</h2>}
+      title={
+        <h2 className="flex items-center text-xl font-medium">
+          Pomodori To Do
+        </h2>
+      }
       actions={[
         <DropdownMenu
           tooltipText="More options"
