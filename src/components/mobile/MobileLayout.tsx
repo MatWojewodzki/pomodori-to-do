@@ -16,7 +16,9 @@ type MobileLayoutProps = {
 }
 
 function MobileLayout(props: MobileLayoutProps) {
-  const [screenSelected, setScreenSelected] = useState<AppScreen>('timer')
+  const [screenSelected, setScreenSelected] = useState<AppScreen>(
+    props.openTodoListId ? 'todos' : 'timer'
+  )
   return (
     <div
       className={classNames(
