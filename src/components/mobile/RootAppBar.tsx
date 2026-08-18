@@ -1,8 +1,12 @@
 import AppBar from './AppBar/AppBar.tsx'
 import DropdownMenuItem from '../common/DropdownMenu/DropdownMenuItem.tsx'
 import AppBarDropdownMenuAction from './AppBar/AppBarDropdownMenuAction.tsx'
+import DialogButton from '../common/dialog/DialogButton.tsx'
+import { useState } from 'react'
+import SettingsDialog from '../common/settings/SettingsDialog.tsx'
 
 function RootAppBar() {
+  const [settingsDialogOpen, setSettingsDialogOpen] = useState(false)
   return (
     <AppBar
       title={
@@ -12,7 +16,16 @@ function RootAppBar() {
       }
       actions={[
         <AppBarDropdownMenuAction>
-          <DropdownMenuItem>Settings</DropdownMenuItem>
+          <DialogButton
+            open={settingsDialogOpen}
+            setOpen={setSettingsDialogOpen}
+            dialog={<SettingsDialog setOpen={setSettingsDialogOpen} />}
+            tooltipEnabled={false}
+          >
+            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+              Settings
+            </DropdownMenuItem>
+          </DialogButton>
         </AppBarDropdownMenuAction>,
       ]}
     />
