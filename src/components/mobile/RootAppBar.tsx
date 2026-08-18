@@ -1,7 +1,6 @@
-import AppBar from './AppBar.tsx'
+import AppBar from './AppBar/AppBar.tsx'
 import DropdownMenuItem from '../common/DropdownMenu/DropdownMenuItem.tsx'
-import DropdownMenu from '../common/DropdownMenu/DropdownMenu.tsx'
-import classNames from 'classnames'
+import AppBarDropdownMenuAction from './AppBar/AppBarDropdownMenuAction.tsx'
 
 function RootAppBar() {
   return (
@@ -12,17 +11,9 @@ function RootAppBar() {
         </h2>
       }
       actions={[
-        <DropdownMenu
-          tooltipText="More options"
-          triggerLabel="More options"
-          iconSize={24}
-          triggerClassName={classNames(
-            'text-neutral-200',
-            'hover:bg-neutral-600 focus:outline-none focus-visible:bg-neutral-600'
-          )}
-        >
+        <AppBarDropdownMenuAction>
           <DropdownMenuItem>Settings</DropdownMenuItem>
-        </DropdownMenu>,
+        </AppBarDropdownMenuAction>,
       ]}
     />
   )

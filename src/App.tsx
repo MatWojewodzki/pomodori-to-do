@@ -20,14 +20,25 @@ function App() {
   if (result.isError) return <ErrorMessage text="Failed to load todo lists." />
   if (!result.isSuccess) return
 
+  const openTodoList =
+    result.data.find((todoList) => todoList.id === openTodoListId) ?? null
+
   if (isMobile) {
-    return <MobileLayout todoLists={result.data} />
+    return (
+      <MobileLayout
+        todoLists={result.data}
+        openTodoListId={openTodoListId}
+        setOpenTodoListId={setOpenTodoListId}
+        openTodoList={openTodoList}
+      />
+    )
   } else {
     return (
       <DesktopLayout
         todoLists={result.data}
         openTodoListId={openTodoListId}
         setOpenTodoListId={setOpenTodoListId}
+        openTodoList={openTodoList}
       />
     )
   }

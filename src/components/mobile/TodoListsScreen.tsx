@@ -7,6 +7,7 @@ type TodoListsScreenProps = {
   screenSelected: AppScreen
   setScreenSelected: React.Dispatch<React.SetStateAction<AppScreen>>
   todoLists: TodoListDto[]
+  setOpenTodoListId: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 function TodoListsScreen(props: TodoListsScreenProps) {
@@ -19,6 +20,7 @@ function TodoListsScreen(props: TodoListsScreenProps) {
               'p-4 grow flex justify-start text-lg cursor-pointer ',
               'hover:bg-neutral-600 focus:outline-none focus-visible:bg-neutral-600'
             )}
+            onClick={() => props.setOpenTodoListId(todoList.id)}
           >
             {todoList.title}
           </button>

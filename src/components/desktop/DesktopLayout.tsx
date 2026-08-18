@@ -10,13 +10,11 @@ type DesktopLayoutProps = {
   todoLists: TodoListDto[]
   openTodoListId: string | null
   setOpenTodoListId: React.Dispatch<React.SetStateAction<string | null>>
+  openTodoList: TodoListDto | null
 }
 
 function DesktopLayout(props: DesktopLayoutProps) {
   const [todoPanelWidth, setTodoPanelWidth] = useState(400)
-  const openTodoList =
-    props.todoLists.find((todoList) => todoList.id === props.openTodoListId) ??
-    null
   return (
     <div
       className={classNames(
@@ -29,16 +27,18 @@ function DesktopLayout(props: DesktopLayoutProps) {
         setOpenTodoListId={props.setOpenTodoListId}
       />
       <div className="grow flex items-stretch overflow-hidden">
-        {openTodoList && (
+        {props.openTodoList && (
           <TodoPanel
             width={todoPanelWidth}
             todoLists={props.todoLists}
-            todoList={openTodoList}
+            todoList={props.openTodoList}
             setOpenTodoListId={props.setOpenTodoListId}
           />
         )}
-        {openTodoList && <PanelGap setTodoPanelWidth={setTodoPanelWidth} />}
-        <PomodoroPanel isTodoPanelOpen={openTodoList !== null} />
+        {props.openTodoList && (
+          <PanelGap setTodoPanelWidth={setTodoPanelWidth} />
+        )}
+        <PomodoroPanel isTodoPanelOpen={props.openTodoList !== null} />
       </div>
     </div>
   )

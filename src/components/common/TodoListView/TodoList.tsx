@@ -1,10 +1,10 @@
 import TodoListItem from './TodoListItem.tsx'
-import { TodoDto } from '../../types/generated/TodoDto.ts'
+import { TodoDto } from '../../../types/generated/TodoDto.ts'
 import { useEffect, useRef, useState } from 'react'
 import { DragDropProvider } from '@dnd-kit/react'
 import { move } from '@dnd-kit/helpers'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import todoService from '../../services/tauri/todo.ts'
+import todoService from '../../../services/tauri/todo.ts'
 import { isSortable } from '@dnd-kit/react/sortable'
 
 type TodoListProps = {

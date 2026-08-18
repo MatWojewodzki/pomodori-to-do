@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import TodoListDialog from './TodoListDialog.tsx'
-import { TodoListDto } from '../../types/generated/TodoListDto.ts'
+import { TodoListDto } from '../../../types/generated/TodoListDto.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import todoListService from '../../services/tauri/todoList.ts'
+import todoListService from '../../../services/tauri/todoList.ts'
 
 type TodoListEditDialogProps = {
   todoList: TodoListDto

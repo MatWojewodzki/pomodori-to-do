@@ -1,14 +1,14 @@
-import MyDropdownMenu from '../common/DropdownMenu/DropdownMenu.tsx'
+import MyDropdownMenu from '../DropdownMenu/DropdownMenu.tsx'
 import classNames from 'classnames'
-import DropdownMenuItem from '../common/DropdownMenu/DropdownMenuItem.tsx'
-import EditIcon from '../../assets/icons/edit_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
-import DeleteIcon from '../../assets/icons/delete_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
-import todoListService from '../../services/tauri/todoList.ts'
+import DropdownMenuItem from '../DropdownMenu/DropdownMenuItem.tsx'
+import EditIcon from '../../../assets/icons/edit_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
+import DeleteIcon from '../../../assets/icons/delete_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
+import todoListService from '../../../services/tauri/todoList.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { TodoListDto } from '../../types/generated/TodoListDto.ts'
+import { TodoListDto } from '../../../types/generated/TodoListDto.ts'
 import React, { useState } from 'react'
 import TodoListEditDialog from './TodoListEditDIalog.tsx'
-import DialogButton from '../common/dialog/DialogButton.tsx'
+import DialogButton from '../dialog/DialogButton.tsx'
 
 function pickPreviousTodoListId(
   todoLists: TodoListDto[],
@@ -27,11 +27,14 @@ type TodoListDropdownMenuProps = {
   todoLists: TodoListDto[]
   todoList: TodoListDto
   setOpenTodoListId: React.Dispatch<React.SetStateAction<string | null>>
+  triggerIconSize?: 20 | 24
 }
 
 function TodoListDropdownMenu(props: TodoListDropdownMenuProps) {
   const [editDialogOpen, setEditDialogOpen] = useState(false)
+
   const queryClient = useQueryClient()
+
   const deleteMutation = useMutation({
     mutationFn: todoListService.deleteTodoList,
     onSuccess: async () => {
@@ -43,6 +46,7 @@ function TodoListDropdownMenu(props: TodoListDropdownMenuProps) {
       )
     },
   })
+
   return (
     <MyDropdownMenu
       tooltipText="More options"
@@ -50,6 +54,7 @@ function TodoListDropdownMenu(props: TodoListDropdownMenuProps) {
       triggerClassName={classNames(
         'hover:bg-neutral-600 focus:outline-none focus-visible:bg-neutral-600'
       )}
+      iconSize={props.triggerIconSize}
     >
       <DialogButton
         open={editDialogOpen}

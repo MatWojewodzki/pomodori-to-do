@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import todoService from '../../services/tauri/todo.ts'
-import ErrorMessage from '../common/ErrorMessage.tsx'
+import todoService from '../../../services/tauri/todo.ts'
+import ErrorMessage from '../ErrorMessage.tsx'
 import TodoList from './TodoList.tsx'
 
 type TodoProps = {

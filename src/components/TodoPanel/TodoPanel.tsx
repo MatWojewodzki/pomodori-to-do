@@ -1,10 +1,10 @@
 import PanelHeader from '../Panel/PanelHeader.tsx'
 import Panel from '../Panel/Panel.tsx'
-import TodoCreationForm from './TodoCreationForm.tsx'
-import Todos from './Todos.tsx'
+import TodoCreationForm from '../common/TodoListView/TodoCreationForm.tsx'
+import Todos from '../common/TodoListView/Todos.tsx'
 import { TodoListDto } from '../../types/generated/TodoListDto.ts'
 import PanelTitle from '../Panel/PanelTitle.tsx'
-import TodoListDropdownMenu from './TodoListDropdownMenu.tsx'
+import TodoListDropdownMenu from '../common/TodoListView/TodoListDropdownMenu.tsx'
 import React from 'react'
 
 type TodoPanelProps = {

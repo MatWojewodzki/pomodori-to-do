@@ -1,11 +1,11 @@
 import classNames from 'classnames'
-import { TodoDto } from '../../types/generated/TodoDto.ts'
-import CheckBox from '../../assets/icons/check_box_22dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
-import CheckBoxOutlineBlank from '../../assets/icons/check_box_outline_blank_22dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
-import DeleteIcon from '../../assets/icons/delete_22dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
-import todoService from '../../services/tauri/todo.ts'
+import { TodoDto } from '../../../types/generated/TodoDto.ts'
+import CheckBox from '../../../assets/icons/check_box_22dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
+import CheckBoxOutlineBlank from '../../../assets/icons/check_box_outline_blank_22dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
+import DeleteIcon from '../../../assets/icons/delete_22dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
+import todoService from '../../../services/tauri/todo.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import Tooltip from '../common/Tooltip.tsx'
+import Tooltip from '../Tooltip.tsx'
 import { useSortable } from '@dnd-kit/react/sortable'
 
 export type TodoListItemProps = {

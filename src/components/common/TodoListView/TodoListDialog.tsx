@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react'
-import PanelHeader from '../Panel/PanelHeader.tsx'
-import PanelTitle from '../Panel/PanelTitle.tsx'
-import TextInput from '../common/form/TextInput.tsx'
-import DialogFooter from '../common/dialog/DialogFooter.tsx'
-import SecondaryDialogButton from '../common/dialog/SecondaryDialogButton.tsx'
-import PrimaryDialogButton from '../common/dialog/PrimaryDialogButton.tsx'
+import PanelHeader from '../../Panel/PanelHeader.tsx'
+import PanelTitle from '../../Panel/PanelTitle.tsx'
+import TextInput from '../form/TextInput.tsx'
+import DialogFooter from '../dialog/DialogFooter.tsx'
+import SecondaryDialogButton from '../dialog/SecondaryDialogButton.tsx'
+import PrimaryDialogButton from '../dialog/PrimaryDialogButton.tsx'
 import { Dialog } from 'radix-ui'
 
 type TodoListDialogProps = {
