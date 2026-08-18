@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import BottomNavigationBar from './BottomNavigationBar/BottomNavigationBar.tsx'
 import classNames from 'classnames'
+import AppBar from './AppBar/AppBar.tsx'
 
-export type Screen = 'todos' | 'timer'
+export type Screen = 'todos' | 'timer' | 'settings'
 
 function MobileLayout() {
   const [screenSelected, setScreenSelected] = useState<Screen>('timer')
@@ -12,7 +13,11 @@ function MobileLayout() {
         'w-screen h-screen flex flex-col bg-neutral-700 text-white'
       )}
     >
-      <div className="grow"></div>
+      <AppBar
+        screenSelected={screenSelected}
+        setScreenSelected={setScreenSelected}
+      />
+      <div className="grow">{screenSelected}</div>
       <BottomNavigationBar
         screenSelected={screenSelected}
         setScreenSelected={setScreenSelected}
