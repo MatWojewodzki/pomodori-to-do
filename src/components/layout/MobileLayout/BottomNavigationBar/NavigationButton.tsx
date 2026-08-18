@@ -20,7 +20,7 @@ const NavigationButton = React.forwardRef<
     <button
       ref={ref}
       className={classNames(
-        'flex flex-col gap-1 p-2 cursor-pointer',
+        'flex flex-col gap-1 p-1 cursor-pointer',
         'focus:outline-none group',
         className
       )}

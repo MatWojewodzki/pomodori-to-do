@@ -15,7 +15,7 @@ function BottomNavigationBar(props: BottomNavigationBarProps) {
     <div className="pb-[env(safe-area-inset-bottom)]">
       <div
         className={classNames(
-          'p-4 flex items-center justify-around bg-neutral-800'
+          'px-4 py-1 flex items-center justify-around bg-neutral-800'
         )}
       >
         <NavigationButton
