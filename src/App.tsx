@@ -4,8 +4,8 @@ import todoListService from './services/tauri/todoList.ts'
 import { useQuery } from '@tanstack/react-query'
 import ErrorMessage from './components/common/ErrorMessage.tsx'
 import { useMediaQuery } from 'usehooks-ts'
-import DesktopLayout from './components/layout/DesktopLayout/DesktopLayout.tsx'
-import MobileLayout from './components/layout/MobileLayout/MobileLayout.tsx'
+import DesktopLayout from './components/desktop/DesktopLayout.tsx'
+import MobileLayout from './components/mobile/MobileLayout.tsx'
 
 function App() {
   const [openTodoListId, setOpenTodoListId] = useState<string | null>(null)

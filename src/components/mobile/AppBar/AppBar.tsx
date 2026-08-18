@@ -1,8 +1,8 @@
 import AppTitle from './AppTitle.tsx'
 import { Screen } from '../MobileLayout.tsx'
 import React from 'react'
-import DropdownMenu from '../../../common/DropdownMenu/DropdownMenu.tsx'
-import DropdownMenuItem from '../../../common/DropdownMenu/DropdownMenuItem.tsx'
+import DropdownMenu from '../../common/DropdownMenu/DropdownMenu.tsx'
+import DropdownMenuItem from '../../common/DropdownMenu/DropdownMenuItem.tsx'
 import classNames from 'classnames'
 
 type AppBarProps = {

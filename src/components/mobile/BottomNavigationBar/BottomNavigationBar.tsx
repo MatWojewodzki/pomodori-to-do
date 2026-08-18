@@ -1,10 +1,10 @@
 import React from 'react'
 import classNames from 'classnames'
 import NavigationButton from './NavigationButton.tsx'
-import TimerIcon from '../../../../assets/icons/timer_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
-import ListIcon from '../../../../assets/icons/list_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
-import TimerFillIcon from '../../../../assets/icons/timer_24dp_000000_FILL1_wght400_GRAD0_opsz24.svg?react'
-import ListFillIcon from '../../../../assets/icons/list_24dp_000000_FILL1_wght400_GRAD0_opsz24.svg?react'
+import TimerIcon from '../../../assets/icons/timer_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
+import ListIcon from '../../../assets/icons/list_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
+import TimerFillIcon from '../../../assets/icons/timer_24dp_000000_FILL1_wght400_GRAD0_opsz24.svg?react'
+import ListFillIcon from '../../../assets/icons/list_24dp_000000_FILL1_wght400_GRAD0_opsz24.svg?react'
 import { Screen } from '../MobileLayout.tsx'
 
 function capitalizeFirstLetter(str: string): string {

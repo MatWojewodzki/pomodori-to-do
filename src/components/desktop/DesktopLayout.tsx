@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import LeftMenu from '../../LeftMenu/LeftMenu.tsx'
-import TodoPanel from '../../TodoPanel/TodoPanel.tsx'
+import LeftMenu from './LeftMenu/LeftMenu.tsx'
+import TodoPanel from '../TodoPanel/TodoPanel.tsx'
 import PanelGap from './PanelGap.tsx'
-import PomodoroPanel from '../../PomodoroPanel/PomodoroPanel.tsx'
-import { TodoListDto } from '../../../types/generated/TodoListDto.ts'
+import PomodoroPanel from '../PomodoroPanel/PomodoroPanel.tsx'
+import { TodoListDto } from '../../types/generated/TodoListDto.ts'
 import classNames from 'classnames'
 
 type DesktopLayoutProps = {
