@@ -30,8 +30,10 @@ function TodoListScreen(props: TodoListScreenProps) {
         ]}
       />
       <div className="min-h-0 flex-1 flex flex-col pt-6">
+        <div className="grow overflow-y-auto scrollbar-gutter-stable">
+          <Todos todoListId={props.todoList.id} />
+        </div>
         <TodoCreationForm todoListId={props.todoList.id} />
-        <Todos todoListId={props.todoList.id} />
       </div>
     </>
   )
