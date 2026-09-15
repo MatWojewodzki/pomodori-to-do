@@ -21,7 +21,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <QueryClientProvider client={queryClient}>
         <SettingsProvider>
           <App />
-          <ReactQueryDevtools initialIsOpen={false} />
+          <div className="hidden md:block">
+            <ReactQueryDevtools initialIsOpen={false} />
+          </div>
         </SettingsProvider>
       </QueryClientProvider>
     </Tooltip.Provider>
