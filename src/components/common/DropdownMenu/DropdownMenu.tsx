@@ -1,7 +1,8 @@
 import { DropdownMenu as RadixDropdownMenu } from 'radix-ui'
 import classNames from 'classnames'
 import Tooltip from '../Tooltip.tsx'
-import MoreVertIcon from '../../../assets/icons/more_vert_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
+import MoreVertIcon20 from '../../../assets/icons/more_vert_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
+import MoreVertIcon24 from '../../../assets/icons/more_vert_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
 import React from 'react'
 
 type DropdownMenuProps = {
@@ -9,9 +10,11 @@ type DropdownMenuProps = {
   triggerLabel: string
   children?: React.ReactNode
   triggerClassName?: string
+  iconSize?: 20 | 24
 }
 
 function DropdownMenu(props: DropdownMenuProps) {
+  const { iconSize = 20 } = props
   return (
     <RadixDropdownMenu.Root>
       <Tooltip text={props.tooltipText}>
@@ -22,7 +25,8 @@ function DropdownMenu(props: DropdownMenuProps) {
             props.triggerClassName
           )}
         >
-          <MoreVertIcon className="size-5" />
+          {iconSize === 20 && <MoreVertIcon20 className="size-5" />}
+          {iconSize === 24 && <MoreVertIcon24 className="size-6" />}
         </RadixDropdownMenu.Trigger>
       </Tooltip>
       <RadixDropdownMenu.Portal>

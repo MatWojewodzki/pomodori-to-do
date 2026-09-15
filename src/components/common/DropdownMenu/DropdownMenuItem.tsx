@@ -17,7 +17,8 @@ const DropdownMenuItem = React.forwardRef<
     <DropdownMenu.Item
       className={classNames(
         'flex justify-start items-center gap-4 px-4 py-2 cursor-pointer',
-        'hover:bg-neutral-800 focus:outline-none focus-visible:bg-neutral-800',
+        'hover:bg-neutral-800 active:bg-neutral-800',
+        'focus:outline-none focus-visible:bg-neutral-800',
         props.className
       )}
       ref={ref}

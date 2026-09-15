@@ -12,6 +12,8 @@
   --font-sans:
     'Nunito', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+  --breakpoint-xs: 24rem;
 }
 
 *::-webkit-scrollbar {

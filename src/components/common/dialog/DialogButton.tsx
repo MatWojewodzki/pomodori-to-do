@@ -42,7 +42,8 @@ function DialogButton(props: DialogButtonProps) {
             aria-label="Close settings"
             className={classNames(
               'absolute top-6 right-6 p-1 rounded-md cursor-pointer',
-              'hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700'
+              'hover:bg-neutral-700 active:bg-neutral-700',
+              'focus:outline-none focus-visible:bg-neutral-700'
             )}
           >
             <CloseIcon className="size-5" />
