@@ -2,9 +2,9 @@ import React from 'react'
 import AppBar from './AppBar/AppBar.tsx'
 import { TodoListDto } from '../../types/generated/TodoListDto.ts'
 import BackButton from './AppBar/BackButton.tsx'
-import TodoListDropdownMenu from '../common/TodoListView/TodoListDropdownMenu.tsx'
-import Todos from '../common/TodoListView/Todos.tsx'
-import TodoCreationForm from '../common/TodoListView/TodoCreationForm.tsx'
+import TodoListDropdownMenu from '../common/todoList/TodoListDropdownMenu.tsx'
+import Todos from '../common/todoList/Todos.tsx'
+import TodoCreationForm from '../common/todoList/TodoCreationForm.tsx'
 
 type TodoListScreenProps = {
   todoLists: TodoListDto[]

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import AddIcon from '../../../assets/icons/add_20dp_000000_FILL0_wght400_GRAD0_opsz20.svg?react'
 import SidebarButton from './SidebarButton.tsx'
-import TodoListCreationDialog from '../../common/TodoListView/TodoListCreationDialog.tsx'
+import TodoListCreationDialog from '../../common/todoList/TodoListCreationDialog.tsx'
 import DialogButton from '../../common/dialog/DialogButton.tsx'
 
 type AddTodoListButtonProps = {

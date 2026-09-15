@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import FloatingActionButton from './FloatingActionButton.tsx'
 import AddIcon from '../../assets/icons/add_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
 import DialogButton from '../common/dialog/DialogButton.tsx'
-import TodoListCreationDialog from '../common/TodoListView/TodoListCreationDialog.tsx'
+import TodoListCreationDialog from '../common/todoList/TodoListCreationDialog.tsx'
 import ChecklistIcon from '../../assets/icons/checklist_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg?react'
 
 type TodoListsScreenProps = {

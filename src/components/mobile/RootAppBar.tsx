@@ -3,7 +3,7 @@ import DropdownMenuItem from '../common/DropdownMenu/DropdownMenuItem.tsx'
 import AppBarDropdownMenuAction from './AppBar/AppBarDropdownMenuAction.tsx'
 import DialogButton from '../common/dialog/DialogButton.tsx'
 import { useState } from 'react'
-import SettingsDialog from '../common/settings/SettingsDialog.tsx'
+import SettingsDialog from '../common/SettingsDIalog/SettingsDialog.tsx'
 
 function RootAppBar() {
   const [settingsDialogOpen, setSettingsDialogOpen] = useState(false)
