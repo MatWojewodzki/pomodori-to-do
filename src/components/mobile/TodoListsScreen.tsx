@@ -19,12 +19,18 @@ function TodoListsScreen(props: TodoListsScreenProps) {
   const [addTodoListDialogOpen, setAddTodoListDialogOpen] = useState(false)
   return (
     <div className="relative flex flex-col flex-1 min-h-0">
-      <ul className="mt-2 min-h-0 flex flex-1 flex-col overflow-y-auto scrollbar-gutter-stable">
+      <ul
+        className={classNames(
+          'ps-2 pe-1 py-2 min-h-0 flex flex-1 flex-col',
+          'overflow-y-auto scrollbar-gutter-stable'
+        )}
+      >
         {props.todoLists.map((todoList) => (
           <li key={todoList.id} className="flex">
             <button
               className={classNames(
-                'p-4 grow flex items-center justify-start gap-4 text-lg cursor-pointer',
+                'p-4 grow flex items-center justify-start gap-4',
+                'rounded-md text-lg cursor-pointer',
                 'hover:bg-neutral-600 focus:outline-none focus-visible:bg-neutral-600'
               )}
               onClick={() => props.setOpenTodoListId(todoList.id)}
