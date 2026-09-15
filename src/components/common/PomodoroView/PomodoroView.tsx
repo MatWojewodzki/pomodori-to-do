@@ -1,7 +1,6 @@
 import { useCallback, useEffect } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import useSettings from '../../../contexts/settings.tsx'
-import useSessionStorage from '../../../hooks/useSessionStorage.ts'
 import taskService from '../../../services/tauri/task.ts'
 import { TaskDto } from '../../../types/generated/TaskDto.ts'
 import { TimerType } from '../../../hooks/useTimerType.ts'
@@ -9,6 +8,7 @@ import notificationService from '../../../services/notification.ts'
 import useTimer from '../../../hooks/useTimer.ts'
 import TimerSection from './TimerSection/TimerSection.tsx'
 import TaskSection from './TaskSection/TaskSection.tsx'
+import { useSessionStorage } from 'usehooks-ts'
 
 function PomodoroView() {
   const { notifications_enabled: notificationsEnabled } = useSettings()
