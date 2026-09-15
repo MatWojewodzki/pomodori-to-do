@@ -20,16 +20,16 @@ function BottomNavigationBar(props: BottomNavigationBarProps) {
     fillIcon: React.ReactElement
   }[] = [
     {
-      screen: 'todos',
-      text: 'Todo lists',
-      icon: <ListIcon className="size-6" />,
-      fillIcon: <ListFillIcon className="size-6" />,
-    },
-    {
       screen: 'timer',
       text: 'Timer & Tasks',
       icon: <TimerIcon className="size-6" />,
       fillIcon: <TimerFillIcon className="size-6" />,
+    },
+    {
+      screen: 'todos',
+      text: 'Todo lists',
+      icon: <ListIcon className="size-6" />,
+      fillIcon: <ListFillIcon className="size-6" />,
     },
   ]
   return (
