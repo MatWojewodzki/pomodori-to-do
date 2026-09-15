@@ -12,7 +12,7 @@ function FloatingActionButton(props: FloatingActionButtonProps) {
     <button
       aria-label={props.label}
       className={classNames(
-        'absolute right-6 bottom-6 p-4 rounded-md cursor-pointer',
+        'absolute right-4 bottom-4 p-4 rounded-md cursor-pointer',
         'bg-neutral-500 hover:bg-neutral-600 active:bg-neutral-600',
         'focus:outline-none focus-visible:bg-neutral-600'
       )}
