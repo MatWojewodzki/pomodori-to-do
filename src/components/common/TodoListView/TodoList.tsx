@@ -50,7 +50,7 @@ function TodoList({ todos }: TodoListProps) {
         }
       }}
     >
-      <ul className="px-5 flex flex-col overflow-y-auto">
+      <ul className="flex flex-col overflow-y-auto">
         {localTodos.map((todo, index) => (
           <TodoListItem key={todo.id} todo={todo} index={index} />
         ))}

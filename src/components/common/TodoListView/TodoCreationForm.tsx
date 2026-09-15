@@ -32,10 +32,7 @@ function TodoCreationForm(props: TodoCreationFormProps) {
   }
 
   return (
-    <form
-      className=" w-full px-5 mb-4 flex items-center gap-2"
-      onSubmit={handleSubmit}
-    >
+    <form className=" w-full flex items-center gap-2" onSubmit={handleSubmit}>
       <label className="sr-only" htmlFor="add-todo-input">
         {'Add a new todo'}
       </label>

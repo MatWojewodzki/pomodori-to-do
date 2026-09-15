@@ -29,8 +29,10 @@ function TodoPanel(props: TodoPanelProps) {
           setOpenTodoListId={props.setOpenTodoListId}
         />
       </PanelHeader>
-      <TodoCreationForm todoListId={props.todoList.id} />
-      <Todos todoListId={props.todoList.id} />
+      <div className="px-5 pb-4 flex flex-col gap-4">
+        <TodoCreationForm todoListId={props.todoList.id} />
+        <Todos todoListId={props.todoList.id} />
+      </div>
     </Panel>
   )
 }
