@@ -1,8 +1,8 @@
 import useTimerType, { TimerType } from './useTimerType.ts'
 import { useEffect, useRef, useState } from 'react'
-import useSessionStorage from './useSessionStorage.ts'
 import useSettings from './../contexts/settings.tsx'
 import useTimerFinish from './useTimerFinish.ts'
+import { useSessionStorage } from 'usehooks-ts'
 
 export function getDurationS(
   workDurationS: number,
@@ -73,7 +73,7 @@ export default function useTimer() {
   const [endTime, setEndTime] = useSessionStorage<number | null>(
     'endTime',
     initialEndTime,
-    initialEndTime !== null
+    { initializeWithValue: initialEndTime === null }
   )
   const [secondsLeft, setSecondsLeft] = useState(
     getSecondsLeft(

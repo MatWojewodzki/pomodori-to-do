@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import useSessionStorage from './useSessionStorage.ts'
+import { useSessionStorage } from 'usehooks-ts'
 
 export enum TimerType {
   WORK,
@@ -25,10 +25,7 @@ export default function useTimerType(
   initialValue: TimerType,
   pomodoriBetweenLongBreaks: number
 ) {
-  const [timerType, setTimerType] = useSessionStorage<TimerType>(
-    'timerType',
-    initialValue
-  )
+  const [timerType, setTimerType] = useSessionStorage('timerType', initialValue)
   const [lastPomodoroCountWithLongBreak, setLastPomodoroCountWithLongBreak] =
     useSessionStorage('lastPomodoroCountWithLongBreak', 0)
 
