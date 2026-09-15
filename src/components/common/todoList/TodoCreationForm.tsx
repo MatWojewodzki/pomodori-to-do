@@ -52,7 +52,8 @@ function TodoCreationForm(props: TodoCreationFormProps) {
         <button
           className={classNames(
             'p-1 rounded-sm cursor-pointer',
-            'hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700'
+            'hover:bg-neutral-700 active:bg-neutral-700',
+            'focus:outline-none focus-visible:bg-neutral-700'
           )}
           aria-label="Add a todo"
         >

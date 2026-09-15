@@ -10,7 +10,8 @@ function BackButton(props: BackButtonProps) {
     <button
       className={classNames(
         'p-1 rounded-md pointer-cursor',
-        'hover:bg-neutral-600 focus:outline-none focus-visible:bg-neutral-600'
+        'hover:bg-neutral-600 active:bg-neutral-600',
+        'focus:outline-none focus-visible:bg-neutral-600'
       )}
       onClick={props.onClick}
     >

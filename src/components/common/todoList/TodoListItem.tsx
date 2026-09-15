@@ -51,7 +51,8 @@ function TodoListItem({ todo, index }: TodoListItemProps) {
           aria-label={checkBoxTooltip}
           className={classNames(
             'shrink-0 p-1 rounded-md cursor-pointer',
-            'hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700'
+            'hover:bg-neutral-700 active:bg-neutral-700',
+            'focus:outline-none focus-visible:bg-neutral-700'
           )}
           onClick={() =>
             setCompletedMutation.mutate({
@@ -74,7 +75,8 @@ function TodoListItem({ todo, index }: TodoListItemProps) {
         <button
           className={classNames(
             'p-1 shrink-0 rounded-md text-neutral-400 cursor-pointer',
-            'hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700',
+            'hover:bg-neutral-700 active:bg-neutral-700',
+            'focus:outline-none focus-visible:bg-neutral-700',
             'invisible group-hover:visible group-focus-within:visible'
           )}
           onClick={() => deleteMutation.mutate({ id: todo.id })}

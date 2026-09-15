@@ -31,7 +31,8 @@ function TodoListsScreen(props: TodoListsScreenProps) {
               className={classNames(
                 'p-4 grow flex items-center justify-start gap-4',
                 'rounded-md text-lg cursor-pointer',
-                'hover:bg-neutral-600 focus:outline-none focus-visible:bg-neutral-600'
+                'hover:bg-neutral-600 active:bg-neutral-600',
+                'focus:outline-none focus-visible:bg-neutral-600'
               )}
               onClick={() => props.setOpenTodoListId(todoList.id)}
             >

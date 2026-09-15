@@ -20,7 +20,8 @@ function TaskSectionDropdownButton(props: TaskSectionDropdownButtonProps) {
             aria-label={buttonLabel}
             className={classNames(
               'p-1 rounded-md cursor-pointer',
-              'hover:bg-neutral-700 focus:outline-none focus-visible:bg-neutral-700'
+              'hover:bg-neutral-700 active:bg-neutral-700',
+              'focus:outline-none focus-visible:bg-neutral-700'
             )}
           >
             <KeyboardArrowDownIcon

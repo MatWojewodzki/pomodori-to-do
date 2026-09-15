@@ -8,7 +8,8 @@ function PrimaryDialogButton(props: PrimaryDialogButtonProps) {
     <button
       className={classNames(
         'px-4 py-1 text-sm rounded-sm bg-white text-black cursor-pointer',
-        'hover:bg-neutral-200 focus:outline-none focus-visible:bg-neutral-200'
+        'hover:bg-neutral-200 active:bg-neutral-200',
+        'focus:outline-none focus-visible:bg-neutral-200'
       )}
       {...props}
     >

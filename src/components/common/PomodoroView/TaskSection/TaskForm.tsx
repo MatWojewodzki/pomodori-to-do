@@ -59,7 +59,8 @@ function TaskForm(props: TaskFormProps) {
               type="button"
               className={classNames(
                 'px-4 py-2 text-xl font-bold rounded-s-md cursor-pointer',
-                'hover:bg-neutral-500 focus:outline-none focus-visible:bg-neutral-500'
+                'hover:bg-neutral-500 active:bg-neutral-500',
+                'focus:outline-none focus-visible:bg-neutral-500'
               )}
               onClick={() => {
                 if (props.totalPomodoriCount > 1)
@@ -85,7 +86,8 @@ function TaskForm(props: TaskFormProps) {
               type="button"
               className={classNames(
                 'px-4 py-2 text-xl font-bold rounded-e-md cursor-pointer',
-                'hover:bg-neutral-500 focus:outline-none focus-visible:bg-neutral-500'
+                'hover:bg-neutral-500 active:bg-neutral-500',
+                'focus:outline-none focus-visible:bg-neutral-500'
               )}
               onClick={() =>
                 props.setTotalPomodoriCount(props.totalPomodoriCount + 1)
@@ -102,8 +104,10 @@ function TaskForm(props: TaskFormProps) {
           onClick={props.handleCancel}
           className={classNames(
             'px-4 py-1 text-sm rounded-sm border-2 border-white cursor-pointer',
-            'hover:bg-neutral-200 focus:outline-none focus-visible:bg-neutral-200',
-            'hover:border-neutral-200 focus-visible:border-neutral-200 hover:text-black focus-visible:text-black'
+            'hover:bg-neutral-200 hover:border-neutral-200 hover:text-black',
+            'active:bg-neutral-200 active:border-neutral-200 active:text-black',
+            'focus:outline-none focus-visible:bg-neutral-200',
+            'focus-visible:border-neutral-200 focus-visible:text-black'
           )}
         >
           Cancel
@@ -112,7 +116,8 @@ function TaskForm(props: TaskFormProps) {
           type="submit"
           className={classNames(
             'px-4 py-1 text-sm rounded-sm bg-white text-black cursor-pointer',
-            'hover:bg-neutral-200 focus:outline-none focus-visible:bg-neutral-200'
+            'hover:bg-neutral-200 active:bg-neutral-200',
+            'focus:outline-none focus-visible:bg-neutral-200'
           )}
         >
           {props.submitButtonText}

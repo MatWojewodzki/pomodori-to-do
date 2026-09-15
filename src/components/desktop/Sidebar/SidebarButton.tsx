@@ -11,7 +11,8 @@ const SidebarButton = React.forwardRef<HTMLButtonElement, SidebarButtonProps>(
         className={classNames(
           'p-1 flex items-center gap-2 rounded-sm cursor-pointer ',
           'text-sm text-nowrap overflow-x-hidden',
-          'hover:bg-neutral-500 focus:outline-none focus-visible:bg-neutral-500',
+          'hover:bg-neutral-500 active:bg-neutral-500',
+          'focus:outline-none focus-visible:bg-neutral-500',
           className
         )}
         {...rest}

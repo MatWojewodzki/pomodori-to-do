@@ -14,7 +14,8 @@ function AppBarDropdownMenuAction(props: AppBarDropdownMenuActionProps) {
       iconSize={24}
       triggerClassName={classNames(
         'text-neutral-200',
-        'hover:bg-neutral-600 focus:outline-none focus-visible:bg-neutral-600'
+        'hover:bg-neutral-600 active:bg-neutral-600',
+        'focus:outline-none focus-visible:bg-neutral-600'
       )}
     >
       {props.children}

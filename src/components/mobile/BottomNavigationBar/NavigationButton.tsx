@@ -33,7 +33,7 @@ const NavigationButton = React.forwardRef<
       <span
         className={classNames(
           'px-3 py-1 flex justify-center rounded-md',
-          'group-hover:bg-neutral-600',
+          'group-hover:bg-neutral-600 group-active:bg-neutral-600',
           'group-focus-visible:bg-neutral-600',
           { 'bg-neutral-500': props.isSelected }
         )}
