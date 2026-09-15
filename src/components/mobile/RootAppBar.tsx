@@ -19,7 +19,11 @@ function RootAppBar() {
           <DialogButton
             open={settingsDialogOpen}
             setOpen={setSettingsDialogOpen}
-            dialog={<SettingsDialog setOpen={setSettingsDialogOpen} />}
+            dialog={
+              <SettingsDialog
+                closeDialog={() => setSettingsDialogOpen(false)}
+              />
+            }
             tooltipEnabled={false}
           >
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>

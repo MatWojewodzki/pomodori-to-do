@@ -18,7 +18,7 @@ function SettingsSidebarButton(props: SettingsSidebarButtonProps) {
       tooltipEnabled={!props.expanded}
       tooltipText={label}
       tooltipSide="right"
-      dialog={<SettingsDialog setOpen={setOpen} />}
+      dialog={<SettingsDialog closeDialog={() => setOpen(false)} />}
     >
       <SidebarButton>
         <SettingsIcon className="size-5 shrink-0" />
