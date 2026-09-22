@@ -9,7 +9,7 @@ pub struct DbPools {
 }
 
 pub fn get_db_uri(app_dir: PathBuf) -> String {
-    if cfg!(debug_assertions) {
+    if cfg!(debug_assertions) && cfg!(not(target_os = "android")) {
         return "sqlite://database.dev.sqlite".to_string();
     }
     let db_path = app_dir.join("database.sqlite");
