@@ -33,7 +33,7 @@ function TodoListScreen(props: TodoListScreenProps) {
       <div className="min-h-0 flex-1 flex flex-col pb-[env(safe-area-inset-bottom)]">
         <div
           className={classNames(
-            'ps-2 pe-1 py-2 grow flex',
+            'ps-2 pe-1 py-2 grow flex flex-col',
             'overflow-y-auto scrollbar-gutter-stable'
           )}
         >
