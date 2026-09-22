@@ -50,7 +50,10 @@ function getSessionTimeLeft(
   let virtuallyCompletedWorkSessions =
     timer.isRunning && timer.timerType === TimerType.WORK ? 1 : 0
 
-  let finishTime = timer.endTime && !timer.isPaused ? timer.endTime : Date.now()
+  let finishTime =
+    timer.finishTimestamp && !timer.isPaused
+      ? timer.finishTimestamp
+      : Date.now()
 
   while (virtuallyCompletedWorkSessions < workSessionsRequired) {
     finishTime +=
