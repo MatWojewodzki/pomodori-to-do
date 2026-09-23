@@ -29,4 +29,5 @@ uuid = { version = "1.23.4", features = ["v4"] }
 thiserror = "2.0.18"
 ts-rs = "12"
 tauri-plugin-notification = "2"
+tauri-plugin-os = "2"
 

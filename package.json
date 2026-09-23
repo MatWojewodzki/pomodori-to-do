@@ -23,6 +23,7 @@
     "@tauri-apps/api": "^2.11.1",
     "@tauri-apps/plugin-notification": "~2.3.3",
     "@tauri-apps/plugin-opener": "^2.5.4",
+    "@tauri-apps/plugin-os": "~2.3.2",
     "classnames": "^2.5.1",
     "radix-ui": "^1.6.0",
     "react": "^19.2.7",
