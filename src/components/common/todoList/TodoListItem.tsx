@@ -77,7 +77,7 @@ function TodoListItem({ todo, index }: TodoListItemProps) {
             'p-1 shrink-0 rounded-md text-neutral-400 cursor-pointer',
             'hover:bg-neutral-700 active:bg-neutral-700',
             'focus:outline-none focus-visible:bg-neutral-700',
-            'md:invisible group-hover:visible group-focus-within:visible'
+            'desktop:invisible group-hover:visible group-focus-within:visible'
           )}
           onClick={() => deleteMutation.mutate({ id: todo.id })}
           aria-label="Delete todo"
