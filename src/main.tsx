@@ -13,6 +13,9 @@ if (isDesktop()) {
   delete document.documentElement.dataset.desktop
 }
 
+// @ts-ignore
+window.android?.onFrontendReady()
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

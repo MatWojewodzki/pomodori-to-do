@@ -33,7 +33,7 @@ function BottomNavigationBar(props: BottomNavigationBarProps) {
     },
   ]
   return (
-    <div className="pb-[env(safe-area-inset-bottom)] bg-neutral-700">
+    <div className="pb-safe-bottom bg-neutral-700">
       <div className={classNames('px-4 py-1 flex items-center justify-around')}>
         {navigationButtons.map((screen, idx) => (
           <NavigationButton

@@ -8,7 +8,7 @@ type AppBarProps = {
 
 function AppBar(props: AppBarProps) {
   return (
-    <div className="pt-[env(safe-area-inset-top)] bg-neutral-700">
+    <div className="pt-safe-top bg-neutral-700">
       <div className="px-3 py-3 flex">
         <div className="grow flex items-center gap-3">
           <span>{props.leading}</span>

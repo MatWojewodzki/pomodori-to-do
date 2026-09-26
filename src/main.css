@@ -1,5 +1,12 @@
 @import 'tailwindcss';
 
+:root {
+  --native-inset-top: env(--safe-area-inset-top, 0);
+  --native-inset-bottom: env(--safe-area-inset-bottom, 0);
+  --native-inset-right: env(--safe-area-inset-right, 0);
+  --native-inset-left: env(--safe-area-inset-left, 0);
+}
+
 @custom-variant desktop (&:where([data-desktop], [data-desktop] *));
 
 @font-face {
@@ -16,6 +23,11 @@
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
   --breakpoint-xs: 24rem;
+
+  --spacing-safe-top: var(--native-inset-top);
+  --spacing-safe-right: var(--native-inset-right);
+  --spacing-safe-bottom: var(--native-inset-bottom);
+  --spacing-safe-left: var(--native-inset-left);
 }
 
 *::-webkit-scrollbar {
