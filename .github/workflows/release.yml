@@ -87,6 +87,10 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+      - name: Setup Android SDK (android only)
+        if: matrix.name == 'android'
+        uses: android-actions/setup-android@v4
+
       - name: install pnpm
         uses: pnpm/action-setup@v6
         with:
