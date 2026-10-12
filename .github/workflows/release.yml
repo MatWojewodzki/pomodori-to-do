@@ -112,7 +112,7 @@ jobs:
 
       - name: build app (android)
         if: matrix.name == 'android'
-        run: 'pnpm tauri android build --target aarch64 --target armv7 --apk --ci'
+        run: 'pnpm tauri android build --target aarch64 --target armv7 --split-per-abi --apk --ci'
 
       - name: sign apk (android, arm64)
         id: sign_apk_arm64
