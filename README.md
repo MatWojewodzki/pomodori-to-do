@@ -1,6 +1,6 @@
 # Pomodori To Do
 
-Desktop app providing pomodoro timer with a todo list.
+A cross-platform app that combines a Pomodoro timer with a todo list.
 
 ## License
 

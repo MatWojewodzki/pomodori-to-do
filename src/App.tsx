@@ -3,14 +3,12 @@ import { useState } from 'react'
 import todoListService from './services/tauri/todoList.ts'
 import { useQuery } from '@tanstack/react-query'
 import ErrorMessage from './components/common/ErrorMessage.tsx'
-import { useMediaQuery } from 'usehooks-ts'
 import DesktopLayout from './components/desktop/DesktopLayout.tsx'
 import MobileLayout from './components/mobile/MobileLayout.tsx'
+import isDesktop from './utils/isDesktop.ts'
 
 function App() {
   const [openTodoListId, setOpenTodoListId] = useState<string | null>(null)
-
-  const isMobile = useMediaQuery('(max-width: 768px)')
 
   const result = useQuery({
     queryKey: ['todo-lists'],
@@ -23,9 +21,9 @@ function App() {
   const openTodoList =
     result.data.find((todoList) => todoList.id === openTodoListId) ?? null
 
-  if (isMobile) {
+  if (isDesktop()) {
     return (
-      <MobileLayout
+      <DesktopLayout
         todoLists={result.data}
         openTodoListId={openTodoListId}
         setOpenTodoListId={setOpenTodoListId}
@@ -34,7 +32,7 @@ function App() {
     )
   } else {
     return (
-      <DesktopLayout
+      <MobileLayout
         todoLists={result.data}
         openTodoListId={openTodoListId}
         setOpenTodoListId={setOpenTodoListId}

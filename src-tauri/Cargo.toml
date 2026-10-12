@@ -1,7 +1,7 @@
 [package]
 name = "pomodori-to-do"
 version = "1.0.1"
-description = "Desktop app providing a pomodoro timer with a todo list."
+description = "A cross-platform app that combines a Pomodoro timer with a todo list."
 authors = ["Mateusz Wojewódzki matwojewodzki@gmail.com"]
 edition = "2021"
 license = "MIT"
@@ -29,4 +29,5 @@ uuid = { version = "1.23.4", features = ["v4"] }
 thiserror = "2.0.18"
 ts-rs = "12"
 tauri-plugin-notification = "2"
+tauri-plugin-os = "2"
 
