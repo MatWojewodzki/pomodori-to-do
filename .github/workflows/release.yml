@@ -113,6 +113,9 @@ jobs:
         with:
           targets: ${{ matrix.rust_targets }}
 
+      - name: setup rust cache
+        uses: Swatinem/rust-cache@v2
+
       - name: install frontend dependencies
         run: 'pnpm install --frozen-lockfile'
 
