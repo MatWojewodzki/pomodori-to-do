@@ -115,6 +115,8 @@ jobs:
 
       - name: setup rust cache
         uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: 'src-tauri'
 
       - name: install frontend dependencies
         run: 'pnpm install --frozen-lockfile'
