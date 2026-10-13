@@ -87,13 +87,13 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Setup Android SDK (android only)
+      - name: setup Android SDK (android only)
         if: matrix.name == 'android'
         uses: android-actions/setup-android@v4
         with:
           packages: ''
 
-      - name: Download Android SDK components (android only)
+      - name: download Android SDK components (android only)
         if: matrix.name == 'android'
         run: sdkmanager "platforms;android-36" "build-tools;36.0.0" # These versions match `compileSdk` from `build.gradle.kts`
 
