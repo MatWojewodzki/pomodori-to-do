@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       tag_name: ${{ steps.validate-tag.outputs.tag_name }}
+      app_version: ${{ steps.validate-tag.outputs.app_version }}
     steps:
       - name: validate tag
         id: validate-tag
@@ -35,6 +36,7 @@ jobs:
           fi
 
           echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
+          echo "app_version=${TAG_NAME#v}" >> $GITHUB_OUTPUT
 
   build:
     needs: resolve-tag
@@ -172,6 +174,18 @@ jobs:
         env:
           BUILD_TOOLS_VERSION: '36.0.0' # Explicitly downloaded above
 
+      - name: rename apks (android)
+        if: matrix.name == 'android'
+        env:
+          UNIVERSAL_APK_PATH: ${{ steps.sign_apk_universal.outputs.signedReleaseFile }}
+          ARM64_APK_PATH: ${{ steps.sign_apk_arm64.outputs.signedReleaseFile }}
+          ARM_APK_PATH: ${{ steps.sign_apk_arm.outputs.signedReleaseFile }}
+        run: |
+          mkdir -p dist/apk
+          cp "$UNIVERSAL_APK_PATH" dist/apk/pomodori-to-do-${{ needs.resolve-tag.outputs.app_version }}-android-universal.apk
+          cp "$ARM64_APK_PATH" dist/apk/pomodori-to-do-${{ needs.resolve-tag.outputs.app_version }}-android-arm64-v8a.apk
+          cp "$ARM_APK_PATH" dist/apk/pomodori-to-do-${{ needs.resolve-tag.outputs.app_version }}-android-armeabi-v7a.apk
+
       - name: upload artifacts
         uses: actions/upload-artifact@v7
         with:
@@ -181,9 +195,7 @@ jobs:
             src-tauri/target/**/release/bundle/**/*.deb
             src-tauri/target/**/release/bundle/**/*.dmg
             src-tauri/target/**/release/bundle/**/*.exe
-            ${{ steps.sign_apk_universal.outputs.signedReleaseFile }}
-            ${{ steps.sign_apk_arm64.outputs.signedReleaseFile }}
-            ${{ steps.sign_apk_arm.outputs.signedReleaseFile }}
+            dist/apk/*.apk
           if-no-files-found: error
 
   publish-github:
