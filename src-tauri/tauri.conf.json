@@ -1,7 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Pomodori To Do",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "identifier": "dev.wojewodzki.pomodori-to-do",
   "build": {
     "beforeDevCommand": "pnpm dev",

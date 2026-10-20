@@ -1,6 +1,6 @@
 [package]
 name = "pomodori-to-do"
-version = "1.1.4"
+version = "1.1.5"
 description = "A cross-platform app that combines a Pomodoro timer with a todo list."
 authors = ["Mateusz Wojewódzki matwojewodzki@gmail.com"]
 edition = "2021"
