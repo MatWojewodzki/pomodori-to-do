@@ -174,28 +174,62 @@ jobs:
         env:
           BUILD_TOOLS_VERSION: '36.0.0' # Explicitly downloaded above
 
-      - name: rename apks (android)
+      - name: rename artifacts (mac-arm)
+        if: matrix.name == 'mac-arm'
+        shell: bash
+        run: |
+          mkdir -p artifacts
+
+          find src-tauri/target/aarch64-apple-darwin/release -type f -name "*.dmg" -exec \
+            cp {} artifacts/pomodori-to-do-${{ needs.resolve-tag.outputs.app_version }}-macos-aarch64.dmg \;
+
+      - name: rename artifacts (mac-intel)
+        if: matrix.name == 'mac-intel'
+        shell: bash
+        run: |
+          mkdir -p artifacts
+
+          find src-tauri/target/x86_64-apple-darwin/release -type f -name "*.dmg" -exec \
+            cp {} artifacts/pomodori-to-do-${{ needs.resolve-tag.outputs.app_version }}-macos-x86_64.dmg \;
+
+      - name: rename artifacts (linux)
+        if: matrix.name == 'linux'
+        run: |
+          mkdir -p artifacts
+
+          find src-tauri/target/x86_64-unknown-linux-gnu/release -type f -name "*.AppImage" -exec \
+            cp {} artifacts/pomodori-to-do-${{ needs.resolve-tag.outputs.app_version }}-linux-amd64.AppImage \;
+
+          find src-tauri/target/x86_64-unknown-linux-gnu/release -type f -name "*.deb" -exec \
+            cp {} artifacts/pomodori-to-do-${{ needs.resolve-tag.outputs.app_version }}-linux-amd64.deb \;
+
+      - name: rename artifacts (windows)
+        if: matrix.name == 'windows'
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Path "artifacts" -Force | Out-Null
+
+          Copy-Item `
+            -Path src-tauri\target\x86_64-pc-windows-msvc\release\bundle\nsis\*-setup.exe `
+            -Destination artifacts\pomodori-to-do-${{ needs.resolve-tag.outputs.app_version }}-windows-x64.exe
+
+      - name: rename artifacts (android)
         if: matrix.name == 'android'
         env:
           UNIVERSAL_APK_PATH: ${{ steps.sign_apk_universal.outputs.signedReleaseFile }}
           ARM64_APK_PATH: ${{ steps.sign_apk_arm64.outputs.signedReleaseFile }}
           ARM_APK_PATH: ${{ steps.sign_apk_arm.outputs.signedReleaseFile }}
         run: |
-          mkdir -p dist/apk
-          cp "$UNIVERSAL_APK_PATH" dist/apk/pomodori-to-do-${{ needs.resolve-tag.outputs.app_version }}-android-universal.apk
-          cp "$ARM64_APK_PATH" dist/apk/pomodori-to-do-${{ needs.resolve-tag.outputs.app_version }}-android-arm64-v8a.apk
-          cp "$ARM_APK_PATH" dist/apk/pomodori-to-do-${{ needs.resolve-tag.outputs.app_version }}-android-armeabi-v7a.apk
+          mkdir -p artifacts
+          cp "$UNIVERSAL_APK_PATH" artifacts/pomodori-to-do-${{ needs.resolve-tag.outputs.app_version }}-android-universal.apk
+          cp "$ARM64_APK_PATH" artifacts/pomodori-to-do-${{ needs.resolve-tag.outputs.app_version }}-android-arm64-v8a.apk
+          cp "$ARM_APK_PATH" artifacts/pomodori-to-do-${{ needs.resolve-tag.outputs.app_version }}-android-armeabi-v7a.apk
 
       - name: upload artifacts
         uses: actions/upload-artifact@v7
         with:
           name: bundle-${{ matrix.target_label }}-${{ matrix.platform }}
-          path: |
-            src-tauri/target/**/release/bundle/**/*.AppImage
-            src-tauri/target/**/release/bundle/**/*.deb
-            src-tauri/target/**/release/bundle/**/*.dmg
-            src-tauri/target/**/release/bundle/**/*.exe
-            dist/apk/*.apk
+          path: artifacts
           if-no-files-found: error
 
   publish-github:
@@ -208,14 +242,14 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           pattern: bundle-*
-          path: target
+          path: artifacts
           merge-multiple: true
 
-      - name: create github release
+      - name: create a github release
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ needs.resolve-tag.outputs.tag_name }}
-          files: target/**/*
+          files: artifacts/*
           draft: false
           prerelease: false
           generate_release_notes: true
