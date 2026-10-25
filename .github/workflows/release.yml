@@ -249,7 +249,7 @@ jobs:
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ needs.resolve-tag.outputs.tag_name }}
-          files: artifacts/**/*
+          files: artifacts/*
           draft: false
           prerelease: false
           generate_release_notes: true
