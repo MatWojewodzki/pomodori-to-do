@@ -242,14 +242,14 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           pattern: bundle-*
-          path: target
+          path: artifacts
           merge-multiple: true
 
-      - name: create github release
+      - name: create a github release
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ needs.resolve-tag.outputs.tag_name }}
-          files: target/**/*
+          files: artifacts/**/*
           draft: false
           prerelease: false
           generate_release_notes: true
