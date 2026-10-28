@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import todoService from '../../../services/tauri/todo.ts'
 import ErrorMessage from '../ErrorMessage.tsx'
 import TodoList from './TodoList.tsx'
+import CentralMessage from '../CentralMessage.tsx'
 
 type TodoProps = {
   todoListId: string
@@ -17,11 +18,7 @@ function Todos(props: TodoProps) {
   if (result.data.length > 0) {
     return <TodoList todos={result.data} />
   } else {
-    return (
-      <div className="grow flex items-center justify-center">
-        <p className="text-neutral-300 text-sm text-center">No todos yet</p>
-      </div>
-    )
+    return <CentralMessage>No todos yet.</CentralMessage>
   }
 }
 
