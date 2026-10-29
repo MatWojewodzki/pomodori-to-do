@@ -2783,7 +2783,7 @@ dependencies = [
 
 [[package]]
 name = "pomodori-to-do"
-version = "1.1.6"
+version = "1.1.7"
 dependencies = [
  "async-trait",
  "serde",
