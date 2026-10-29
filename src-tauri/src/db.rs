@@ -1,3 +1,5 @@
+use crate::error::DatabaseError;
+use crate::error::StartupError;
 use sqlx::sqlite::{SqliteConnectOptions, SqlitePool, SqlitePoolOptions};
 use std::path::PathBuf;
 use std::str::FromStr;
@@ -16,34 +18,46 @@ pub fn get_db_uri(app_dir: PathBuf) -> String {
     format!("sqlite:///{}", db_path.to_string_lossy())
 }
 
-pub async fn create_pool(url: &str) -> DbPools {
+pub async fn create_pool(url: &str) -> Result<DbPools, StartupError> {
     let write_options = SqliteConnectOptions::from_str(url)
-        .expect("Failed to parse db url")
+        .map_err(|source| DatabaseError::SqlxOperation {
+            operation: "parse the database url",
+            source,
+        })?
         .create_if_missing(true);
 
     let read_options = SqliteConnectOptions::from_str(url)
-        .expect("Failed to parse db url")
+        .map_err(|source| DatabaseError::SqlxOperation {
+            operation: "parse the database url",
+            source,
+        })?
         .read_only(true);
 
     let write_pool = SqlitePoolOptions::new()
         .max_connections(1)
         .connect_with(write_options)
         .await
-        .expect("Failed to connect to db");
+        .map_err(|source| DatabaseError::SqlxOperation {
+            operation: "connect to the database",
+            source,
+        })?;
 
     let read_pool = SqlitePoolOptions::new()
         .max_connections(5)
         .connect_with(read_options)
         .await
-        .expect("Failed to connect to db");
+        .map_err(|source| DatabaseError::SqlxOperation {
+            operation: "connect to the database",
+            source,
+        })?;
 
     sqlx::migrate!()
         .run(&write_pool)
         .await
-        .expect("Failed to run migrations");
+        .map_err(DatabaseError::SqlxMigration)?;
 
-    DbPools {
+    Ok(DbPools {
         writer: write_pool,
         reader: read_pool,
-    }
+    })
 }
